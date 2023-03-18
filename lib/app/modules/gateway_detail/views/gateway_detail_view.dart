@@ -1,0 +1,168 @@
+import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../controllers/gateway_detail_controller.dart';
+
+class GatewayDetailView extends GetView<GatewayDetailController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      body: Obx(
+        () => Padding(
+          padding: EdgeInsets.only(top: 40.h),
+          child: Stack(
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 40.h, horizontal: 5.w),
+                    child: controller.getIsLoading()
+                        ? Center(
+                            child: SizedBox(
+                              width: 20.w,
+                              height: 20.h,
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 45.h),
+                              Text(
+                                '${'instructions'.tr}:',
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 12.h),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w, vertical: 5.h),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.white,
+                                ),
+                                child: HtmlWidget(
+                                  controller.getData(),
+                                  factoryBuilder: () => _MyWidgetFactory(),
+                                  onTapUrl: (url) async {
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      return await launchUrl(Uri.parse(url));
+                                    } else {
+                                      return false;
+                                      // throw 'Could not launch $url';
+                                    }
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 15.h),
+                            ],
+                          ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: controller.getIsLoading()
+                    ? Center(
+                        child: SizedBox(
+                          width: 20.w,
+                          height: 20.h,
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : SizedBox.shrink(),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: 70.h,
+                  color: mainColor,
+                  child: PageHeaderWidget(
+                    title: 'gateway'.tr,
+                    canBack: true,
+                    hasNotificationIcon: false,
+                    icon: const SizedBox(),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin:
+                      EdgeInsets.only(right: 17.w, left: 16.w, bottom: 10.h),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      // primary: mainColor,
+                      backgroundColor: mainColor,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'close'.tr,
+                          style: TextStyle(
+                            //fontFamily: FontFamily.inter,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MyWidgetFactory extends WidgetFactory {
+  @override
+  Widget buildGestureDetector(
+    BuildMetadata meta,
+    Widget child,
+    GestureTapCallback onTap,
+  ) {
+    return GestureDetector(
+      child: child,
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+    );
+  }
+
+  @override
+  Future<bool> onTapUrl(String url) {
+    if (url.toLowerCase().endsWith('.pdf')) {
+      // Download the PDF file using flutter_downloader
+
+      Functions.downloadFile(url, true);
+      return Future.value(true);
+    } else {
+      // Launch the URL in the default web browser
+      return launchUrl(Uri.parse(url));
+    }
+  }
+}
