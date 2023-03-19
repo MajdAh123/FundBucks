@@ -44,7 +44,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   )
                 : Padding(
-                    padding: EdgeInsets.only(top: 45.h),
+                    padding: EdgeInsets.only(top: 0.h),
                     child: IndexedStack(
                       index: controller.index.value,
                       children: [

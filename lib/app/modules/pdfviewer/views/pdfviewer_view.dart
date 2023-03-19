@@ -21,38 +21,35 @@ class PdfviewerView extends GetView<PdfviewerController> {
         backgroundColor: mainColor,
       ),
       body: Obx(
-        () => Padding(
-          padding: EdgeInsets.only(top: 40.h),
-          child: Column(
-            children: [
-              Container(
-                height: 70.h,
-                color: mainColor,
-                child: PageHeaderWidget(
-                  title: 'download_bank_details'.tr,
-                  canBack: true,
-                  hasNotificationIcon: false,
-                  icon: const SizedBox(),
-                ),
+        () => Column(
+          children: [
+            Container(
+              height: 90.h,
+              color: mainColor,
+              child: PageHeaderWidget(
+                title: 'download_bank_details'.tr,
+                canBack: true,
+                hasNotificationIcon: false,
+                icon: const SizedBox(),
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(
-                      left: 17.w, right: 16.w, top: 20.h, bottom: 15.h),
-                  child: controller.getIsLoading() ||
-                          controller.getPdfUrlVar().isEmpty
-                      ? Center(
-                          child: SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : PDFViewer(document: controller.getPdfDocument()),
-                ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(
+                    left: 17.w, right: 16.w, top: 20.h, bottom: 15.h),
+                child: controller.getIsLoading() ||
+                        controller.getPdfUrlVar().isEmpty
+                    ? Center(
+                        child: SizedBox(
+                          width: 20.w,
+                          height: 20.h,
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : PDFViewer(document: controller.getPdfDocument()),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

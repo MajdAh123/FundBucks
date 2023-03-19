@@ -54,7 +54,7 @@ class ReportPageView extends GetView<ReportController> {
                 child: Stack(
                   children: [
                     Container(
-                      height: 98.h,
+                      height: 110.h,
                       color: mainColor,
                     ),
                     PageHeaderWidget(title: 'reports'.tr),

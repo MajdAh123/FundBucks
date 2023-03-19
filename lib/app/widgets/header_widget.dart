@@ -12,62 +12,66 @@ class HeaderWidget extends GetView<AccountController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Container(
-                  width: 375.w,
-                  margin: EdgeInsets.only(top: 25.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      HeaderColumnWidget(
-                        title: '${"capital".tr}:',
-                        value:
-                            '\$${Functions.moneyFormat(controller.homeController.getUser()!.balance ?? '')}',
-                        isRight: false,
-                      ),
-                      SizedBox(width: 10.w),
-                      controller.homeController.getUser()!.avatar == null
-                          ? SizedBox()
-                          : CircleAvatar(
-                              radius: 30.r,
-                              backgroundImage: NetworkImage(
-                                Functions.getUserAvatar(
-                                  controller.homeController.getUser()!.avatar ??
-                                      '',
+      () => Padding(
+        padding: EdgeInsets.only(top: 35.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    width: 375.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        HeaderColumnWidget(
+                          title: '${"capital".tr}:',
+                          value:
+                              '\$${Functions.moneyFormat(controller.homeController.getUser()!.balance ?? '')}',
+                          isRight: false,
+                        ),
+                        SizedBox(width: 10.w),
+                        controller.homeController.getUser()!.avatar == null
+                            ? SizedBox()
+                            : CircleAvatar(
+                                radius: 30.r,
+                                backgroundImage: NetworkImage(
+                                  Functions.getUserAvatar(
+                                    controller.homeController
+                                            .getUser()!
+                                            .avatar ??
+                                        '',
+                                  ),
                                 ),
                               ),
-                            ),
-                      SizedBox(width: 10.w),
-                      HeaderColumnWidget(
-                        title: '${"plan_new".tr}:',
-                        value: Functions.getTranslate(
-                            enValue: controller.homeController
-                                    .getUser()!
-                                    .plan
-                                    ?.enName! ??
-                                '',
-                            arValue: controller.homeController
-                                    .getUser()!
-                                    .plan
-                                    ?.name! ??
-                                ''),
-                      ),
-                    ],
+                        SizedBox(width: 10.w),
+                        HeaderColumnWidget(
+                          title: '${"plan_new".tr}:',
+                          value: Functions.getTranslate(
+                              enValue: controller.homeController
+                                      .getUser()!
+                                      .plan
+                                      ?.enName! ??
+                                  '',
+                              arValue: controller.homeController
+                                      .getUser()!
+                                      .plan
+                                      ?.name! ??
+                                  ''),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              // SizedBox(width: 22.w),
-            ],
-          ),
-        ],
+                // SizedBox(width: 22.w),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

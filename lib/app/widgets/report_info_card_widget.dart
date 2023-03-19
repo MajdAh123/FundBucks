@@ -14,7 +14,7 @@ class ReportInfoCardWidget extends GetView<ReportController> {
     return Container(
       height: 120.h,
       width: 314.w,
-      margin: EdgeInsets.only(top: 65.h, left: 30.w, right: 31.w),
+      margin: EdgeInsets.only(top: 90.h, left: 30.w, right: 31.w),
       child: CustomPaint(
         painter: CardWidgetPainter(
           percent: 0.91,

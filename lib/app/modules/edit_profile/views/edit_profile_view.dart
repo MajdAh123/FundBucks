@@ -37,11 +37,14 @@ class EditProfilePage extends GetView<EditProfileController> {
           Container(
             height: 70.h,
             color: mainColor,
-            child: PageHeaderWidget(
-              title: 'profile'.tr,
-              canBack: true,
-              hasNotificationIcon: false,
-              icon: const SizedBox(),
+            child: Center(
+              child: PageHeaderWidget(
+                title: 'profile'.tr,
+                canBack: true,
+                hasNotificationIcon: false,
+                icon: const SizedBox(),
+                paddingTop: 0,
+              ),
             ),
           ),
           Container(

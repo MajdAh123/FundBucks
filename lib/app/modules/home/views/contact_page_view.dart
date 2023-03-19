@@ -33,7 +33,7 @@ class ContactPageView extends GetView<ContactController> {
         child: Stack(
           children: [
             Container(
-              height: 98.h,
+              height: 110.h,
               color: mainColor,
             ),
             PageHeaderWidget(title: 'contact'.tr),
@@ -52,15 +52,12 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        // padding: EdgeInsets.only(top: 70.h, bottom: 0),
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 70.h),
             Container(
               width: 325.w,
               height: 56.h,
-              margin: EdgeInsets.only(left: 25.w, right: 25.w),
+              margin: EdgeInsets.only(left: 25.w, right: 25.w, top: 90.h),
               padding: EdgeInsets.only(left: 3.w, right: 3.w),
               decoration: BoxDecoration(
                 color: Colors.white,

@@ -13,44 +13,41 @@ class SupportCardView extends GetView<SupportCardController> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Obx(
-        () => Padding(
-          padding: EdgeInsets.only(top: 40.h),
-          child: Column(
-            children: [
-              Container(
-                height: 70.h,
-                color: mainColor,
-                child: PageHeaderWidget(
-                  title: 'faq'.tr,
-                  canBack: true,
-                  hasNotificationIcon: false,
-                  icon: const SizedBox(),
-                ),
+        () => Column(
+          children: [
+            Container(
+              height: 90.h,
+              color: mainColor,
+              child: PageHeaderWidget(
+                title: 'faq'.tr,
+                canBack: true,
+                hasNotificationIcon: false,
+                icon: const SizedBox(),
               ),
-              Expanded(
-                  child: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
-                child: controller.getIsLoading()
-                    ? ShimmerListViewWidget()
-                    : controller.checkIfSupportCardListIsEmpty()
-                        ? Center(
-                            child: Text(
-                              'no_faq_found'.tr,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+            ),
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
+              child: controller.getIsLoading()
+                  ? ShimmerListViewWidget()
+                  : controller.checkIfSupportCardListIsEmpty()
+                      ? Center(
+                          child: Text(
+                            'no_faq_found'.tr,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
                             ),
-                          )
-                        : ListView(
-                            shrinkWrap: true,
-                            children: [
-                              SupportCardWidget(),
-                            ],
                           ),
-              )),
-            ],
-          ),
+                        )
+                      : ListView(
+                          shrinkWrap: true,
+                          children: [
+                            SupportCardWidget(),
+                          ],
+                        ),
+            )),
+          ],
         ),
       ),
     );

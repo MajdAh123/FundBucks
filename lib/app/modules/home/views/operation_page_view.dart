@@ -31,7 +31,7 @@ class OperationPageView extends GetView<OperationController> {
         child: Stack(
           children: [
             Container(
-              height: 98.h,
+              height: 110.h,
               color: mainColor,
             ),
             PageHeaderWidget(title: 'transfer'.tr),
@@ -50,7 +50,7 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        margin: EdgeInsets.only(top: 70.h),
+        margin: EdgeInsets.only(top: 90.h),
         child: Column(
           children: [
             Container(

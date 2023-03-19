@@ -55,5 +55,18 @@
 	<string>Post videos to profile</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Saving Photos to your Gallery</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+    	<key>NSExceptionDomains</key>
+    	<dict>
+        	<key>app.fundbucks.com</key>
+        		<dict>
+            		<key>NSExceptionAllowsInsecureHTTPLoads</key>
+            		<true/>
+            		<key>NSIncludesSubdomains</key>
+            		<true/>
+        		</dict>
+    	</dict>
+	</dict>
 </dict>
 </plist>

@@ -11,17 +11,20 @@ class PageHeaderWidget extends GetView<HomeController> {
   final bool canBack;
   final bool hasNotificationIcon;
   final Widget? icon;
+  final double paddingTop;
   const PageHeaderWidget({
     Key? key,
     required this.title,
     this.canBack = false,
     this.hasNotificationIcon = false,
     this.icon,
+    this.paddingTop = 35,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: paddingTop.h),
       margin:
           EdgeInsets.only(top: canBack ? 10.h : 15.h, left: 15.w, right: 17.w),
       child: Row(

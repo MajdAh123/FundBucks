@@ -20,36 +20,33 @@ class PhotoView extends GetView<PhotoController> {
         backgroundColor: mainColor,
       ),
       body: Obx(
-        () => Padding(
-          padding: EdgeInsets.only(top: 40.h),
-          child: Column(
-            children: [
-              Container(
-                height: 70.h,
-                color: mainColor,
-                child: PageHeaderWidget(
-                  title: 'view_photo'.tr,
-                  canBack: true,
-                  hasNotificationIcon: false,
-                  icon: const SizedBox(),
-                ),
+        () => Column(
+          children: [
+            Container(
+              height: 90.h,
+              color: mainColor,
+              child: PageHeaderWidget(
+                title: 'view_photo'.tr,
+                canBack: true,
+                hasNotificationIcon: false,
+                icon: const SizedBox(),
               ),
-              Expanded(
-                  child: InteractiveViewer(
-                child: controller.getPhotoUrl().isEmpty
-                    ? Center(
-                        child: SizedBox(
-                          width: 20.w,
-                          height: 20.h,
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : Image.network(
-                        controller.getPhotoUrl(),
+            ),
+            Expanded(
+                child: InteractiveViewer(
+              child: controller.getPhotoUrl().isEmpty
+                  ? Center(
+                      child: SizedBox(
+                        width: 20.w,
+                        height: 20.h,
+                        child: CircularProgressIndicator(),
                       ),
-              )),
-            ],
-          ),
+                    )
+                  : Image.network(
+                      controller.getPhotoUrl(),
+                    ),
+            )),
+          ],
         ),
       ),
     );

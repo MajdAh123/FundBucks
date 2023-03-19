@@ -78,6 +78,7 @@ class NewCaseFormWidget extends GetView<ContactController> {
                     controller:
                         controller.descriptionTextEditingController.value,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textInputAction: TextInputAction.done,
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,

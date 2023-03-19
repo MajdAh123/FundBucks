@@ -4,8 +4,6 @@ import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/ic.dart';
 
 class ProfilePageView extends GetView<ProfileController> {
   @override
@@ -14,12 +12,12 @@ class ProfilePageView extends GetView<ProfileController> {
       child: Stack(
         children: [
           Container(
-            height: 70.h,
+            height: 90.h,
             color: mainColor,
           ),
           PageHeaderWidget(title: 'profile'.tr),
           Container(
-            margin: EdgeInsets.only(top: 40.h),
+            margin: EdgeInsets.only(top: 70.h),
             child: ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
