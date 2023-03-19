@@ -35,7 +35,6 @@ Future<void> main() async {
     ));
   } else {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
 
   tz.initializeTimeZones();
