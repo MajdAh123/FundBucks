@@ -68,8 +68,8 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
-                        controller.operationController?.reset();
-                        controller.operationController?.forward();
+                        controller.operationController.reset();
+                        controller.operationController.forward();
                         // setState(() {
                         //   // _controller.r;
                         // });
@@ -105,8 +105,8 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
-                        controller.operationController?.reset();
-                        controller.operationController?.forward();
+                        controller.operationController.reset();
+                        controller.operationController.forward();
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -144,7 +144,7 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                 children: [
                   if (controller.getIndex() == 0) ...[
                     FadeTransition(
-                      opacity: controller.animation!,
+                      opacity: controller.animation,
                       child: controller.getIsLoading()
                           ? Center(
                               child: SizedBox(
@@ -157,7 +157,7 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                     ),
                   ] else ...[
                     FadeTransition(
-                      opacity: controller.animation!,
+                      opacity: controller.animation,
                       child: controller.getIsLoading()
                           ? Center(
                               child: SizedBox(

@@ -38,9 +38,9 @@ class OperationController extends GetxController
   final depositFormKey = GlobalKey<FormState>().obs;
   final withdrawFormKey = GlobalKey<FormState>().obs;
 
-  AnimationController? controller = null;
-  AnimationController? operationController = null;
-  Animation<double>? animation = null;
+  late AnimationController controller;
+  late AnimationController operationController;
+  late Animation<double> animation;
 
   var isLoading = false.obs;
   var isImageError = false.obs;
@@ -408,12 +408,12 @@ class OperationController extends GetxController
     animation = Tween(
       begin: 0.0,
       end: 1.0,
-    ).animate(operationController!);
-    operationController!.forward();
-    controller!.addListener(() {
+    ).animate(operationController);
+    operationController.forward();
+    controller.addListener(() {
       selectIndex.value = selectIndex.value == 0 ? 1 : 0;
-      controller!.forward();
-      operationController!.reverse(from: 0);
+      controller.forward();
+      operationController.reverse(from: 0);
     });
   }
 
@@ -441,7 +441,7 @@ class OperationController extends GetxController
 
   @override
   void onClose() {
-    controller?.dispose();
-    operationController?.dispose();
+    controller.dispose();
+    operationController.dispose();
   }
 }

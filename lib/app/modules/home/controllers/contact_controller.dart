@@ -41,9 +41,9 @@ class ContactController extends GetxController
     secondaryColor,
   ];
 
-  AnimationController? controller = null;
-  AnimationController? operationController = null;
-  Animation<double>? animation = null;
+  late AnimationController controller;
+  late AnimationController operationController;
+  late Animation<double> animation;
 
   final globalFormKey = GlobalKey<FormState>().obs;
 
@@ -75,12 +75,12 @@ class ContactController extends GetxController
     animation = Tween(
       begin: 0.0,
       end: 1.0,
-    ).animate(operationController!);
-    operationController!.forward();
-    controller!.addListener(() {
+    ).animate(operationController);
+    operationController.forward();
+    controller.addListener(() {
       selectIndex.value = selectIndex.value == 0 ? 1 : 0;
-      controller!.forward();
-      operationController!.reverse(from: 0);
+      controller.forward();
+      operationController.reverse(from: 0);
     });
     getAllTickets();
   }
@@ -164,7 +164,7 @@ class ContactController extends GetxController
     var ticket = openTicketsList.firstWhere((element) => element.id == id);
 
     // Here check if the message is already in the list
-    
+
     ticket.latestSupportMessage = supportMessage;
     openTicketsList.replaceRange(
       openTicketsList.indexOf(ticket),
@@ -223,7 +223,7 @@ class ContactController extends GetxController
 
   @override
   void onClose() {
-    controller?.dispose();
-    operationController?.dispose();
+    controller.dispose();
+    operationController.dispose();
   }
 }

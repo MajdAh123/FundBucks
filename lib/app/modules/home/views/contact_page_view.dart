@@ -69,8 +69,8 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(0);
-                        controller.operationController!.reset();
-                        controller.operationController!.forward();
+                        controller.operationController.reset();
+                        controller.operationController.forward();
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -103,8 +103,8 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(1);
-                        controller.operationController!.reset();
-                        controller.operationController!.forward();
+                        controller.operationController.reset();
+                        controller.operationController.forward();
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -137,8 +137,8 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(2);
-                        controller.operationController!.reset();
-                        controller.operationController!.forward();
+                        controller.operationController.reset();
+                        controller.operationController.forward();
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -185,7 +185,7 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               ),
                             )
                           : FadeTransition(
-                              opacity: controller.animation!,
+                              opacity: controller.animation,
                               child: const NewCaseFormWidget(),
                             ),
                     ] else if (controller.getIndex() == 1) ...[
@@ -198,7 +198,7 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               ),
                             )
                           : FadeTransition(
-                              opacity: controller.animation!,
+                              opacity: controller.animation,
                               child: controller.openTicketsList.isEmpty
                                   ? Center(
                                       child: Text(
@@ -269,7 +269,7 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               ),
                             )
                           : FadeTransition(
-                              opacity: controller.animation!,
+                              opacity: controller.animation,
                               child: controller.closedTicketsList.isEmpty
                                   ? Center(
                                       child: Text(
