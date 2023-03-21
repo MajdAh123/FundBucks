@@ -10,8 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pusher_client/pusher_client.dart';
 
-class ContactController extends GetxController
-    with GetTickerProviderStateMixin {
+class ContactController extends GetxController {
   final ContactProvider contactProvider;
   ContactController({
     required this.contactProvider,
@@ -41,9 +40,9 @@ class ContactController extends GetxController
     secondaryColor,
   ];
 
-  late AnimationController controller;
-  late AnimationController operationController;
-  late Animation<double> animation;
+  // late AnimationController controller;
+  // late AnimationController operationController;
+  // late Animation<double> animation;
 
   final globalFormKey = GlobalKey<FormState>().obs;
 
@@ -62,26 +61,26 @@ class ContactController extends GetxController
 
   @override
   void onInit() {
-    controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    operationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(operationController);
-    operationController.forward();
-    controller.addListener(() {
-      selectIndex.value = selectIndex.value == 0 ? 1 : 0;
-      controller.forward();
-      operationController.reverse(from: 0);
-    });
-    super.onInit();
+    // controller = AnimationController(
+    //   duration: const Duration(seconds: 2),
+    //   vsync: this,
+    // );
+    // operationController = AnimationController(
+    //   duration: const Duration(milliseconds: 800),
+    //   vsync: this,
+    // );
+    // animation = Tween(
+    //   begin: 0.0,
+    //   end: 1.0,
+    // ).animate(operationController);
+    // operationController.forward();
+    // controller.addListener(() {
+    //   selectIndex.value = selectIndex.value == 0 ? 1 : 0;
+    //   controller.forward();
+    //   operationController.reverse(from: 0);
+    // });
     getAllTickets();
+    super.onInit();
   }
 
   void getAllTickets() {
@@ -221,7 +220,7 @@ class ContactController extends GetxController
 
   @override
   void onClose() {
-    controller.dispose();
-    operationController.dispose();
+    // controller.dispose();
+    // operationController.dispose();
   }
 }

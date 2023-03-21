@@ -12,8 +12,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:colorful_iconify_flutter/icons/logos.dart';
 
-class OperationController extends GetxController
-    with GetTickerProviderStateMixin {
+class OperationController extends GetxController {
   final OperationPageProvider operationPageProvider;
 
   OperationController({
@@ -38,9 +37,9 @@ class OperationController extends GetxController
   final depositFormKey = GlobalKey<FormState>().obs;
   final withdrawFormKey = GlobalKey<FormState>().obs;
 
-  late AnimationController controller;
-  late AnimationController operationController;
-  late Animation<double> animation;
+  // late AnimationController controller;
+  // late AnimationController operationController;
+  // late Animation<double> animation;
 
   var isLoading = false.obs;
   var isImageError = false.obs;
@@ -390,24 +389,24 @@ class OperationController extends GetxController
 
   @override
   void onInit() {
-    controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    operationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(operationController);
-    operationController.forward();
-    controller.addListener(() {
-      selectIndex.value = selectIndex.value == 0 ? 1 : 0;
-      controller.forward();
-      operationController.reverse(from: 0);
-    });
+    // controller = AnimationController(
+    //   duration: const Duration(seconds: 2),
+    //   vsync: this,
+    // );
+    // operationController = AnimationController(
+    //   duration: const Duration(milliseconds: 800),
+    //   vsync: this,
+    // );
+    // animation = Tween(
+    //   begin: 0.0,
+    //   end: 1.0,
+    // ).animate(operationController);
+    // operationController.forward();
+    // controller.addListener(() {
+    //   selectIndex.value = selectIndex.value == 0 ? 1 : 0;
+    //   controller.forward();
+    //   operationController.reverse(from: 0);
+    // });
     getGatewaysList();
     getOperations();
     getPortfolios();
@@ -440,7 +439,7 @@ class OperationController extends GetxController
 
   @override
   void onClose() {
-    controller.dispose();
-    operationController.dispose();
+    // controller.dispose();
+    // operationController.dispose();
   }
 }
