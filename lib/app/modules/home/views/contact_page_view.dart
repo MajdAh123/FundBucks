@@ -72,9 +72,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+                      child: Container(
+                        // duration: const Duration(milliseconds: 300),
+                        // curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -106,9 +106,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+                      child: Container(
+                        // duration: const Duration(milliseconds: 300),
+                        // curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -140,9 +140,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+                      child: Container(
+                        // duration: const Duration(milliseconds: 300),
+                        // curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(

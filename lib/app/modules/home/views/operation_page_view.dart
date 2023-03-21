@@ -72,9 +72,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+                      child: Container(
+                        // duration: const Duration(milliseconds: 300),
+                        // curve: Curves.easeInOut,
                         width: 156.5.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -107,9 +107,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
+                      child: Container(
+                        // duration: const Duration(milliseconds: 300),
+                        // curve: Curves.easeInOut,
                         width: 156.5.w,
                         height: 50.h,
                         decoration: BoxDecoration(
