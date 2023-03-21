@@ -1,0 +1,5 @@
+workflows:
+  build:
+    scripts:
+      - flutter packages get
+      - flutter build ios --no-sound-null-safety
