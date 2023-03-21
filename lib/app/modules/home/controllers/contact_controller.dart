@@ -164,7 +164,6 @@ class ContactController extends GetxController
     var ticket = openTicketsList.firstWhere((element) => element.id == id);
 
     // Here check if the message is already in the list
-
     ticket.latestSupportMessage = supportMessage;
     openTicketsList.replaceRange(
       openTicketsList.indexOf(ticket),

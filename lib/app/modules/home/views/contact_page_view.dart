@@ -69,8 +69,8 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(0);
-                        controller.operationController.reset();
-                        controller.operationController.forward();
+                        controller.operationController!.reset();
+                        controller.operationController!.forward();
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
