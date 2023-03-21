@@ -63,111 +63,114 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        controller.setIndex(0);
-                        controller.operationController.reset();
-                        controller.operationController.forward();
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        width: 102.3.w,
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: controller.getIndex() == 0
-                              ? controller.getColor()
-                              : Colors.transparent,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'new_case'.tr,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
-                              fontWeight: FontWeight.w500,
-                              color: controller.getIndex() == 0
-                                  ? Colors.white
-                                  : unselectedBottomBarItemColor,
+              child: TickerMode(
+                enabled: true,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          controller.setIndex(0);
+                          controller.operationController.reset();
+                          controller.operationController.forward();
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          width: 102.3.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: controller.getIndex() == 0
+                                ? controller.getColor()
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'new_case'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                //fontFamily: FontFamily.inter,
+                                fontWeight: FontWeight.w500,
+                                color: controller.getIndex() == 0
+                                    ? Colors.white
+                                    : unselectedBottomBarItemColor,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        controller.setIndex(1);
-                        controller.operationController.reset();
-                        controller.operationController.forward();
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        width: 102.3.w,
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: controller.getIndex() == 1
-                              ? controller.getColor()
-                              : Colors.transparent,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'open_cases'.tr,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
-                              fontWeight: FontWeight.w500,
-                              color: controller.getIndex() == 1
-                                  ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          controller.setIndex(1);
+                          controller.operationController.reset();
+                          controller.operationController.forward();
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          width: 102.3.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: controller.getIndex() == 1
+                                ? controller.getColor()
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'open_cases'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                //fontFamily: FontFamily.inter,
+                                fontWeight: FontWeight.w500,
+                                color: controller.getIndex() == 1
+                                    ? Colors.white
+                                    : unselectedBottomBarItemColor,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        controller.setIndex(2);
-                        controller.operationController.reset();
-                        controller.operationController.forward();
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        width: 102.3.w,
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: controller.getIndex() == 2
-                              ? controller.getColor()
-                              : Colors.transparent,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'solved_cases'.tr,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
-                              fontWeight: FontWeight.w500,
-                              color: controller.getIndex() == 2
-                                  ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          controller.setIndex(2);
+                          controller.operationController.reset();
+                          controller.operationController.forward();
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          width: 102.3.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: controller.getIndex() == 2
+                                ? controller.getColor()
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'solved_cases'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                //fontFamily: FontFamily.inter,
+                                fontWeight: FontWeight.w500,
+                                color: controller.getIndex() == 2
+                                    ? Colors.white
+                                    : unselectedBottomBarItemColor,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Obx(
