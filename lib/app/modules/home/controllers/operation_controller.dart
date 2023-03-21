@@ -390,12 +390,6 @@ class OperationController extends GetxController
 
   @override
   void onInit() {
-    getGatewaysList();
-    getOperations();
-    getPortfolios();
-    // getDepositDateTextEditingController().text = 'date'.tr;
-    // getDepositDateTextEditingController().text = ;
-    super.onInit();
     controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -404,7 +398,6 @@ class OperationController extends GetxController
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-
     animation = Tween(
       begin: 0.0,
       end: 1.0,
@@ -415,6 +408,12 @@ class OperationController extends GetxController
       controller.forward();
       operationController.reverse(from: 0);
     });
+    getGatewaysList();
+    getOperations();
+    getPortfolios();
+    // getDepositDateTextEditingController().text = 'date'.tr;
+    // getDepositDateTextEditingController().text = ;
+    super.onInit();
   }
 
   Widget getIconBasedOnGateway(code) {

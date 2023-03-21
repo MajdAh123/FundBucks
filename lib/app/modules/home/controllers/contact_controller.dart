@@ -62,7 +62,6 @@ class ContactController extends GetxController
 
   @override
   void onInit() {
-    super.onInit();
     controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -71,7 +70,6 @@ class ContactController extends GetxController
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-
     animation = Tween(
       begin: 0.0,
       end: 1.0,
@@ -82,6 +80,7 @@ class ContactController extends GetxController
       controller.forward();
       operationController.reverse(from: 0);
     });
+    super.onInit();
     getAllTickets();
   }
 
