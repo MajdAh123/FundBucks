@@ -11,7 +11,7 @@ class HeaderNotificationWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        margin: EdgeInsets.only(top: 50.h),
+        margin: EdgeInsets.only(top: 70.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

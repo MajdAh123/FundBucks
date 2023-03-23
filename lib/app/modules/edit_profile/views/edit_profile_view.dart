@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/ic.dart';
 
 import '../controllers/edit_profile_controller.dart';
 
@@ -1533,34 +1535,72 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 ),
                               )
                             : Container(
-                                margin: EdgeInsets.symmetric(horizontal: 17.w),
-                                child: TextButton(
-                                  onPressed:
+                                margin:
+                                    EdgeInsets.fromLTRB(17.w, 12.h, 16.w, 0),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap:
                                       controller.showDeleteAccountReasonDialog,
-                                  style: TextButton.styleFrom(
-                                    minimumSize: const Size.fromHeight(50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    // primary: mainColor,
-                                    backgroundColor: secondaryColor,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'delete_account'.tr,
-                                        style: TextStyle(
-                                          //fontFamily: FontFamily.inter,
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                  child: controller.getIsDeleteLoading()
+                                      ? Center(
+                                          child: SizedBox(
+                                            width: 20.w,
+                                            height: 20.h,
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        )
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Iconify(
+                                              Ic.round_delete_outline,
+                                              size: 20,
+                                              color: secondaryColor,
+                                            ),
+                                            SizedBox(width: 8.w),
+                                            Text(
+                                              'delete_account'.tr,
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: secondaryColor,
+                                                //fontFamily: FontFamily.inter,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
                               ),
+                        //  Container(
+                        //     margin: EdgeInsets.symmetric(horizontal: 17.w),
+                        //     child: TextButton(
+                        //       onPressed:
+                        //           controller.showDeleteAccountReasonDialog,
+                        //       style: TextButton.styleFrom(
+                        //         minimumSize: const Size.fromHeight(50),
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(8),
+                        //         ),
+                        //         // primary: mainColor,
+                        //         backgroundColor: secondaryColor,
+                        //       ),
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.center,
+                        //         children: [
+                        //           Text(
+                        //             'delete_account'.tr,
+                        //             style: TextStyle(
+                        //               //fontFamily: FontFamily.inter,
+                        //               fontSize: 13.sp,
+                        //               fontWeight: FontWeight.w600,
+                        //               color: Colors.white,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
                       ),
                       SizedBox(height: 20.h),
                     ],

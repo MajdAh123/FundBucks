@@ -33,7 +33,7 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 30.h),
+                            SizedBox(height: 40.h),
                             Text(
                               '${'instructions'.tr}:',
                               style: TextStyle(

@@ -13,7 +13,7 @@ class HeaderWidget extends GetView<AccountController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Padding(
-        padding: EdgeInsets.only(top: 35.h),
+        padding: EdgeInsets.only(top: 55.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
