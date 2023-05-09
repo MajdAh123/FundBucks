@@ -1,4 +1,3 @@
-import 'package:app/app/modules/ticket/providers/ticket_provider.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';

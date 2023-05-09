@@ -1,7 +1,7 @@
 class EndPoints {
   static bool isDevelopment = false;
   static String url = 'https://app.fundbucks.com';
-  static String devUrl = 'http://192.168.1.110:8000';
+  static String devUrl = 'http://192.168.1.107:8000';
   static String api = '/api';
   static String apiVersion = '/v1';
 
@@ -49,6 +49,7 @@ class EndPoints {
   static String alerts = '/alerts';
   static String readAlert = '/alert/read';
   static String deleteAccount = '/user/delete-account';
+  static String changeAccountMode = '/user/change-mode';
 
   static String userAvatarUrl() => getBaseUrl() + userAvatar;
 

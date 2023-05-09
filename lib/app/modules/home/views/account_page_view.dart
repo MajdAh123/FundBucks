@@ -45,11 +45,12 @@ class AccountPageView extends GetView<AccountController> {
             ),
             SizedBox(height: 38.h),
             const WalletInfoCardWidget(),
+            // SizedBox(height: 15.h),
             const StockWatcherWidget(),
             Container(
               width: 342.w,
               // height: 210.h,
-              margin: EdgeInsets.only(top: 420.h, left: 17.w, right: 16.w),
+              margin: EdgeInsets.only(top: 440.h, left: 17.w, right: 16.w),
               padding: EdgeInsets.only(top: 11.h, left: 12.w, right: 12.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -100,7 +101,7 @@ class AccountPageView extends GetView<AccountController> {
               width: 342.w,
               // height: 135.h,
               margin: EdgeInsets.only(
-                  top: 650.h, left: 17.w, right: 16.w, bottom: 20.h),
+                  top: 670.h, left: 17.w, right: 16.w, bottom: 20.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

@@ -231,6 +231,17 @@ class LocaleKeys {
   static const not_interested = 'not_interested';
   static const not_ready_yet = 'not_ready_yet';
   static const unsatisfactory_service = 'unsatisfactory_service';
+  static const enable_test_mode = 'enable_test_mode';
+  static const disable_test_mode = 'disable_test_mode';
+  static const app_name = 'app_name';
+  static const rate_us = 'rate_us';
+  static const visit_our_website = 'visit_our_website';
+  static const email_us = 'email_us';
+  static const test_mode = 'test_mode';
+  static const must_disable_test_mode = 'must_disable_test_mode';
+  static const test_mode_label = 'test_mode_label';
+  static const alert_will_enable_test_mode = 'alert_will_enable_test_mode';
+  static const alert_will_disable_test_mode = 'alert_will_disable_test_mode';
 }
 
 class Locales {
@@ -460,6 +471,19 @@ class Locales {
     'not_interested': 'غير مهتم',
     'not_ready_yet': 'غير جاهز حالياً للمشاركة',
     'unsatisfactory_service': 'خدمة غير مرضية',
+    'enable_test_mode': 'تم تفعيل الوضع التجريبي بنجاح.',
+    'disable_test_mode': 'تم تعطيل الوضع التجريبي بنجاح.',
+    'app_name': 'فندبكس',
+    'rate_us': 'قيَمنا',
+    'visit_our_website': 'الموقع الإلكتروني',
+    'email_us': 'تواصل معنا',
+    'test_mode': 'تجريبي',
+    'must_disable_test_mode': 'للقيام بالعملية يجب عليك تعطيل الوضع التجريبي',
+    'test_mode_label': 'الوضع التجريبي',
+    'alert_will_enable_test_mode':
+        'سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000\$، هل أنت متأكد ؟',
+    'alert_will_disable_test_mode':
+        'هل أنت متأكد من إلغاء الوضع التجريبي للحساب ؟',
   };
   static const en = {
     'sign_in_to_you_account': 'Sign in to Your Account',
@@ -523,7 +547,7 @@ class Locales {
     'notifications': 'Notifications',
     'settings': 'Settings',
     'faq': 'FAQ',
-    'about': 'About',
+    'about': 'About us',
     'terms_and_conditions': 'Terms and Conditions',
     'privacy_policy': 'Privacy Policy',
     'language': 'Language',
@@ -689,5 +713,18 @@ class Locales {
     'not_interested': 'Not interested',
     'not_ready_yet': 'Not yet ready to share',
     'unsatisfactory_service': 'Unsatisfactory service',
+    'enable_test_mode': 'Test mode enabled successfully.',
+    'disable_test_mode': 'Test mode has been successfully disabled.',
+    'app_name': 'FundBucks',
+    'rate_us': 'Rate Us',
+    'visit_our_website': 'Our Website',
+    'email_us': 'Contact Us',
+    'test_mode': 'Test',
+    'must_disable_test_mode': 'Must disable test mode to do current operation.',
+    'test_mode_label': 'Test Mode',
+    'alert_will_enable_test_mode':
+        'A test mode investment account of \$10,000 will be activated, Are you sure?',
+    'alert_will_disable_test_mode':
+        'Are you sure to cancel the test mode of the account?',
   };
 }

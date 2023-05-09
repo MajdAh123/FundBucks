@@ -9,6 +9,7 @@ import 'package:app/app/modules/home/providers/auth_provider.dart';
 
 class ProfileController extends GetxController {
   final AuthProvider authProvider;
+
   ProfileController({
     required this.authProvider,
   });
@@ -17,14 +18,10 @@ class ProfileController extends GetxController {
 
   var isLoading = false.obs;
 
-
   final globalFormKey = GlobalKey<FormState>().obs;
-
 
   void setIsLoading(value) => isLoading.value = value;
   bool getIsLoading() => isLoading.value;
-
-
 
   final homeController = Get.find<HomeController>();
 
@@ -32,6 +29,13 @@ class ProfileController extends GetxController {
     return Functions.fullname(homeController.getUser()?.firstname,
         homeController.getUser()?.lastname);
   }
+
+  bool getIsTestAccount() =>
+      homeController.getUser()?.type?.compareTo('test') == 0;
+
+  bool getIfUserCanHaveTestMode() =>
+      num.parse(homeController.getUser()?.balance ?? '0') == 0 ||
+      homeController.getUser()?.type?.compareTo('test') == 0;
 
   @override
   void onInit() {
@@ -53,7 +57,145 @@ class ProfileController extends GetxController {
     });
   }
 
- 
+  void changeAccountMode() {
+    setIsLoading(true);
+    authProvider.changeAccountMode().then((value) {
+      setIsLoading(false);
+      if (value.statusCode == 200) {
+        homeController.getUserApi();
+        final getIsTestMode =
+            homeController.getUser()?.type?.compareTo('test') == 0;
+        Get.showSnackbar(GetSnackBar(
+          title: 'success'.tr,
+          message:
+              !getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
+          duration: const Duration(seconds: defaultSnackbarDuration),
+        ));
+        print('changed mode');
+      }
+    });
+  }
+
+  void showTestModeDialog() {
+    Get.dialog(
+      barrierDismissible: true,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.h),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Material(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.h),
+                      Text(
+                        'alert'.tr,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 15.h),
+                      Text(
+                        getIsTestAccount()
+                            ? 'alert_will_disable_test_mode'.tr
+                            : 'alert_will_enable_test_mode'.tr,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30.h),
+                      //Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: TextButton(
+                                onPressed: () {
+                                  if (Get.isDialogOpen ?? false) {
+                                    // Get.back(closeOverlays: true);
+                                    Get.close(1);
+                                  }
+                                  changeAccountMode();
+                                },
+                                style: TextButton.styleFrom(
+                                  // minimumSize: const Size.fromHeight(50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  // primary: mainColor,
+                                  backgroundColor: mainColor,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'agree'.tr,
+                                    style: TextStyle(
+                                      //fontFamily: FontFamily.inter,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Container(
+                              child: TextButton(
+                                onPressed: () {
+                                  if (Get.isDialogOpen ?? false) {
+                                    // Get.back(closeOverlays: true);
+                                    Get.close(1);
+                                  }
+                                },
+                                style: TextButton.styleFrom(
+                                  // minimumSize:
+                                  //     const Size.fromHeight(50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  // primary: mainColor,
+                                  backgroundColor: Colors.white,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'close'.tr,
+                                    style: TextStyle(
+                                      //fontFamily: FontFamily.inter,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: mainColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void onReady() {

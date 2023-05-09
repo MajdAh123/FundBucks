@@ -19,7 +19,7 @@ class StockWatcherWidget extends GetView<AccountController> {
           width: 342.w,
           height: 100.h,
           margin: EdgeInsets.only(
-              top: 300.h, left: 16.w, right: 15.w, bottom: 30.h),
+              top: 320.h, left: 16.w, right: 15.w, bottom: 30.h),
           padding: EdgeInsets.only(top: 11.h, left: 12.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

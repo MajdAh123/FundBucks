@@ -37,6 +37,7 @@ class User {
   Plan? plan;
   Country? country;
   Currency? currency;
+  String? type;
 
   User({
     this.id,
@@ -73,11 +74,12 @@ class User {
     this.plan,
     this.country,
     this.currency,
+    this.type,
   });
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, email: $email, avatar: $avatar, firstname: $firstname, lastname: $lastname, gender: $gender, address: $address, city: $city, bankUsername: $bankUsername, bankName: $bankName, bankUserId: $bankUserId, iban: $iban, emailVerifiedAt: $emailVerifiedAt, balance: $balance, differencePercent: $differencePercent, returnPercent: $returnPercent, returnValue: $returnValue, currentValue: $currentValue, mobile: $mobile, isBanned: $isBanned, verCod: $verCod, verCodeSendAt: $verCodeSendAt, isBankVer: $isBankVer, pauseCalc: $pauseCalc, isAdmin: $isAdmin, fcmToken: $fcmToken, createdAt: $createdAt, updatedAt: $updatedAt, planId: $planId, countryId: $countryId, plan: $plan, country: $country, currency: $currency)';
+    return 'User(id: $id, username: $username, email: $email, avatar: $avatar, type: $type, firstname: $firstname, lastname: $lastname, gender: $gender, address: $address, city: $city, bankUsername: $bankUsername, bankName: $bankName, bankUserId: $bankUserId, iban: $iban, emailVerifiedAt: $emailVerifiedAt, balance: $balance, differencePercent: $differencePercent, returnPercent: $returnPercent, returnValue: $returnValue, currentValue: $currentValue, mobile: $mobile, isBanned: $isBanned, verCod: $verCod, verCodeSendAt: $verCodeSendAt, isBankVer: $isBankVer, pauseCalc: $pauseCalc, isAdmin: $isAdmin, fcmToken: $fcmToken, createdAt: $createdAt, updatedAt: $updatedAt, planId: $planId, countryId: $countryId, plan: $plan, country: $country, currency: $currency)';
   }
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -92,6 +94,7 @@ class User {
         city: json['city'] as dynamic,
         bankUsername: json['bank_username'] as dynamic,
         bankName: json['bank_name'] as dynamic,
+        type: json['type'] as dynamic,
         bankUserId: json['bank_user_id'] as dynamic,
         iban: json['iban'] as dynamic,
         emailVerifiedAt: json['email_verified_at'] == null
@@ -140,6 +143,7 @@ class User {
         'bank_name': bankName,
         'bank_user_id': bankUserId,
         'iban': iban,
+        'type': type,
         'email_verified_at': emailVerifiedAt?.toIso8601String(),
         'balance': balance,
         'difference_percent': differencePercent,

@@ -27,4 +27,5 @@ class AuthProvider extends BaseGetConnect {
   Future<Response> readAlert(id) =>
       get(EndPoints.readAlert + '/${id.toString()}');
 
+  Future<Response> changeAccountMode() => get(EndPoints.changeAccountMode);
 }

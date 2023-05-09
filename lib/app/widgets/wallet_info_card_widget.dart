@@ -33,22 +33,40 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                   height: 20.h,
                   margin: EdgeInsets.only(bottom: 10.h),
                   decoration: BoxDecoration(
-                    color: controller.homeController.getUser()!.isBankVer == 0
-                        ? inActiveBackgroundColor
-                        : activeBackgroundColor,
+                    color: controller.homeController
+                                .getUser()!
+                                .type
+                                ?.compareTo('test') ==
+                            0
+                        ? secondaryColor
+                        : controller.homeController.getUser()!.isBankVer == 0
+                            ? inActiveBackgroundColor
+                            : activeBackgroundColor,
                     borderRadius: BorderRadius.circular(8.5.h),
                   ),
                   child: Center(
                     child: Text(
-                      controller.homeController.getUser()!.isBankVer == 0
-                          ? 'inactive'.tr
-                          : 'active'.tr,
+                      controller.homeController
+                                  .getUser()!
+                                  .type
+                                  ?.compareTo('test') ==
+                              0
+                          ? 'test_mode'.tr
+                          : controller.homeController.getUser()!.isBankVer == 0
+                              ? 'inactive'.tr
+                              : 'active'.tr,
                       style: TextStyle(
                         fontSize: 9.sp,
                         //fontFamily: FontFamily.inter,
                         fontWeight: FontWeight.w400,
-                        color:
-                            controller.homeController.getUser()!.isBankVer == 0
+                        color: controller.homeController
+                                    .getUser()!
+                                    .type
+                                    ?.compareTo('test') ==
+                                0
+                            ? Colors.white
+                            : controller.homeController.getUser()!.isBankVer ==
+                                    0
                                 ? inActiveTextColor
                                 : activeTextColor,
                       ),

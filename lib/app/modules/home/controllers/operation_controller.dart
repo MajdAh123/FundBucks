@@ -121,7 +121,14 @@ class OperationController extends GetxController {
       return;
     }
     if (getDepositFormKey().currentState.validate()) {
-      // print(getDepositCurrencySelect()?.compareTo('default') == 0);
+      if (homeController.getUser()?.type?.compareTo('test') == 0) {
+        Get.showSnackbar(GetSnackBar(
+          title: 'error'.tr,
+          message: 'must_disable_test_mode'.tr,
+          duration: const Duration(seconds: defaultSnackbarDuration),
+        ));
+        return;
+      }
       sendDepositRequest();
     }
   }
@@ -141,6 +148,14 @@ class OperationController extends GetxController {
   void onWithdrawSendButtonClick() {
     if (getWithdrawFormKey().currentState.validate() &&
         checkIfBankingDetailsExists()) {
+      if (homeController.getUser()?.type?.compareTo('test') == 0) {
+        Get.showSnackbar(GetSnackBar(
+          title: 'error'.tr,
+          message: 'must_disable_test_mode'.tr,
+          duration: const Duration(seconds: defaultSnackbarDuration),
+        ));
+        return;
+      }
       sendWithdrawRequest();
     }
   }

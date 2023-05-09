@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:app/app/modules/ticket/controllers/ticket_controller.dart';
 import 'package:app/app/utils/utils.dart';

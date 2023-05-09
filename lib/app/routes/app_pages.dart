@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../middlewares/auth_middleware.dart';
+import '../modules/about_us/bindings/about_us_binding.dart';
+import '../modules/about_us/views/about_us_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
 import '../modules/create_account/views/create_account_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
@@ -156,6 +158,11 @@ class AppPages {
       name: _Paths.PHOTO,
       page: () => PhotoView(),
       binding: PhotoBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT_US,
+      page: () => const AboutUsView(),
+      binding: AboutUsBinding(),
     ),
   ];
 }

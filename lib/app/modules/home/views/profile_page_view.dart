@@ -23,6 +23,93 @@ class ProfilePageView extends GetView<ProfileController> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 const ProfileAccountInformationWidget(),
+                if (controller.getIfUserCanHaveTestMode()) ...[
+                  SizedBox(height: 15.h),
+                  SwitchListTile.adaptive(
+                    // shape: ShapeBorder,
+                    value: controller.getIsTestAccount(),
+                    onChanged: (value) {
+                      controller.showTestModeDialog();
+                    },
+                    title: Text(
+                      'test_mode_label'.tr,
+                      style: TextStyle(
+                        //fontFamily: FontFamily.inter,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    activeColor: secondaryColor,
+                  ),
+                ],
+                SizedBox(height: 15.h),
+
+                // Container(
+                //   margin: EdgeInsets.only(
+                //     bottom: 15.h,
+                //     right: Get.locale?.languageCode.compareTo('ar') == 0
+                //         ? (MediaQuery.of(context).size.width / 2).w
+                //         : 0,
+                //     left: Get.locale?.languageCode.compareTo('ar') != 0
+                //         ? (MediaQuery.of(context).size.width / 2).w
+                //         : 0,
+                //   ),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       TextButton(
+                //         onPressed: () {
+                //           // controller.onContinueButtonClick();
+                //         },
+                //         style: TextButton.styleFrom(
+                //           minimumSize: const Size.fromHeight(40),
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.only(
+                //               topRight:
+                //                   Get.locale?.languageCode.compareTo('ar') == 0
+                //                       ? Radius.circular(18)
+                //                       : Radius.zero,
+                //               bottomRight:
+                //                   Get.locale?.languageCode.compareTo('ar') == 0
+                //                       ? Radius.circular(18)
+                //                       : Radius.zero,
+                //               topLeft:
+                //                   Get.locale?.languageCode.compareTo('ar') != 0
+                //                       ? Radius.circular(18)
+                //                       : Radius.zero,
+                //               bottomLeft:
+                //                   Get.locale?.languageCode.compareTo('ar') != 0
+                //                       ? Radius.circular(18)
+                //                       : Radius.zero,
+                //             ),
+                //           ),
+                //           // primary: mainColor,
+                //           backgroundColor: controller.getIsTestAccount()
+                //               ? mainColor
+                //               : secondaryColor,
+                //         ),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           mainAxisSize: MainAxisSize.min,
+                //           children: [
+                //             Text(
+                //               controller.getIsTestAccount()
+                //                   ? 'disable_test_mode'.tr
+                //                   : 'enable_test_mode'.tr,
+                //               style: TextStyle(
+                //                 //fontFamily: FontFamily.inter,
+                //                 fontSize: 11.sp,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Colors.white,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 // PortfolioInformationWidget(),
                 OptionItemWidget(
                     title: 'account_information'.tr,
@@ -48,18 +135,19 @@ class ProfilePageView extends GetView<ProfileController> {
                     title: 'faq'.tr, onTap: () => Get.toNamed('/support-card')),
                 // Divider(height: 0, color: Colors.grey[400]),
                 OptionItemWidget(
-                    title: 'about'.tr,
-                    onTap: () => Get.toNamed(
-                          '/webview',
-                          arguments: ['about'.tr, 2],
-                        )),
+                  title: 'about'.tr,
+                  onTap: () => Get.toNamed(
+                    '/about-us',
+                  ),
+                ),
                 // Divider(height: 0, color: Colors.grey[400]),
                 OptionItemWidget(
-                    title: 'terms_and_conditions'.tr,
-                    onTap: () => Get.toNamed(
-                          '/webview',
-                          arguments: ['terms_and_conditions'.tr, 1],
-                        )),
+                  title: 'terms_and_conditions'.tr,
+                  onTap: () => Get.toNamed(
+                    '/webview',
+                    arguments: ['terms_and_conditions'.tr, 1],
+                  ),
+                ),
                 // Divider(height: 0, color: Colors.grey[400]),
                 OptionItemWidget(
                   title: 'privacy_policy'.tr,

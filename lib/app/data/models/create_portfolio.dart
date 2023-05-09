@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 
 import 'currency.dart';
 import 'plan.dart';

@@ -216,5 +216,16 @@
   "other_reason_here": "يرجى التوضيح هنا...",
   "not_interested": "غير مهتم",
   "not_ready_yet": "غير جاهز حالياً للمشاركة",
-  "unsatisfactory_service": "خدمة غير مرضية"
+  "unsatisfactory_service": "خدمة غير مرضية",
+  "enable_test_mode": "تم تفعيل الوضع التجريبي بنجاح.",
+  "disable_test_mode": "تم تعطيل الوضع التجريبي بنجاح.",
+  "app_name": "فندبكس",
+  "rate_us": "قيَمنا",
+  "visit_our_website": "الموقع الإلكتروني",
+  "email_us": "تواصل معنا",
+  "test_mode": "تجريبي",
+  "must_disable_test_mode": "للقيام بالعملية يجب عليك تعطيل الوضع التجريبي",
+  "test_mode_label": "الوضع التجريبي",
+  "alert_will_enable_test_mode": "سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000$، هل أنت متأكد ؟",
+  "alert_will_disable_test_mode": "هل أنت متأكد من إلغاء الوضع التجريبي للحساب ؟"
 }
