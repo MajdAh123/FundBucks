@@ -59,6 +59,7 @@ class ProfileController extends GetxController {
 
   void changeAccountMode() {
     setIsLoading(true);
+    homeController.setIsLoading(true);
     authProvider.changeAccountMode().then((value) {
       setIsLoading(false);
       if (value.statusCode == 200) {
@@ -68,7 +69,7 @@ class ProfileController extends GetxController {
         Get.showSnackbar(GetSnackBar(
           title: 'success'.tr,
           message:
-              !getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
+              getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
           duration: const Duration(seconds: defaultSnackbarDuration),
         ));
         print('changed mode');
