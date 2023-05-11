@@ -440,6 +440,12 @@ class HomeController extends GetxController {
       }
     });
 
+    channelNew.bind("user.wallet.updated", (PusherEvent? event) {
+      if (event?.data != null) {
+        _handleNewUserWalletUpdate(event!.data);
+      }
+    });
+
     channelNew.bind("chart.updated", (PusherEvent? event) {
       if (event?.data != null) {
         print(event?.data);
@@ -549,6 +555,10 @@ class HomeController extends GetxController {
       ));
       Get.offNamedUntil('/login', ModalRoute.withName('newlogin'));
     }
+  }
+
+  void _handleNewUserWalletUpdate(data) {
+    final json = jsonDecode(data);
 
     var newJson = jsonEncode({
       'chart': null,
