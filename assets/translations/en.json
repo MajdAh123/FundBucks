@@ -217,15 +217,15 @@
   "not_interested": "Not interested",
   "not_ready_yet": "Not yet ready to share",
   "unsatisfactory_service": "Unsatisfactory service",
-  "enable_test_mode": "Test mode enabled successfully.",
-  "disable_test_mode": "Test mode has been successfully disabled.",
+  "enable_test_mode": "Demo mode enabled successfully.",
+  "disable_test_mode": "Demo mode has been successfully disabled.",
   "app_name": "FundBucks",
   "rate_us": "Rate Us",
   "visit_our_website": "Our Website",
   "email_us": "Contact Us",
-  "test_mode": "Test",
-  "must_disable_test_mode": "Must disable test mode to do current operation.",
-  "test_mode_label": "Test Mode",
-  "alert_will_enable_test_mode": "A test mode investment account of $10,000 will be activated, Are you sure?",
-  "alert_will_disable_test_mode": "Are you sure to cancel the test mode of the account?"
+  "test_mode": "Demo",
+  "must_disable_test_mode": "Must disable demo mode to do current operation.",
+  "test_mode_label": "Demo Mode",
+  "alert_will_enable_test_mode": "A demo mode investment account of $10,000 will be activated, Are you sure?",
+  "alert_will_disable_test_mode": "Are you sure to cancel the demo mode of the account?"
 }
