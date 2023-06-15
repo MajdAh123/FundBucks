@@ -16,7 +16,7 @@ dependencies:
   dotted_border: 2.0.0+3
   downloads_path_provider_28: 0.1.2
   easy_refresh: 3.3.0+1
-  firebase_analytics: 
+  # firebase_analytics: 
   firebase_core: 2.13.1
   firebase_messaging: 14.6.1
   fl_chart: 0.55.2
