@@ -1,14 +1,10 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:app/app/data/models/models.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/portfolio_information_controller.dart';
@@ -17,7 +13,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 480.h,
         title: '2 / 3',
@@ -28,8 +26,8 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
             () => controller.getIsLoading()
                 ? Center(
                     child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 30.w, vertical: 30.w),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.w),
                     child: SizedBox(
                       width: 20.w,
                       height: 20.h,
@@ -46,7 +44,11 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                           // height: 52.h,
                           padding: EdgeInsets.symmetric(horizontal: 15.w),
                           decoration: BoxDecoration(
-                            border: Border.all(color: strokeColor),
+                            border: Border.all(
+                              color: ThemeController.to.getIsDarkMode
+                                  ? greyColor.withOpacity(.39)
+                                  : strokeColor,
+                            ),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -59,10 +61,12 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                               decoration: InputDecoration(
                                 constraints: BoxConstraints(minHeight: 52.h),
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 // errorBorder: UnderlineInputBorder(
                                 //     borderSide: BorderSide(width: 0)),
@@ -78,7 +82,8 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                 return null;
                               },
                               icon: const Icon(
-                                  Icons.keyboard_arrow_down_outlined),
+                                Icons.keyboard_arrow_down_outlined,
+                              ),
                               hint: Text(
                                 'portfolio'.tr,
                                 style: TextStyle(
@@ -89,19 +94,23 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                       : FontFamily.inter,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: textFieldColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : textFieldColor,
                                 ),
                               ),
                               style: TextStyle(
                                 //fontFamily: FontFamily.inter,
-                                fontFamily: Get.locale?.languageCode
-                                            .compareTo('ar') ==
-                                        0
-                                    ? FontFamily.tajawal
-                                    : FontFamily.inter,
+                                fontFamily:
+                                    Get.locale?.languageCode.compareTo('ar') ==
+                                            0
+                                        ? FontFamily.tajawal
+                                        : FontFamily.inter,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
-                                color: textColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : textColor,
                               ),
                               isDense: true,
                               isExpanded: true,
@@ -115,8 +124,7 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                             arValue: e.name!),
                                       ),
                                       value: Functions.getTranslate(
-                                          enValue: e.enName!,
-                                          arValue: e.name!),
+                                          enValue: e.enName!, arValue: e.name!),
                                     ),
                                   )
                                   .toList(),
@@ -160,7 +168,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -203,7 +213,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -244,7 +256,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -285,7 +299,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -308,7 +324,11 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                           // height: 52.h,
                           padding: EdgeInsets.symmetric(horizontal: 15.w),
                           decoration: BoxDecoration(
-                            border: Border.all(color: strokeColor),
+                            border: Border.all(
+                              color: ThemeController.to.getIsDarkMode
+                                  ? greyColor.withOpacity(.39)
+                                  : strokeColor,
+                            ),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -334,10 +354,12 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                 ),
                                 constraints: BoxConstraints(minHeight: 52.h),
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 // errorBorder: UnderlineInputBorder(
                                 //     borderSide: BorderSide(width: 0)),
@@ -364,19 +386,23 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                                       : FontFamily.inter,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
-                                  // color: textFieldColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : textFieldColor,
                                 ),
                               ),
                               style: TextStyle(
                                 //fontFamily: FontFamily.inter,
-                                fontFamily: Get.locale?.languageCode
-                                            .compareTo('ar') ==
-                                        0
-                                    ? FontFamily.tajawal
-                                    : FontFamily.inter,
+                                fontFamily:
+                                    Get.locale?.languageCode.compareTo('ar') ==
+                                            0
+                                        ? FontFamily.tajawal
+                                        : FontFamily.inter,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
-                                color: textColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : textColor,
                               ),
                               isDense: true,
                               isExpanded: true,
@@ -414,7 +440,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             // primary: mainColor,
-                            backgroundColor: mainColor,
+                            backgroundColor: ThemeController.to.getIsDarkMode
+                                ? mainColorDarkTheme
+                                : mainColor,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

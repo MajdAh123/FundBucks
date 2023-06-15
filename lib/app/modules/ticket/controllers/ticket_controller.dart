@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/contact_controller.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/modules/ticket/providers/ticket_provider.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
@@ -239,7 +240,9 @@ class TicketController extends GetxController {
     Get.bottomSheet(
       Container(
           // height: 100.h,
-          color: Colors.white,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -315,115 +318,163 @@ class TicketController extends GetxController {
 
   void showDetailsDialog() {
     // Get.close(1);
-    Get.defaultDialog(
-      title: "ticket_details".tr,
-      backgroundColor: Colors.white,
-      titleStyle: TextStyle(fontSize: 14.sp),
-      titlePadding: EdgeInsets.symmetric(vertical: 10.h),
-      radius: 10.r,
-      middleText: 'awd',
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'subject'.tr + ':',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 5.w),
-              Text(
-                getTicketTitle(),
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-                maxLines: 4,
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'description'.tr + ':',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 5.w),
-              Expanded(
-                child: Text(
-                  getTicketDesc(),
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w500,
+    Get.dialog(
+      barrierDismissible: true,
+      Obx(
+        () => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorDarkTheme
+                        : containerColorLightTheme,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: ThemeController.to.getIsDarkMode
+                          ? greyColor.withOpacity(.39)
+                          : greyColor,
+                    ),
                   ),
-                  maxLines: 4,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'date'.tr + ':',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(width: 5.w),
-              Expanded(
-                child: Text(
-                  getTicketDate(),
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w500,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 10.h),
+                        Text(
+                          'ticket_details'.tr,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 15.h),
+                        // Here is the reasons why the account is being deleted
+                        Row(
+                          children: [
+                            Text(
+                              'subject'.tr + ':',
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 5.w),
+                            Text(
+                              getTicketTitle(),
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 4,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'description'.tr + ':',
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 5.w),
+                            Expanded(
+                              child: Text(
+                                getTicketDesc(),
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                maxLines: 4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'date'.tr + ':',
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 5.w),
+                            Expanded(
+                              child: Text(
+                                getTicketDate(),
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                maxLines: 4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30.h),
+                        //Buttons
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Get.clo(1);
+                                    if (Get.isDialogOpen ?? false) {
+                                      Get.close(1);
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
+                                    // minimumSize:
+                                    //     const Size.fromHeight(50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    // primary: mainColor,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'close'.tr,
+                                      style: TextStyle(
+                                        //fontFamily: FontFamily.inter,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5.w),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  maxLines: 4,
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
-      cancel: GestureDetector(
-        onTap: () {
-          // Get.close(1);
-          // Get.back(closeOverlays: true);
-        },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 36.w),
-          child: TextButton(
-            onPressed: () {
-              Get.close(1);
-            },
-            style: TextButton.styleFrom(
-              minimumSize: Size.fromHeight(13.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              // primary: mainColor,
-              backgroundColor: mainColor,
             ),
-            child: Text(
-              'close'.tr,
-              style: TextStyle(
-                //fontFamily: FontFamily.inter,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          ],
         ),
       ),
     );

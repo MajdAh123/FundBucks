@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,17 @@ class NotificationView extends GetView<NotificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               // padding: EdgeInsets.only(top:),
               child: PageHeaderWidget(
                 title: 'notifications'.tr,
@@ -56,7 +61,10 @@ class NotificationView extends GetView<NotificationController> {
                                           'mark_all_as_read'.tr,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: mainColor,
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? bottomBarItemColorDarkTheme
+                                                : mainColor,
                                             //fontFamily: FontFamily.inter,
                                             fontSize: 13.sp,
                                           ),
@@ -77,7 +85,7 @@ class NotificationView extends GetView<NotificationController> {
                                     isRead: e.read == 1,
                                     onTap: () => e.read == 1
                                         ? null
-                                        : controller.readNotification(e.id),
+                                        : controller.readNotification(e.id, e.title),
                                     onDeleteTap: () =>
                                         controller.deleteNotification(e.id),
                                   ),

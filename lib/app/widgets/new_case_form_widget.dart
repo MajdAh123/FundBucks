@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/contact_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +44,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                       errorMaxLines: 2,
                       hintText: 'subject'.tr,
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: ThemeController.to.getIsDarkMode
+                          ? containerColorDarkTheme
+                          : containerColorLightTheme,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
@@ -54,7 +57,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -62,6 +67,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -112,7 +120,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                         ),
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: ThemeController.to.getIsDarkMode
+                          ? containerColorDarkTheme
+                          : containerColorLightTheme,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
@@ -123,7 +133,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -131,6 +143,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -152,7 +167,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         // primary: mainColor,
-                        backgroundColor: mainColor,
+                        backgroundColor: ThemeController.to.getIsDarkMode
+                            ? mainColorDarkTheme
+                            : mainColor,
                       ),
                       child: Text(
                         'create'.tr,
@@ -186,7 +203,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: mainColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor,
                             ),
                           ),
                         ),

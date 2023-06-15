@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,17 @@ class WebviewView extends GetView<WebviewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               child: PageHeaderWidget(
                 title: controller.getPageTitle(),
                 canBack: true,

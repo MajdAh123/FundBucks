@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
@@ -6,7 +7,7 @@ class ShimmerListViewWidget extends StatelessWidget {
   final double _containerHeight = 20.h;
   final double _spaceHeight = 10.h;
   final Color _shimmerColor = Colors.grey[200]!;
-  final Color _shimmerColorDark = Colors.grey[500]!;
+  final Color _shimmerColorDark = Colors.grey[800]!;
   ShimmerListViewWidget({super.key});
 
   @override
@@ -22,7 +23,9 @@ class ShimmerListViewWidget extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0.h),
               child: Shimmer.fromColors(
                 highlightColor: Colors.white,
-                baseColor: _shimmerColor,
+                baseColor: ThemeController.to.getIsDarkMode
+                    ? _shimmerColorDark
+                    : _shimmerColor,
                 period: const Duration(milliseconds: 1000),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +35,9 @@ class ShimmerListViewWidget extends StatelessWidget {
                       padding: EdgeInsets.only(left: 12.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: _shimmerColor,
+                        color: ThemeController.to.getIsDarkMode
+                            ? _shimmerColorDark
+                            : _shimmerColor,
                       ),
                       height: 110.h,
                       child: Container(
@@ -55,7 +60,9 @@ class ShimmerListViewWidget extends StatelessWidget {
                             padding: EdgeInsets.only(left: 12.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: _shimmerColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? _shimmerColorDark
+                                  : _shimmerColor,
                             ),
                             height: _containerHeight,
                             child: Container(
@@ -73,7 +80,9 @@ class ShimmerListViewWidget extends StatelessWidget {
                             padding: EdgeInsets.only(left: 12.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: _shimmerColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? _shimmerColorDark
+                                  : _shimmerColor,
                             ),
                             height: _containerHeight,
                             child: Container(
@@ -91,7 +100,9 @@ class ShimmerListViewWidget extends StatelessWidget {
                             padding: EdgeInsets.only(left: 12.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: _shimmerColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? _shimmerColorDark
+                                  : _shimmerColor,
                             ),
                             height: _containerHeight,
                             width: 100.w,
@@ -112,7 +123,9 @@ class ShimmerListViewWidget extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(top: 20.h),
-              color: _shimmerColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? _shimmerColorDark
+                  : _shimmerColor,
               height: 1.h,
             ),
           ],

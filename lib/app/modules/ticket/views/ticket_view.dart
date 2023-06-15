@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,17 @@ class TicketView extends GetView<TicketController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // persistentFooterButtons: [],
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               child: PageHeaderWidget(
                 title: controller.getTicketUniqueId(),
                 canBack: true,
@@ -52,7 +57,9 @@ class TicketView extends GetView<TicketController> {
                       );
                     }).toList();
                   },
-                  color: Colors.white,
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
                   icon: GestureDetector(
                     // onTap: () {
                     //   controller.showDetailsDialog();
@@ -69,6 +76,7 @@ class TicketView extends GetView<TicketController> {
               child: ListView(
                 shrinkWrap: true,
                 controller: controller.scrollController,
+                padding: EdgeInsets.zero,
                 children: controller.getIsLoading()
                     ? [
                         SizedBox(height: 50.h),

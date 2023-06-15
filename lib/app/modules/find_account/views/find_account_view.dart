@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,9 @@ class FindAccountView extends GetView<FindAccountController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 480.h,
         subTitle: 'find_account'.tr,
@@ -60,7 +63,9 @@ class FindAccountView extends GetView<FindAccountController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -96,7 +101,9 @@ class FindAccountView extends GetView<FindAccountController> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             // primary: mainColor,
-                            backgroundColor: mainColor,
+                            backgroundColor: ThemeController.to.getIsDarkMode
+                                ? mainColorDarkTheme
+                                : mainColor,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

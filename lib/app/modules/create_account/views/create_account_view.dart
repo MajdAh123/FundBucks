@@ -1,4 +1,4 @@
-
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
@@ -13,7 +13,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 514.h,
         title: '1 / 3',
@@ -43,11 +45,17 @@ class CreateAccountView extends GetView<CreateAccountController> {
                                             FileImage(controller.getFile()),
                                         radius: 50.r,
                                       )
-                                    : Assets.images.svg.user.svg(
-                                        width: 96.w,
-                                        height: 96.h,
-                                        fit: BoxFit.contain,
-                                      ),
+                                    : ThemeController.to.getIsDarkMode
+                                        ? Assets.images.svg.userDark.svg(
+                                            width: 96.w,
+                                            height: 96.h,
+                                            fit: BoxFit.contain,
+                                          )
+                                        : Assets.images.svg.user.svg(
+                                            width: 96.w,
+                                            height: 96.h,
+                                            fit: BoxFit.contain,
+                                          ),
                               ),
                               Positioned(
                                 right: 0,
@@ -59,8 +67,16 @@ class CreateAccountView extends GetView<CreateAccountController> {
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     elevation: 1,
-                                    child: Icon(Icons.edit,
-                                        size: 12, color: mainColor),
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 12,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? containerColorLightTheme
+                                          : mainColor,
+                                    ),
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? bottomBarItemColorDarkTheme
+                                        : null,
                                   ),
                                 ),
                               ),
@@ -71,8 +87,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     ],
                   ),
                   TextFormField(
-                    controller:
-                        controller.usernameTextEditingController.value,
+                    controller: controller.usernameTextEditingController.value,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(
                       fontSize: 13.sp,
@@ -115,6 +130,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       suffixIcon: controller.getIsCheckUsernameLoading()
                           ? Container(
@@ -131,8 +149,8 @@ class CreateAccountView extends GetView<CreateAccountController> {
                                   ? Container(
                                       width: 15.w,
                                       height: 15.h,
-                                      margin: Functions.getSpacingBasedOnLang(
-                                          10.w),
+                                      margin:
+                                          Functions.getSpacingBasedOnLang(10.w),
                                       child: Icon(
                                         Icons.close,
                                         color: Colors.red,
@@ -141,8 +159,8 @@ class CreateAccountView extends GetView<CreateAccountController> {
                                   : Container(
                                       width: 15.w,
                                       height: 15.h,
-                                      margin: Functions.getSpacingBasedOnLang(
-                                          10.w),
+                                      margin:
+                                          Functions.getSpacingBasedOnLang(10.w),
                                       child: Icon(
                                         Icons.check_circle_outline_rounded,
                                         color: successColor,
@@ -161,7 +179,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -169,6 +189,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -181,12 +204,14 @@ class CreateAccountView extends GetView<CreateAccountController> {
                   ),
                   SizedBox(height: 14.h),
                   TextFormField(
-                    controller:
-                        controller.passwordTextEditingController.value,
+                    controller: controller.passwordTextEditingController.value,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : null,
                     ),
                     cursorColor: mainColor,
                     obscureText: controller.getIsObscureText(),
@@ -216,15 +241,21 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       suffixIcon: IconButton(
                         onPressed: controller.setIsObscureText,
                         icon: Icon(
-                            !controller.getIsObscureText()
-                                ? Icons.remove_red_eye_outlined
-                                : Icons.visibility_off_outlined,
-                            color: eyeIconColor,
-                            size: 20),
+                          !controller.getIsObscureText()
+                              ? Icons.remove_red_eye_outlined
+                              : Icons.visibility_off_outlined,
+                          color: ThemeController.to.getIsDarkMode
+                              ? unselectedBottomBarItemColorDarkTheme
+                              : eyeIconColor,
+                          size: 20,
+                        ),
                       ),
                       hintText: 'password'.tr,
                       focusedBorder: OutlineInputBorder(
@@ -237,7 +268,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -245,6 +278,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -266,6 +302,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : null,
                     ),
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
@@ -286,18 +325,23 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       hintText: 'password_confirmation'.tr,
                       suffixIcon: IconButton(
-                        onPressed: controller
-                            .setIsObscureTextForPasswordConfirmation,
+                        onPressed:
+                            controller.setIsObscureTextForPasswordConfirmation,
                         icon: Icon(
-                            !controller
-                                    .getIsObscureTextForPasswordConfirmation()
-                                ? Icons.remove_red_eye_outlined
-                                : Icons.visibility_off_outlined,
-                            color: eyeIconColor,
-                            size: 20),
+                          !controller.getIsObscureTextForPasswordConfirmation()
+                              ? Icons.remove_red_eye_outlined
+                              : Icons.visibility_off_outlined,
+                          color: ThemeController.to.getIsDarkMode
+                              ? unselectedBottomBarItemColorDarkTheme
+                              : eyeIconColor,
+                          size: 20,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -309,7 +353,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -317,6 +363,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -338,7 +387,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       // primary: mainColor,
-                      backgroundColor: mainColor,
+                      backgroundColor: ThemeController.to.getIsDarkMode
+                          ? mainColorDarkTheme
+                          : mainColor,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,7 @@
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
+import 'package:app/app/utils/colors.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +20,11 @@ class StretchedBottomNavigationBar extends GetView<HomeController> {
       () => SizedBox(
         height: 65.h,
         child: CustomPaint(
-          painter: StretchedBottomNavigationBarPainter(),
+          painter: StretchedBottomNavigationBarPainter(
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,

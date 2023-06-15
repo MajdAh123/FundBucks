@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Stack(
           // mainAxisSize: MainAxisSize.min,
@@ -33,7 +36,7 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 40.h),
+                            SizedBox(height: 60.h),
                             Text(
                               '${'instructions'.tr}:',
                               style: TextStyle(
@@ -47,11 +50,13 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
                                   horizontal: 10.w, vertical: 5.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? containerColorDarkTheme
+                                    : containerColorLightTheme,
                               ),
                               child: HtmlWidget(
                                 controller.getData(),
-                                factoryBuilder: () => _MyWidgetFactory(),
+                                factoryBuilder: () => MyHtmlWidgetFactory(),
                                 onTapUrl: (url) async {
                                   if (await canLaunchUrl(Uri.parse(url))) {
                                     return await launchUrl(Uri.parse(url));
@@ -84,7 +89,9 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
               alignment: Alignment.topCenter,
               child: Container(
                 height: 90.h,
-                color: mainColor,
+                color: ThemeController.to.getIsDarkMode
+                    ? mainColorDarkTheme
+                    : mainColor,
                 child: PageHeaderWidget(
                   title: 'gateway'.tr,
                   canBack: true,
@@ -107,7 +114,9 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     // primary: mainColor,
-                    backgroundColor: mainColor,
+                    backgroundColor: ThemeController.to.getIsDarkMode
+                        ? mainColorDarkTheme
+                        : mainColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +143,7 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
   }
 }
 
-class _MyWidgetFactory extends WidgetFactory {
+class MyHtmlWidgetFactory extends WidgetFactory {
   @override
   Widget buildGestureDetector(
     BuildMetadata meta,
@@ -157,7 +166,10 @@ class _MyWidgetFactory extends WidgetFactory {
       return Future.value(true);
     } else {
       // Launch the URL in the default web browser
-      return launchUrl(Uri.parse(url));
+      return launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
     }
   }
 }

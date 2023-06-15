@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,13 @@ class NotificationItemWidget extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        color: isRead ? softGreyColor.withOpacity(.2) : Colors.white,
+        color: isRead
+            ? (ThemeController.to.getIsDarkMode
+                ? greyColor.withOpacity(.57)
+                : softGreyColor.withOpacity(.2))
+            : (ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme),
         margin: EdgeInsets.symmetric(vertical: 2.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,21 +50,27 @@ class NotificationItemWidget extends StatelessWidget {
                           Text(title,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: chartTitleColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? containerColorLightTheme
+                                    : chartTitleColor,
                                 //fontFamily: FontFamily.inter,
                                 fontSize: 14.sp,
                               )),
                           SizedBox(height: 4.h),
                           Text(time,
                               style: TextStyle(
-                                color: Colors.grey[400],
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : Colors.grey[400],
                                 fontSize: 11.sp,
                                 //fontFamily: FontFamily.inter,
                               )),
                           SizedBox(height: 8.h),
                           Text(description,
                               style: TextStyle(
-                                color: unselectedBottomBarItemColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme,
                                 //fontFamily: FontFamily.inter,
                                 fontSize: 14.sp,
                               )),
@@ -68,8 +81,13 @@ class NotificationItemWidget extends StatelessWidget {
                       onPressed: onTap,
                       icon: Iconify(
                         Mdi.eye,
-                        color:
-                            isRead ? mainColor : unselectedBottomBarItemColor,
+                        color: isRead
+                            ? (ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor)
+                            : (ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : unselectedBottomBarItemColorLightTheme),
                       ),
                     ),
                     SizedBox(width: 5.w),

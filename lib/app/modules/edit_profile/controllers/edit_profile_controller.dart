@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:app/app/data/presistent/presistent_data.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class EditProfileController extends GetxController {
   });
 
   ScrollController controller = ScrollController();
+  ScrollController scrollController = ScrollController();
 
   final presistentData = PresistentData();
 
@@ -364,16 +366,25 @@ class EditProfileController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.h),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Material(
+              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorDarkTheme
+                        : containerColorLightTheme,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: ThemeController.to.getIsDarkMode
+                          ? greyColor.withOpacity(.39)
+                          : greyColor,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(height: 10.h),
                         Text(
@@ -443,7 +454,7 @@ class EditProfileController extends GetxController {
                                                   hintText:
                                                       'other_reason_here'.tr,
                                                   filled: true,
-                                                  fillColor: Colors.white,
+                                                  // fillColor: Colors.white,
                                                   focusedBorder:
                                                       OutlineInputBorder(
                                                     borderRadius:
@@ -500,6 +511,7 @@ class EditProfileController extends GetxController {
                         //Buttons
                         Row(
                           children: [
+                            SizedBox(width: 5.w),
                             Expanded(
                               child: Container(
                                 child: TextButton(
@@ -521,7 +533,12 @@ class EditProfileController extends GetxController {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     // primary: mainColor,
-                                    backgroundColor: mainColor,
+                                    backgroundColor: Colors.red.shade400,
+
+                                    // backgroundColor:
+                                    //     ThemeController.to.getIsDarkMode
+                                    //         ? mainColorDarkTheme
+                                    //         : mainColor,
                                   ),
                                   child: Center(
                                     child: Text(
@@ -554,7 +571,10 @@ class EditProfileController extends GetxController {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     // primary: mainColor,
-                                    backgroundColor: Colors.white,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
                                   ),
                                   child: Center(
                                     child: Text(
@@ -563,13 +583,14 @@ class EditProfileController extends GetxController {
                                         //fontFamily: FontFamily.inter,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: mainColor,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
+                            SizedBox(width: 5.w),
                           ],
                         ),
                       ],
@@ -592,15 +613,23 @@ class EditProfileController extends GetxController {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.h),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Material(
+            padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: ThemeController.to.getIsDarkMode
+                        ? greyColor.withOpacity(.39)
+                        : greyColor,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       SizedBox(height: 10.h),
@@ -625,6 +654,7 @@ class EditProfileController extends GetxController {
                       //Buttons
                       Row(
                         children: [
+                          SizedBox(width: 5.w),
                           Expanded(
                             child: Container(
                               child: TextButton(
@@ -668,7 +698,10 @@ class EditProfileController extends GetxController {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   // primary: mainColor,
-                                  backgroundColor: Colors.white,
+                                  backgroundColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? mainColorDarkTheme
+                                          : mainColor,
                                 ),
                                 child: Center(
                                   child: Text(
@@ -677,13 +710,14 @@ class EditProfileController extends GetxController {
                                       //fontFamily: FontFamily.inter,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: mainColor,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                          SizedBox(width: 5.w),
                         ],
                       ),
                     ],
@@ -743,7 +777,9 @@ class EditProfileController extends GetxController {
     Get.bottomSheet(
       Container(
           // height: 100.h,
-          color: Colors.white,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,

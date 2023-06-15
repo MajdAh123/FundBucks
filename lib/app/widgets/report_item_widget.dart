@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +34,9 @@ class ReportItemWidget extends StatelessWidget {
       padding:
           EdgeInsets.only(left: 15.w, right: 15.w, top: 10.h, bottom: 11.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ThemeController.to.getIsDarkMode
+            ? containerColorDarkTheme
+            : containerColorLightTheme,
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Stack(
@@ -46,7 +49,9 @@ class ReportItemWidget extends StatelessWidget {
             right: 0,
             child: Center(
               child: InvestmentReportNote(
-                color: mainColor,
+                color: ThemeController.to.getIsDarkMode
+                    ? mainColorDarkTheme
+                    : mainColor,
                 text: notes,
                 textColor: Colors.white,
                 hPadding: 20,
@@ -67,7 +72,9 @@ class ReportItemWidget extends StatelessWidget {
                       fontSize: 13.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorLightTheme
+                          : Colors.black,
                     ),
                   ),
                   Text(
@@ -76,7 +83,9 @@ class ReportItemWidget extends StatelessWidget {
                       fontSize: 13.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorLightTheme
+                          : Colors.black,
                     ),
                   ),
                 ],
@@ -91,7 +100,9 @@ class ReportItemWidget extends StatelessWidget {
                       fontSize: 12.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w500,
-                      color: textFieldColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : textFieldColor,
                     ),
                   ),
                   Text(
@@ -100,7 +111,9 @@ class ReportItemWidget extends StatelessWidget {
                       fontSize: 12.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w500,
-                      color: textFieldColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : textFieldColor,
                     ),
                   ),
                 ],

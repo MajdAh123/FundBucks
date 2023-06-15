@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/assets.gen.dart';
@@ -17,13 +18,17 @@ class AboutUsView extends GetView<AboutUsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 90.h,
-            color: mainColor,
+            color: ThemeController.to.getIsDarkMode
+                ? mainColorDarkTheme
+                : mainColor,
             child: PageHeaderWidget(
               title: 'about'.tr,
               canBack: true,
@@ -35,7 +40,9 @@ class AboutUsView extends GetView<AboutUsController> {
             shrinkWrap: true,
             primary: true,
             children: [
-              Assets.images.svg.logo.svg(),
+              ThemeController.to.getIsDarkMode
+                  ? Assets.images.svg.logoDark.svg()
+                  : Assets.images.svg.logo.svg(),
               // SizedBox(height: 5.h),
               Center(
                 child: Text(
@@ -55,7 +62,9 @@ class AboutUsView extends GetView<AboutUsController> {
                 icon: Iconify(
                   MaterialSymbols.attach_email_outline_sharp,
                   size: 25,
-                  color: mainColor,
+                  color: ThemeController.to.getIsDarkMode
+                      ? Colors.white
+                      : mainColor,
                 ),
                 onTap: () async {
                   await launchUrl(Uri.parse('mailto:support@fundbucks.com'));
@@ -66,7 +75,9 @@ class AboutUsView extends GetView<AboutUsController> {
                 haveIcon: true,
                 icon: Iconify(
                   MaterialSymbols.web,
-                  color: mainColor,
+                  color: ThemeController.to.getIsDarkMode
+                      ? Colors.white
+                      : mainColor,
                   size: 25,
                 ),
                 onTap: () async {
@@ -82,7 +93,9 @@ class AboutUsView extends GetView<AboutUsController> {
                   icon: Iconify(
                     MaterialSymbols.star_outline_rounded,
                     // color: Colors.amber,
-                    color: mainColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? Colors.white
+                        : mainColor,
                     size: 25,
                   ),
                   onTap: () {

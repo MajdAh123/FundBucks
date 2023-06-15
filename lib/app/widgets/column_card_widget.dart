@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,7 @@ class ColumnCardWidget extends StatefulWidget {
     this.maxWidth,
     this.isCenter = false,
     this.isRight = false,
-    this.textValueSize = 14,
+    this.textValueSize = 15,
   });
 
   @override
@@ -64,7 +65,9 @@ class _ColumnCardWidgetState extends State<ColumnCardWidget> {
                 fontSize: 12.sp,
                 //fontFamily: FontFamily.inter,
                 fontWeight: FontWeight.w400,
-                color: unselectedBottomBarItemColor,
+                color: ThemeController.to.getIsDarkMode
+                    ? unselectedBottomBarItemColorDarkTheme
+                    : unselectedBottomBarItemColorLightTheme,
               ),
               maxLines: 1,
               overflow: TextOverflow.visible,

@@ -3,6 +3,7 @@ import 'package:app/app/modules/home/views/contact_page_view.dart';
 import 'package:app/app/modules/home/views/operation_page_view.dart';
 import 'package:app/app/modules/home/views/profile_page_view.dart';
 import 'package:app/app/modules/home/views/report_page_view.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class HomeView extends GetView<HomeController> {
     return Obx(
       () => Scaffold(
         bottomNavigationBar: StretchedBottomNavigationBar(),
-        backgroundColor: backgroundColor,
+        backgroundColor: ThemeController.to.getIsDarkMode
+            ? backgroundColorDarkTheme
+            : backgroundColorLightTheme,
         body: controller.getIsLoading()
             ? Center(
                 child: SizedBox(
@@ -34,7 +37,9 @@ class HomeView extends GetView<HomeController> {
                         Text(
                           'something_happened'.tr,
                           style: TextStyle(
-                              fontSize: 15.sp, fontWeight: FontWeight.w600),
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         ElevatedButton.icon(
                             onPressed: controller.getUserApi,

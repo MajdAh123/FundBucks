@@ -7,10 +7,12 @@ class HeaderColumnWidget extends StatefulWidget {
   final String title;
   final String value;
   final bool isRight;
+  final double textWidth;
   const HeaderColumnWidget({
     super.key,
     required this.title,
     required this.value,
+    required this.textWidth,
     this.isRight = true,
   });
 
@@ -53,7 +55,7 @@ class _HeaderColumnWidgetState extends State<HeaderColumnWidget> {
               child: Text(
                 widget.value,
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: widget.textWidth,
                   //fontFamily: FontFamily.inter,
                   fontWeight: FontWeight.w700,
                   color: mainColor,
@@ -67,12 +69,12 @@ class _HeaderColumnWidgetState extends State<HeaderColumnWidget> {
               child: Text(
                 widget.value,
                 style: TextStyle(
-                  fontSize: 13.sp,
+                  fontSize: widget.textWidth,
                   //fontFamily: FontFamily.inter,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
-                maxLines: 1,
+                maxLines: 2,
                 // overflow: TextOverflow.fade,
                 // softWrap: true,
                 textDirection:

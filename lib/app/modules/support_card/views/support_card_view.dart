@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,17 @@ class SupportCardView extends GetView<SupportCardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               child: PageHeaderWidget(
                 title: 'faq'.tr,
                 canBack: true,
@@ -42,6 +47,7 @@ class SupportCardView extends GetView<SupportCardController> {
                         )
                       : ListView(
                           shrinkWrap: true,
+                          padding: EdgeInsets.zero,
                           children: [
                             SupportCardWidget(),
                           ],

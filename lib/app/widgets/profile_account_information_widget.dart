@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,9 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
                 height: 100.h,
                 margin: EdgeInsets.only(right: 10.w),
                 child: CircleAvatar(
-                  backgroundColor: mainColor,
+                  backgroundColor: ThemeController.to.getIsDarkMode
+                      ? bottomBarItemColorDarkTheme
+                      : mainColor,
                   radius: 25.r,
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
@@ -51,14 +54,18 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
                       //fontFamily: FontFamily.inter,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
-                      color: mainColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                     ),
                   ),
                   SizedBox(height: 8.h),
                   Text(controller.homeController.getUser()?.username ?? '',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: unselectedBottomBarItemColor,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme,
                         //fontFamily: FontFamily.inter,
                         fontWeight: FontWeight.w500,
                       )),

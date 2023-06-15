@@ -242,6 +242,9 @@ class LocaleKeys {
   static const test_mode_label = 'test_mode_label';
   static const alert_will_enable_test_mode = 'alert_will_enable_test_mode';
   static const alert_will_disable_test_mode = 'alert_will_disable_test_mode';
+  static const dark_mode = 'dark_mode';
+  static const light_mode = 'light_mode';
+  static const mode = 'mode';
 }
 
 class Locales {
@@ -484,6 +487,9 @@ class Locales {
         'سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000\$، هل أنت متأكد ؟',
     'alert_will_disable_test_mode':
         'هل أنت متأكد من إلغاء الوضع التجريبي للحساب ؟',
+    'dark_mode': 'الوضع الداكن',
+    'light_mode': 'الوضع الفاتح',
+    'mode': 'المظهر',
   };
   static const en = {
     'sign_in_to_you_account': 'Sign in to Your Account',
@@ -726,5 +732,8 @@ class Locales {
         'A demo mode investment account of \$10,000 will be activated, Are you sure?',
     'alert_will_disable_test_mode':
         'Are you sure to cancel the demo mode of the account?',
+    'dark_mode': 'Dark Mode',
+    'light_mode': 'Light Mode',
+    'mode': 'Theme',
   };
 }

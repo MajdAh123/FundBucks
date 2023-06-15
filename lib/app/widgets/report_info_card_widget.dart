@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/report_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
@@ -19,6 +20,9 @@ class ReportInfoCardWidget extends GetView<ReportController> {
         painter: CardWidgetPainter(
           percent: 0.91,
           borderRadius: 12,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
         ),
         willChange: true,
         child: Container(
@@ -35,7 +39,9 @@ class ReportInfoCardWidget extends GetView<ReportController> {
                       fontSize: 14.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w600,
-                      color: chartTitleColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : chartTitleColor,
                     ),
                   ),
                 ],
@@ -54,7 +60,9 @@ class ReportInfoCardWidget extends GetView<ReportController> {
                               controller.getTotalDeposits().toString()),
                       color: controller.getTotalDeposits() != 0
                           ? activeTextColor
-                          : unselectedBottomBarItemColor,
+                          : (ThemeController.to.getIsDarkMode
+                              ? unselectedBottomBarItemColorDarkTheme
+                              : unselectedBottomBarItemColorLightTheme),
                       isRight: true,
                     ),
                     ColumnCardWidget(
@@ -64,7 +72,9 @@ class ReportInfoCardWidget extends GetView<ReportController> {
                               controller.getTotalWithdraws().toString()),
                       color: controller.getTotalWithdraws() != 0
                           ? secondaryColor
-                          : unselectedBottomBarItemColor,
+                          : (ThemeController.to.getIsDarkMode
+                              ? unselectedBottomBarItemColorDarkTheme
+                              : unselectedBottomBarItemColorLightTheme),
                     ),
                   ],
                 ),

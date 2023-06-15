@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/operation_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
@@ -63,7 +64,9 @@ class DepositFormWidget extends GetView<OperationController> {
                               borderType: BorderType.RRect,
                               radius: const Radius.circular(8),
                               padding: EdgeInsets.all(6.h),
-                              color: mainColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? mainColorDarkTheme
+                                  : mainColor,
                               strokeWidth: 2.h,
                               child: InkWell(
                                 onTap: controller.showImageSelection,
@@ -105,7 +108,10 @@ class DepositFormWidget extends GetView<OperationController> {
                                               Assets.images.svg.uploadIcon.svg(
                                                 width: 20.w,
                                                 height: 24.h,
-                                                color: mainColor,
+                                                color: ThemeController
+                                                        .to.getIsDarkMode
+                                                    ? bottomBarItemColorDarkTheme
+                                                    : mainColor,
                                               ),
                                               SizedBox(height: 7.h),
                                               Text(
@@ -114,7 +120,10 @@ class DepositFormWidget extends GetView<OperationController> {
                                                   //fontFamily: FontFamily.inter,
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w500,
-                                                  color: textFieldColor,
+                                                  color: ThemeController
+                                                          .to.getIsDarkMode
+                                                      ? unselectedBottomBarItemColorDarkTheme
+                                                      : textFieldColor,
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
@@ -124,75 +133,21 @@ class DepositFormWidget extends GetView<OperationController> {
                                 ),
                               ),
                             ),
-                            // Container(
-                            //   margin: EdgeInsets.only(left: 16.w, right: 15.w),
-                            //   child: TextButton(
-                            //     onPressed: () => Get.toNamed('/pdfviewer'),
-                            //     style: TextButton.styleFrom(
-                            //       minimumSize: const Size.fromHeight(50),
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(8),
-                            //       ),
-                            //       // primary: mainColor,
-                            //       backgroundColor: mainColor,
-                            //     ),
-                            //     child: FittedBox(
-                            //       child: Row(
-                            //         mainAxisAlignment:
-                            //             MainAxisAlignment.spaceEvenly,
-                            //         mainAxisSize: MainAxisSize.min,
-                            //         children: [
-                            //           Iconify(
-                            //             Bi.bank,
-                            //             color: Colors.white,
-                            //             size: 16.h,
-                            //           ),
-                            //           SizedBox(width: 6.w),
-                            //           Text(
-                            //             "download_banking_details".tr,
-                            //             style: TextStyle(
-                            //               //fontFamily: FontFamily.inter,
-                            //               fontSize: 14.sp,
-                            //               fontWeight: FontWeight.w600,
-                            //               color: Colors.white,
-                            //             ),
-                            //             maxLines: 2,
-                            //             softWrap: true,
-                            //           ),
-                            //           SizedBox(width: 6.w),
-                            //           Container(
-                            //             // width: 45.w,
-                            //             // height: 46.h,
-                            //             padding: EdgeInsets.symmetric(
-                            //                 horizontal: 5.w, vertical: 5.h),
-                            //             decoration: BoxDecoration(
-                            //               color: Colors.white,
-                            //               borderRadius:
-                            //                   BorderRadius.circular(8),
-                            //             ),
-                            //             child: Center(
-                            //               child: Iconify(
-                            //                 AkarIcons.download,
-                            //                 color: downloadIconColor,
-                            //                 size: 24.h,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                           SizedBox(height: 32.h),
                           TextFormField(
-                            cursorColor: mainColor,
+                            cursorColor: ThemeController.to.getIsDarkMode
+                                ? mainColorDarkTheme
+                                : mainColor,
                             controller: controller
                                 .getDepositAmountTextEditingController(),
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
                               signed: false,
                             ),
+                            inputFormatters: [
+                              DigitPersianFormatter(),
+                            ],
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w500,
@@ -205,13 +160,22 @@ class DepositFormWidget extends GetView<OperationController> {
                                   'name': 'amount'.tr,
                                 });
                               }
+                              double? parsedValue = double.tryParse(value!);
+                              if (parsedValue == null) {
+                                return 'required_field'.trParams({
+                                  'name': 'amount'.tr,
+                                });
+                              }
                               return null;
                             },
                             decoration: InputDecoration(
                               errorMaxLines: 2,
                               hintText: 'amount'.tr,
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
+                              // fillColor: Colors.white,
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                                 borderSide: BorderSide(
@@ -222,13 +186,18 @@ class DepositFormWidget extends GetView<OperationController> {
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                                 borderSide: BorderSide(
-                                  color: strokeColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? greyColor.withOpacity(.39)
+                                      : strokeColor,
                                   width: 1.0,
                                 ),
                               ),
                               hintStyle: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : null,
                               ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -244,9 +213,15 @@ class DepositFormWidget extends GetView<OperationController> {
                             // height: 52.h,
                             padding: EdgeInsets.symmetric(horizontal: 15.w),
                             decoration: BoxDecoration(
-                              border: Border.all(color: strokeColor),
+                              border: Border.all(
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
+                              ),
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButtonFormField<String>(
@@ -265,12 +240,15 @@ class DepositFormWidget extends GetView<OperationController> {
                                 icon: const Icon(
                                     Icons.keyboard_arrow_down_outlined),
                                 decoration: InputDecoration(
-                                  constraints: BoxConstraints(minHeight: 52.h),
+                                  constraints: BoxConstraints(minHeight: 48.h),
+
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
                                   ),
                                   // errorBorder: UnderlineInputBorder(
                                   //     borderSide: BorderSide(width: 0)),
@@ -287,14 +265,18 @@ class DepositFormWidget extends GetView<OperationController> {
                                         : FontFamily.inter,
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.w500,
-                                    // color: textFieldColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : textColor,
                                   ),
                                 ),
                                 style: TextStyle(
                                   //fontFamily: FontFamily.inter,
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: textColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : textColor,
                                 ),
                                 isDense: true,
                                 isExpanded: true,
@@ -355,19 +337,26 @@ class DepositFormWidget extends GetView<OperationController> {
                               hintStyle: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
-                                // color: textFieldColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : null,
                               ),
                               suffixIcon: Padding(
                                 padding: marginHorizontalBasedOnLanguage(11.w),
                                 child: Iconify(
                                   Ic.twotone_date_range,
                                   size: 27,
-                                  color: mainColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                      : mainColor,
                                 ),
                               ),
                               suffixIconConstraints: BoxConstraints(
                                   maxWidth: 27.w, maxHeight: 27.h),
-                              fillColor: Colors.white,
+                              fillColor: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
+                              // fillColor: Colors.white,
                               filled: true,
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.r),
@@ -377,9 +366,11 @@ class DepositFormWidget extends GetView<OperationController> {
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
+                                borderRadius: BorderRadius.circular(8.0),
                                 borderSide: BorderSide(
-                                  color: strokeColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? greyColor.withOpacity(.39)
+                                      : strokeColor,
                                   width: 1.0,
                                 ),
                               ),
@@ -419,7 +410,10 @@ class DepositFormWidget extends GetView<OperationController> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 // primary: mainColor,
-                                backgroundColor: mainColor,
+                                backgroundColor:
+                                    ThemeController.to.getIsDarkMode
+                                        ? mainColorDarkTheme
+                                        : mainColor,
                               ),
                               child: Text(
                                 'submit'.tr,

@@ -43,7 +43,7 @@ class PusherConfig {
     static const cluster = 'us2';
    **/
   static const hostEndPoint =
-      isDevelopment ? 'http://192.168.1.107:8000' : 'https://app.fundbucks.com';
+      isDevelopment ? 'http://192.168.1.108:8000' : 'https://app.fundbucks.com';
   static String hostAuthEndPoint =
       '$hostEndPoint${EndPoints.getBroadcastingAuth()}';
   static const port = 6001;

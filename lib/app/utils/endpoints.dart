@@ -1,7 +1,7 @@
 class EndPoints {
   static bool isDevelopment = false;
   static String url = 'https://app.fundbucks.com';
-  static String devUrl = 'http://192.168.1.107:8000';
+  static String devUrl = 'http://192.168.1.108:8000';
   static String api = '/api';
   static String apiVersion = '/v1';
 

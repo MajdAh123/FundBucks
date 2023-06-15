@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,12 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
               if (index == 9) ...[
                 Assets.images.svg.arcticonsCalculator.svg(
                   color: controller.isSelected(index)
-                      ? mainColor
-                      : unselectedBottomBarItemColor,
+                      ? (ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor)
+                      : (ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : unselectedBottomBarItemColorLightTheme),
                   width: 24.w,
                   height: 24.h,
                 ),
@@ -50,16 +55,24 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                 Iconify(
                   icon!,
                   color: controller.isSelected(index)
-                      ? mainColor
-                      : unselectedBottomBarItemColor,
+                      ? (ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor)
+                      : (ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : unselectedBottomBarItemColorLightTheme),
                   size: 20,
                 ),
               ]
             ] else ...[
               Assets.images.svg.home.svg(
                 color: controller.isSelected(index)
-                    ? mainColor
-                    : unselectedBottomBarItemColor,
+                    ? (ThemeController.to.getIsDarkMode
+                        ? bottomBarItemColorDarkTheme
+                        : mainColor)
+                    : (ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : unselectedBottomBarItemColorLightTheme),
                 width: 15.w,
                 height: 15.h,
               ),
@@ -72,8 +85,12 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w600,
                 color: controller.isSelected(index)
-                    ? mainColor
-                    : unselectedBottomBarItemColor,
+                    ? (ThemeController.to.getIsDarkMode
+                        ? bottomBarItemColorDarkTheme
+                        : mainColor)
+                    : (ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : unselectedBottomBarItemColorLightTheme),
               ),
             ),
             SizedBox(height: 7.h),

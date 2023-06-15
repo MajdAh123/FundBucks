@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:app/app/data/presistent/presistent_data.dart';
 import 'package:app/app/modules/lanuage_controller.dart';
 import 'package:app/app/modules/notification_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/firebase_options.dart';
 import 'package:app/generated/generated.dart';
@@ -23,18 +26,26 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Get.put(GlobalNotificationController());
+  
+  Get.put(GlobalNotificationController(), permanent: true);
 
-  Get.put<LanguageController>(LanguageController());
+  Get.put<LanguageController>(LanguageController(), permanent: true);
+  Get.put<PresistentData>(PresistentData(), permanent: true);
+  Get.put<ThemeController>(ThemeController(), permanent: true);
+
+  final presistentData = Get.find<PresistentData>();
+  var isDark = presistentData.getDarkMode() ?? false;
 
   if (!Platform.isIOS) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.light,
-      statusBarColor: mainColor,
+      statusBarIconBrightness: isDark ? Brightness.dark : Brightness.light,
+      statusBarColor: isDark ? mainColorDarkTheme : mainColor,
       systemNavigationBarColor: secondaryColor,
     ));
   } else {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    SystemChrome.setSystemUIOverlayStyle(
+      isDark ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
+    );
   }
 
   tz.initializeTimeZones();
@@ -48,29 +59,25 @@ Future<void> main() async {
         builder: (context, child) {
           final languageController = Get.find<LanguageController>();
           languageController.setLanguage('ar');
+
+          final themeController = Get.find<ThemeController>();
+
           return OverlaySupport.global(
+            toastTheme: ToastThemeData(),
             child: GetMaterialApp(
               title: "Fundbucks",
               initialRoute: AppPages.INITIAL,
               getPages: AppPages.routes,
-              // supportedLocales: [
-              //   Locale('ar'),
-              //   Locale('en'),
-              // ],
-              // locale: Locale(languageController.getLanguage()),
               fallbackLocale: Locale(Get.deviceLocale?.languageCode ?? 'en'),
-              // theme: ThemeData.light(),
               translationsKeys: AppTranslation.translations,
-              theme: ThemeData(
-                fontFamily:
-                    languageController.getLanguage().compareTo('ar') == 0
-                        ? FontFamily.tajawal
-                        : FontFamily.inter,
-                primarySwatch: Colors.blue,
-              ),
+              theme: themeController.lightTheme,
+              darkTheme: themeController.darkTheme,
+              themeMode: (presistentData.getDarkMode() ?? false)
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
               home: GetBuilder<GlobalNotificationController>(
+                init: Get.find<GlobalNotificationController>(),
                 builder: (_) => child ?? SizedBox(),
-                init: GlobalNotificationController(),
               ),
               debugShowCheckedModeBanner: false,
             ),

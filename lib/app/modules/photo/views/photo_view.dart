@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,20 +12,29 @@ class PhotoView extends GetView<PhotoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       floatingActionButton: FloatingActionButton(
         onPressed: controller.downloadImage,
         child: Icon(
           Icons.download,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorLightTheme
+              : mainColorDarkTheme,
         ),
-        backgroundColor: mainColor,
+        backgroundColor: ThemeController.to.getIsDarkMode
+            ? bottomBarItemColorDarkTheme
+            : mainColor,
       ),
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               child: PageHeaderWidget(
                 title: 'view_photo'.tr,
                 canBack: true,

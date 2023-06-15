@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/login/providers/user_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -160,6 +161,12 @@ class LoginController extends GetxController {
     Get.updateLocale(Locale(lan));
   }
 
+  void changeTheme() {
+    final themeController = Get.find<ThemeController>();
+    themeController.toggleTheme();
+    update();
+  }
+
   void login() {
     setIsLoading(true);
     final FormData _formData = FormData({
@@ -300,15 +307,23 @@ class LoginController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.h),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Material(
+                padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorDarkTheme
+                          : containerColorLightTheme,
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                        color: ThemeController.to.getIsDarkMode
+                            ? greyColor.withOpacity(.39)
+                            : greyColor,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
                           SizedBox(height: 10.h),
@@ -371,7 +386,10 @@ class LoginController extends GetxController {
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
-                                            backgroundColor: mainColor,
+                                            backgroundColor:
+                                                ThemeController.to.getIsDarkMode
+                                                    ? mainColorDarkTheme
+                                                    : mainColor,
                                           ),
                                           child: Center(
                                             child: Text(
@@ -413,15 +431,23 @@ class LoginController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.h),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Material(
+              padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorDarkTheme
+                        : containerColorLightTheme,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: ThemeController.to.getIsDarkMode
+                          ? greyColor.withOpacity(.39)
+                          : greyColor,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         SizedBox(height: 10.h),
@@ -465,7 +491,10 @@ class LoginController extends GetxController {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     // primary: mainColor,
-                                    backgroundColor: mainColor,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
                                   ),
                                   child: Center(
                                     child: Text(

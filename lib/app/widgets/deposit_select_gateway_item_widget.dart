@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +36,12 @@ class DepositSelectGatewayItemWidget extends StatelessWidget {
             icon: Icon(
               Icons.info_outline_rounded,
               color: selected?.compareTo(alias) == 0
-                  ? mainColor
-                  : unselectedBottomBarItemColor,
+                  ? (ThemeController.to.getIsDarkMode
+                      ? bottomBarItemColorDarkTheme
+                      : mainColor)
+                  : (ThemeController.to.getIsDarkMode
+                      ? unselectedBottomBarItemColorDarkTheme
+                      : unselectedBottomBarItemColorLightTheme),
             ),
           ),
           Expanded(
@@ -46,11 +51,15 @@ class DepositSelectGatewayItemWidget extends StatelessWidget {
                 height: 52.h,
                 width: 343.w,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
                     color: selected?.compareTo(alias) == 0
-                        ? mainColor
+                        ? (ThemeController.to.getIsDarkMode
+                            ? mainColorDarkTheme
+                            : mainColor)
                         : const Color.fromARGB(255, 218, 218, 218),
                   ),
                 ),
@@ -65,7 +74,9 @@ class DepositSelectGatewayItemWidget extends StatelessWidget {
                         fontSize: 14.sp,
                         //fontFamily: FontFamily.inter,
                         fontWeight: FontWeight.w500,
-                        color: textFieldColor,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : textFieldColor,
                       ),
                     ),
                     // SizedBox(width: 160.w),
@@ -73,7 +84,9 @@ class DepositSelectGatewayItemWidget extends StatelessWidget {
                     Radio(
                       value: alias,
                       groupValue: selected,
-                      activeColor: mainColor,
+                      activeColor: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                       onChanged: onClick,
                     ),
                     SizedBox(width: 5.w),

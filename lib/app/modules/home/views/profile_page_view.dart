@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,9 @@ class ProfilePageView extends GetView<ProfileController> {
         children: [
           Container(
             height: 90.h,
-            color: mainColor,
+            color: ThemeController.to.getIsDarkMode
+                ? mainColorDarkTheme
+                : mainColor,
           ),
           PageHeaderWidget(title: 'profile'.tr),
           Container(
@@ -44,73 +47,6 @@ class ProfilePageView extends GetView<ProfileController> {
                 ],
                 SizedBox(height: 15.h),
 
-                // Container(
-                //   margin: EdgeInsets.only(
-                //     bottom: 15.h,
-                //     right: Get.locale?.languageCode.compareTo('ar') == 0
-                //         ? (MediaQuery.of(context).size.width / 2).w
-                //         : 0,
-                //     left: Get.locale?.languageCode.compareTo('ar') != 0
-                //         ? (MediaQuery.of(context).size.width / 2).w
-                //         : 0,
-                //   ),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     mainAxisSize: MainAxisSize.min,
-                //     children: [
-                //       TextButton(
-                //         onPressed: () {
-                //           // controller.onContinueButtonClick();
-                //         },
-                //         style: TextButton.styleFrom(
-                //           minimumSize: const Size.fromHeight(40),
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.only(
-                //               topRight:
-                //                   Get.locale?.languageCode.compareTo('ar') == 0
-                //                       ? Radius.circular(18)
-                //                       : Radius.zero,
-                //               bottomRight:
-                //                   Get.locale?.languageCode.compareTo('ar') == 0
-                //                       ? Radius.circular(18)
-                //                       : Radius.zero,
-                //               topLeft:
-                //                   Get.locale?.languageCode.compareTo('ar') != 0
-                //                       ? Radius.circular(18)
-                //                       : Radius.zero,
-                //               bottomLeft:
-                //                   Get.locale?.languageCode.compareTo('ar') != 0
-                //                       ? Radius.circular(18)
-                //                       : Radius.zero,
-                //             ),
-                //           ),
-                //           // primary: mainColor,
-                //           backgroundColor: controller.getIsTestAccount()
-                //               ? mainColor
-                //               : secondaryColor,
-                //         ),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           mainAxisSize: MainAxisSize.min,
-                //           children: [
-                //             Text(
-                //               controller.getIsTestAccount()
-                //                   ? 'disable_test_mode'.tr
-                //                   : 'enable_test_mode'.tr,
-                //               style: TextStyle(
-                //                 //fontFamily: FontFamily.inter,
-                //                 fontSize: 11.sp,
-                //                 fontWeight: FontWeight.w600,
-                //                 color: Colors.white,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // PortfolioInformationWidget(),
                 OptionItemWidget(
                     title: 'account_information'.tr,
                     onTap: () {
@@ -193,12 +129,20 @@ class LogoutItemWidget extends GetView<ProfileController> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.power_settings_new, size: 20, color: mainColor),
+                    Icon(
+                      Icons.power_settings_new,
+                      size: 20,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
+                    ),
                     SizedBox(width: 8.w),
                     Text('sign_out'.tr,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: mainColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? bottomBarItemColorDarkTheme
+                              : mainColor,
                           //fontFamily: FontFamily.inter,
                           fontWeight: FontWeight.w500,
                         )),

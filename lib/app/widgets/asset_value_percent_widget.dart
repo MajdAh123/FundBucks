@@ -1,4 +1,5 @@
 import 'package:app/app/data/models/models.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,9 @@ class AssetValuePercentWidget extends StatelessWidget {
             fontSize:
                 (Get.locale?.languageCode.compareTo('ar') == 0) ? 11.sp : 10.sp,
             fontWeight: FontWeight.w500,
-            color: unselectedBottomBarItemColor,
+            color: ThemeController.to.getIsDarkMode
+                ? unselectedBottomBarItemColorDarkTheme
+                : unselectedBottomBarItemColorLightTheme,
             //fontFamily: FontFamily.inter,
           ),
         ),
@@ -42,7 +45,9 @@ class AssetValuePercentWidget extends StatelessWidget {
             fontSize:
                 (Get.locale?.languageCode.compareTo('ar') == 0) ? 11.sp : 10.sp,
             fontWeight: FontWeight.w500,
-            color: unselectedBottomBarItemColor,
+            color: ThemeController.to.getIsDarkMode
+                ? unselectedBottomBarItemColorDarkTheme
+                : unselectedBottomBarItemColorLightTheme,
             //fontFamily: FontFamily.inter,
           ),
         ),

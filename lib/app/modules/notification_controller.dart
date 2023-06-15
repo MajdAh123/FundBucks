@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/colors.dart';
 import 'package:app/app/utils/constant.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -56,13 +59,16 @@ class GlobalNotificationController extends GetxController {
             title: message.notification?.title,
             body: message.notification?.body,
           );
+          log("New notification: " + (notification.title ?? ''));
           showSimpleNotification(
             Text(
               notification.title!,
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorLightTheme
+                    : Colors.black,
               ),
             ),
             subtitle: Text(
@@ -70,10 +76,14 @@ class GlobalNotificationController extends GetxController {
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
-                color: Colors.black,
+                color: ThemeController.to.getIsDarkMode
+                    ? unselectedBottomBarItemColorDarkTheme
+                    : Colors.black,
               ),
             ),
-            background: Colors.white,
+            background: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
             duration: Duration(seconds: defaultSnackbarDuration),
             autoDismiss: true,
             slideDismissDirection: DismissDirection.up,
@@ -91,13 +101,9 @@ class GlobalNotificationController extends GetxController {
                     channel.id,
                     channel.name,
                     channelDescription: channel.description,
-                    // icon: android.smallIcon,
                     color: mainColor,
                     playSound: true,
-                    // icon: '@mipmap/ic_launcher_transparent',
                     icon: '@drawable/ic_stat_logo_transparent',
-                    // colorized: true,
-                    // ledColor: mainColor,
                   ),
                 ));
           }
@@ -107,6 +113,8 @@ class GlobalNotificationController extends GetxController {
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         RemoteNotification? notification = message.notification;
         AndroidNotification? android = message.notification?.android;
+        log("Clicked the notification");
+
         if (notification != null && android != null) {
           Get.toNamed('/notification');
         }
@@ -146,7 +154,9 @@ class GlobalNotificationController extends GetxController {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorLightTheme
+                : Colors.black,
           ),
         ),
         subtitle: Text(
@@ -154,10 +164,14 @@ class GlobalNotificationController extends GetxController {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: Colors.black,
+            color: ThemeController.to.getIsDarkMode
+                ? unselectedBottomBarItemColorDarkTheme
+                : Colors.black,
           ),
         ),
-        background: Colors.white,
+        background: ThemeController.to.getIsDarkMode
+            ? containerColorDarkTheme
+            : containerColorLightTheme,
         duration: Duration(seconds: 4),
       );
     }

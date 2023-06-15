@@ -106,7 +106,7 @@ class VerifyController extends GetxController {
         print(baseErrorModel);
         Get.showSnackbar(GetSnackBar(
           title: 'fail'.tr,
-          message: 'please_check_opt'.tr,
+          message: 'please_check_otp'.tr,
           duration: const Duration(seconds: defaultSnackbarDuration),
         ));
       } else {

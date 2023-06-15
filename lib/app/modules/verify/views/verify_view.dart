@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,13 @@ class VerifyView extends GetView<VerifyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 480.h,
         subTitle: controller.getIsPasswordReset()
-            ? 'reset_code_send_to'
-                .trParams({'email': controller.getEmailOtp()})
+            ? 'reset_code_send_to'.trParams({'email': controller.getEmailOtp()})
             : 'success_send_the_code_to'
                 .trParams({'email': controller.getEmailOtp()}),
         content: Container(
@@ -67,7 +69,9 @@ class VerifyView extends GetView<VerifyController> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               // primary: mainColor,
-                              backgroundColor: mainColor,
+                              backgroundColor: ThemeController.to.getIsDarkMode
+                                  ? mainColorDarkTheme
+                                  : mainColor,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +119,9 @@ class VerifyView extends GetView<VerifyController> {
                                   'send_again'.tr,
                                   style: TextStyle(
                                     //fontFamily: FontFamily.inter,
-                                    color: mainColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? bottomBarItemColorDarkTheme
+                                        : mainColor,
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.w600,
                                   ),

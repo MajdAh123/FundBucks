@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/home/providers/contact_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,11 +35,11 @@ class ContactController extends GetxController {
 
   final selectIndex = 0.obs;
 
-  final colors = [
-    mainColor,
-    greyColor,
-    secondaryColor,
-  ];
+  // final colors = [
+  //   ThemeController.to.getIsDarkMode ? mainColorDarkTheme : mainColor,
+  //   greyColor,
+  //   ThemeController.to.getIsDarkMode ? secondaryColorDarkTheme : secondaryColor,
+  // ];
 
   // late AnimationController controller;
   // late AnimationController operationController;
@@ -57,7 +58,7 @@ class ContactController extends GetxController {
 
   void setIndex(int index) => selectIndex.value = index;
   int getIndex() => selectIndex.value;
-  Color getColor() => colors[selectIndex.value];
+  // Color getColor() => colors[selectIndex.value];
 
   @override
   void onInit() {

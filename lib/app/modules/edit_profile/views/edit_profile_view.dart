@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/app/modules/edit_profile/providers/user_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
@@ -17,7 +18,9 @@ class EditProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: EditProfilePage(),
     );
   }
@@ -38,7 +41,9 @@ class EditProfilePage extends GetView<EditProfileController> {
         children: [
           Container(
             height: 70.h,
-            color: mainColor,
+            color: ThemeController.to.getIsDarkMode
+                ? mainColorDarkTheme
+                : mainColor,
             child: Center(
               child: PageHeaderWidget(
                 title: 'profile'.tr,
@@ -71,7 +76,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                           'profile'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: mainColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor,
                             //fontFamily: FontFamily.inter,
                             fontSize: 15.sp,
                           ),
@@ -84,13 +91,17 @@ class EditProfilePage extends GetView<EditProfileController> {
                             vertical: 15.h, horizontal: 10.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11),
-                          color: Colors.white,
+                          color: ThemeController.to.getIsDarkMode
+                              ? containerColorDarkTheme
+                              : containerColorLightTheme,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
-                              cursorColor: mainColor,
+                              cursorColor: ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor,
                               readOnly: true,
                               initialValue: controller.getEmail(),
                               style: TextStyle(
@@ -117,7 +128,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -164,7 +177,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -183,97 +198,111 @@ class EditProfilePage extends GetView<EditProfileController> {
                               ),
                             ),
                             SizedBox(height: 14.h),
-                            TextFormField(
-                              controller:
-                                  controller.passwordTextEditController.value,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              validator: (value) {
-                                if (value?.isNotEmpty ?? false) {
-                                  if (value!.length < 8) {
-                                    return 'min_size_field'.trParams({
-                                      'name': 'password'.tr,
-                                      'size': 8.toString(),
-                                    });
-                                  }
-                                  if (RegExp(r'[\u0621-\u064A]', unicode: true)
-                                      .hasMatch(value)) {
-                                    return 'just_english_characters'.trParams({
-                                      'name': 'password'.tr,
-                                    });
-                                  }
-                                }
-                                return null;
-                              },
-                              cursorColor: mainColor,
-                              obscureText: controller.obscureText.value,
-                              focusNode: controller.focusNodes[1],
-                              decoration: InputDecoration(
-                                errorMaxLines: 2,
-                                labelStyle: TextStyle(
-                                  //fontFamily: FontFamily.inter,
-                                  fontSize: 12.sp,
+                            Obx(
+                              () => TextFormField(
+                                controller:
+                                    controller.passwordTextEditController.value,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                style: TextStyle(
+                                  fontSize: 13.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
-                                hintText: '**********',
-                                filled: controller.focusNodes[1].hasFocus
-                                    ? true
-                                    : false,
-                                fillColor: mainColor.withOpacity(0.1),
-                                label: Row(
-                                  children: [
-                                    Text('password'.tr),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: controller.focusNodes[1].hasFocus
-                                            ? mainColor
-                                            : Colors.grey,
-                                        size: 17,
+                                validator: (value) {
+                                  if (value?.isNotEmpty ?? false) {
+                                    if (value!.length < 8) {
+                                      return 'min_size_field'.trParams({
+                                        'name': 'password'.tr,
+                                        'size': 8.toString(),
+                                      });
+                                    }
+                                    if (RegExp(r'[\u0621-\u064A]',
+                                            unicode: true)
+                                        .hasMatch(value)) {
+                                      return 'just_english_characters'
+                                          .trParams({
+                                        'name': 'password'.tr,
+                                      });
+                                    }
+                                  }
+                                  return null;
+                                },
+                                cursorColor: mainColor,
+                                obscureText: controller.obscureText.value,
+                                focusNode: controller.focusNodes[1],
+                                decoration: InputDecoration(
+                                  errorMaxLines: 2,
+                                  labelStyle: TextStyle(
+                                    //fontFamily: FontFamily.inter,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  hintText: '**********',
+                                  filled: controller.focusNodes[1].hasFocus
+                                      ? true
+                                      : false,
+                                  fillColor: ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                          .withOpacity(0.1)
+                                      : mainColor.withOpacity(0.1),
+                                  label: Row(
+                                    children: [
+                                      Text('password'.tr),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color:
+                                              controller.focusNodes[1].hasFocus
+                                                  ? mainColor
+                                                  : Colors.grey,
+                                          size: 17,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                suffixIcon: IconButton(
-                                  onPressed: controller.setObscureText,
-                                  icon: Icon(
+                                    ],
+                                  ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  suffixIcon: IconButton(
+                                    onPressed: () =>
+                                        controller.setObscureText(),
+                                    icon: Icon(
                                       controller.obscureText.value
                                           ? Icons.remove_red_eye_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: eyeIconColor,
-                                      size: 20),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(
-                                    color: strokeColor,
-                                    width: 1.0,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? unselectedBottomBarItemColorDarkTheme
+                                          : eyeIconColor,
+                                      size: 20,
+                                    ),
                                   ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(
-                                    color: strokeColor,
-                                    width: 1.0,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: strokeColor,
+                                      width: 1.0,
+                                    ),
                                   ),
-                                ),
-                                hintStyle: TextStyle(
-                                  //fontFamily: FontFamily.inter,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(
-                                    color: strokeColor,
-                                    width: 1.0,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? greyColor.withOpacity(.39)
+                                          : strokeColor,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  hintStyle: TextStyle(
+                                    //fontFamily: FontFamily.inter,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: strokeColor,
+                                      width: 1.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -294,7 +323,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                           'portfolio'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: mainColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor,
                             //fontFamily: FontFamily.inter,
                             fontSize: 15.sp,
                           ),
@@ -307,7 +338,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                             vertical: 15.h, horizontal: 10.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11),
-                          color: Colors.white,
+                          color: ThemeController.to.getIsDarkMode
+                              ? containerColorDarkTheme
+                              : containerColorLightTheme,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +371,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -361,9 +396,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                               context: context,
                               removeBottom: true,
                               removeTop: true,
-                              child: RawScrollbar(
-                                thumbVisibility: true,
-                                thumbColor: mainColor,
+                              child: Scrollbar(
+                                // controller: controller.scrollController,
+                                // thumbVisibility: true,
+                                // thumbColor: mainColor,
                                 thickness: 3.w,
                                 radius: Radius.circular(8.r),
                                 interactive: true,
@@ -396,7 +432,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                       borderSide: BorderSide(
-                                        color: strokeColor,
+                                        color: ThemeController.to.getIsDarkMode
+                                            ? greyColor.withOpacity(.39)
+                                            : strokeColor,
                                         width: 1.0,
                                       ),
                                     ),
@@ -444,7 +482,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -490,7 +530,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -536,7 +578,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -576,7 +620,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -610,7 +656,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                           'personal_information'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: mainColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor,
                             //fontFamily: FontFamily.inter,
                             fontSize: 15.sp,
                           ),
@@ -623,7 +671,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                             vertical: 15.h, horizontal: 10.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11),
-                          color: Colors.white,
+                          color: ThemeController.to.getIsDarkMode
+                              ? containerColorDarkTheme
+                              : containerColorLightTheme,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -664,7 +714,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[2].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('first_name'.tr),
@@ -690,7 +743,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -745,7 +800,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[3].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('last_name'.tr),
@@ -771,7 +829,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -794,7 +854,11 @@ class EditProfilePage extends GetView<EditProfileController> {
                               // height: 52.h,
                               padding: EdgeInsets.symmetric(horizontal: 15.w),
                               decoration: BoxDecoration(
-                                border: Border.all(color: strokeColor),
+                                border: Border.all(
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? greyColor.withOpacity(.39)
+                                      : strokeColor,
+                                ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: DropdownButtonHideUnderline(
@@ -815,11 +879,11 @@ class EditProfilePage extends GetView<EditProfileController> {
                                         BoxConstraints(minHeight: 52.h),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.transparent),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.white),
+                                          BorderSide(color: Colors.transparent),
                                     ),
                                     // errorBorder: UnderlineInputBorder(
                                     //     borderSide: BorderSide(width: 0)),
@@ -838,7 +902,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                           : FontFamily.inter,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: textFieldColor,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? unselectedBottomBarItemColorDarkTheme
+                                          : textFieldColor,
                                     ),
                                   ),
                                   style: TextStyle(
@@ -850,7 +916,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                         : FontFamily.inter,
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: textColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : textColor,
                                   ),
                                   isDense: true,
                                   isExpanded: true,
@@ -921,7 +989,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                         borderSide: BorderSide(
-                                          color: strokeColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
                                           width: 1.0,
                                         ),
                                       ),
@@ -972,7 +1043,11 @@ class EditProfilePage extends GetView<EditProfileController> {
                                       filled: controller.focusNodes[4].hasFocus
                                           ? true
                                           : false,
-                                      fillColor: mainColor.withOpacity(0.1),
+                                      fillColor:
+                                          ThemeController.to.getIsDarkMode
+                                              ? bottomBarItemColorDarkTheme
+                                                  .withOpacity(0.1)
+                                              : mainColor.withOpacity(0.1),
                                       hintText: 'city'.tr,
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.always,
@@ -1004,7 +1079,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                         borderSide: BorderSide(
-                                          color: strokeColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
                                           width: 1.0,
                                         ),
                                       ),
@@ -1063,7 +1141,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1081,26 +1161,6 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 ),
                               ),
                             ),
-                            // Obx(
-                            //   () => PhoneNumberInput(
-                            //     controller:
-                            //         controller.phoneNumberController.value,
-                            //     // initialCountry: 'SA',
-                            //     locale: Get.locale?.languageCode ?? 'en',
-                            //     allowPickFromContacts: false,
-                            //     countryListMode: CountryListMode.dialog,
-                            //     contactsPickerPosition:
-                            //         ContactsPickerPosition.suffix,
-                            //     enabledBorder: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(8),
-                            //         borderSide: BorderSide(color: strokeColor)),
-                            //     focusedBorder: OutlineInputBorder(
-                            //       borderRadius: BorderRadius.circular(8),
-                            //       borderSide: BorderSide(color: strokeColor),
-                            //     ),
-                            //     hint: 'XXXXXXXXXXX',
-                            //   ),
-                            // ),
                             SizedBox(height: 14.h),
                           ],
                         ),
@@ -1121,7 +1181,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                           'banking_details'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: mainColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor,
                             //fontFamily: FontFamily.inter,
                             fontSize: 15.sp,
                           ),
@@ -1134,7 +1196,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                             vertical: 15.h, horizontal: 10.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11),
-                          color: Colors.white,
+                          color: ThemeController.to.getIsDarkMode
+                              ? containerColorDarkTheme
+                              : containerColorLightTheme,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1182,7 +1246,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[5].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('bank_name'.tr),
@@ -1208,7 +1275,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1263,7 +1332,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[6].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('bank_account_number'.tr),
@@ -1289,7 +1361,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1352,7 +1426,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[7].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('bank_account_name'.tr),
@@ -1378,7 +1455,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1437,7 +1516,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 filled: controller.focusNodes[8].hasFocus
                                     ? true
                                     : false,
-                                fillColor: mainColor.withOpacity(0.1),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                        .withOpacity(0.1)
+                                    : mainColor.withOpacity(0.1),
                                 label: Row(
                                   children: [
                                     Text('iban'.tr),
@@ -1463,7 +1545,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                   borderSide: BorderSide(
-                                    color: strokeColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
                                     width: 1.0,
                                   ),
                                 ),
@@ -1505,7 +1589,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     // primary: mainColor,
-                                    backgroundColor: mainColor,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1662,7 +1749,9 @@ class ProfileChangeImageWidget extends GetView<EditProfileController> {
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: mainColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor,
                               border: Border.all(
                                 color: Colors.black.withOpacity(0.3),
                               ),
@@ -1692,7 +1781,9 @@ class ProfileChangeImageWidget extends GetView<EditProfileController> {
                                     shape: BoxShape.circle,
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: mainColor,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? bottomBarItemColorDarkTheme
+                                          : mainColor,
                                     ),
                                   ),
                                   child: const Icon(

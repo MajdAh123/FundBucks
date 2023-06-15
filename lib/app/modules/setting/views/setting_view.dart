@@ -1,4 +1,4 @@
-
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +15,17 @@ class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: Obx(
         () => Column(
           children: [
             Container(
               height: 90.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
               child: PageHeaderWidget(
                 title: 'settings'.tr,
                 canBack: true,
@@ -52,21 +56,27 @@ class SettingView extends GetView<SettingController> {
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 15.h),
-                            color: Colors.white,
+                            color: ThemeController.to.getIsDarkMode
+                                ? containerColorDarkTheme
+                                : containerColorLightTheme,
                             child: Row(
                               children: [
                                 Container(
                                   width: 30.w,
                                   height: 30.w,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border:
-                                          Border.all(color: Colors.white10)),
+                                    // color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.white10,
+                                    ),
+                                  ),
                                   child: Center(
                                     child: Iconify(
                                       Mdi.notification_settings_outline,
-                                      color: mainColor,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? Colors.white
+                                          : mainColor,
                                       size: 25,
                                     ),
                                   ),
@@ -78,12 +88,17 @@ class SettingView extends GetView<SettingController> {
                                     fontSize: 14.sp,
                                     //fontFamily: FontFamily.inter,
                                     fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF515151),
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : const Color(0xFF515151),
                                   ),
                                 ),
                                 const Spacer(),
                                 Switch(
                                   value: controller.activateNotifications.value,
+                                  activeColor: ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                      : mainColor,
                                   onChanged: (value) {
                                     controller.changeNotificationsStatus();
                                   },
@@ -92,28 +107,86 @@ class SettingView extends GetView<SettingController> {
                             ),
                           ),
                           SizedBox(height: 10.h),
-                          // Divider(
-                          //   height: 0.5.h,
-                          //   color: unselectedBottomBarItemColor,
-                          // ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 15.h),
-                            color: Colors.white,
+                              horizontal: 10.w,
+                              vertical: 15.h,
+                            ),
+                            color: ThemeController.to.getIsDarkMode
+                                ? containerColorDarkTheme
+                                : containerColorLightTheme,
                             child: Row(
                               children: [
                                 Container(
                                   width: 30.w,
                                   height: 30.w,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border:
-                                          Border.all(color: Colors.white10)),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.white10,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Iconify(
+                                      Mdi.theme_light_dark,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? Colors.white
+                                          : mainColor,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 15.w),
+                                Text(
+                                  'dark_mode'.tr,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    //fontFamily: FontFamily.inter,
+                                    fontWeight: FontWeight.w500,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : const Color(0xFF515151),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Switch(
+                                  value: ThemeController.to.getIsDarkMode,
+                                  activeColor: ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                      : mainColor,
+                                  onChanged: (value) {
+                                    controller.changeTheme(value);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 15.h),
+                            color: ThemeController.to.getIsDarkMode
+                                ? containerColorDarkTheme
+                                : containerColorLightTheme,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 30.w,
+                                  height: 30.w,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.white10,
+                                    ),
+                                  ),
                                   child: Center(
                                     child: Iconify(
                                       Ic.twotone_g_translate,
-                                      color: mainColor,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? Colors.white
+                                          : mainColor,
                                       size: 25,
                                     ),
                                   ),
@@ -125,13 +198,17 @@ class SettingView extends GetView<SettingController> {
                                     fontSize: 14.sp,
                                     //fontFamily: FontFamily.inter,
                                     fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF515151),
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : const Color(0xFF515151),
                                   ),
                                 ),
                                 const Spacer(),
                                 DropdownButton<String>(
-                                  icon: Icon(Icons.chevron_right,
-                                      color: softGreyColor),
+                                  icon: Icon(
+                                    Icons.chevron_right,
+                                    color: softGreyColor,
+                                  ),
                                   underline: SizedBox(),
                                   value: Get.locale?.languageCode
                                               .compareTo('ar') ==
@@ -148,7 +225,10 @@ class SettingView extends GetView<SettingController> {
                                           fontSize: 13.sp,
                                           //fontFamily: FontFamily.inter,
                                           fontWeight: FontWeight.w600,
-                                          color: unselectedBottomBarItemColor,
+                                          color: ThemeController
+                                                  .to.getIsDarkMode
+                                              ? unselectedBottomBarItemColorDarkTheme
+                                              : unselectedBottomBarItemColorLightTheme,
                                         ),
                                       ),
                                     );
@@ -163,22 +243,11 @@ class SettingView extends GetView<SettingController> {
                               ],
                             ),
                           ),
+                          // SizedBox(height: 10.h),
                         ],
                       ),
                     ),
                   ),
-            // Container(
-            //   margin: EdgeInsets.only(bottom: 15.h),
-            //   child: Text(
-            //     'v 1.0',
-            //     style: TextStyle(
-            //       //fontFamily: FontFamily.inter,
-            //       fontSize: 15.sp,
-            //       color: mainColor,
-            //       letterSpacing: 1.5,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

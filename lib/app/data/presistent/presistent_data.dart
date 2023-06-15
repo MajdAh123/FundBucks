@@ -13,6 +13,7 @@ class PresistentData extends GetxController {
   final String rememberMe = 'REMEMBER_ME';
   final String notifications = 'NOTIFICATIONS';
   final String tooManyAttempts = 'TOO_MANY_ATTEMPTS';
+  final String darkMode = 'DARK_MODE';
 
   void writeTooManyAttempts(String value) => box.write(tooManyAttempts, value);
 
@@ -41,6 +42,11 @@ class PresistentData extends GetxController {
       box.write(this.rememberMe, rememberMe);
 
   bool? getRememberMe() => box.read(rememberMe);
+
+  bool? getDarkMode() => box.read(darkMode);
+
+  void writeDarkMode(bool darkMode) =>
+      box.write(this.darkMode, darkMode);
 
   bool? getNotifications() => box.read(notifications);
 

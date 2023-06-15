@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/notification/providers/notification_provider.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class NotificationController extends GetxController {
     });
   }
 
-  void readNotification(id) {
+  void readNotification(id, String? title) {
     setLoading(true);
     notificationProvider.readNotification(id).then((value) {
       setLoading(false);
@@ -70,6 +71,21 @@ class NotificationController extends GetxController {
           message: 'notification_read'.tr,
           duration: const Duration(seconds: defaultSnackbarDuration),
         ));
+        if (title == null) return;
+        if (title.contains('رسالة جديدة')) {
+          homeController.setIndex(3);
+          Get.close(1);
+        } else if (title.contains('عملية إيداع جديدة')) {
+          homeController.setIndex(2);
+          final operationController = Get.find<OperationController>();
+          operationController.setIndex(1);
+          Get.close(1);
+        } else if (title.contains('عملية سحب جديدة')) {
+          homeController.setIndex(2);
+          final operationController = Get.find<OperationController>();
+          operationController.setIndex(0);
+          Get.close(1);
+        }
       } else {
         Get.showSnackbar(GetSnackBar(
           title: 'fail'.tr,

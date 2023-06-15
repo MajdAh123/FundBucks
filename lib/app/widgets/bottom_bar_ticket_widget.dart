@@ -1,4 +1,4 @@
-
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/modules/ticket/controllers/ticket_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +20,12 @@ class BottomBarTicketWidget extends GetView<TicketController> {
         child: Container(
           // height: 80.h,
           padding: EdgeInsets.fromLTRB(5.w, 12.h, 5.w, 12.h),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(11), topLeft: Radius.circular(11)),
-            color: Colors.white,
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
           ),
           child: Column(
             children: [
@@ -74,7 +76,9 @@ class BottomBarTicketWidget extends GetView<TicketController> {
                           onPressed: controller.showImageSelection,
                           icon: Iconify(
                             Mdi.file_image_plus_outline,
-                            color: mainColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? bottomBarItemColorDarkTheme
+                                : mainColor,
                           ),
                         )
                       : SizedBox.shrink(),
@@ -108,33 +112,39 @@ class BottomBarTicketWidget extends GetView<TicketController> {
                             letterSpacing: 0.1,
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : null,
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(40),
                               ),
                               borderSide: BorderSide(
-                                  color: unselectedBottomBarItemColor,
+                                  color: unselectedBottomBarItemColorLightTheme,
                                   width: 1)),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(40),
                             ),
                             borderSide: BorderSide(
-                                color: unselectedBottomBarItemColor, width: 1),
+                              color: unselectedBottomBarItemColorLightTheme,
+                              width: 1,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(40.r),
                             ),
                             borderSide: BorderSide(
-                                color: unselectedBottomBarItemColor, width: 1),
+                                color: unselectedBottomBarItemColorLightTheme,
+                                width: 1),
                           ),
                           isDense: true,
                           contentPadding:
                               EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 12.h),
                           filled: true,
-                          fillColor: Colors.white,
+                          // fillColor: Colors.white,
                         ),
                         // textInputAction: TextInputAction.send,
                         onFieldSubmitted: (message) {},
@@ -154,7 +164,9 @@ class BottomBarTicketWidget extends GetView<TicketController> {
                           ),
                         )
                       : CircleAvatar(
-                          backgroundColor: mainColor,
+                          backgroundColor: ThemeController.to.getIsDarkMode
+                              ? bottomBarItemColorDarkTheme
+                              : mainColor,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 1.h, horizontal: 1.w),

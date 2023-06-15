@@ -1,5 +1,6 @@
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/operation_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
@@ -42,7 +43,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                       errorMaxLines: 2,
                       hintText: controller.getBankNameChoice(),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: ThemeController.to.getIsDarkMode
+                          ? containerColorDarkTheme
+                          : containerColorLightTheme,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
@@ -53,7 +56,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -62,8 +67,12 @@ class WithdrawFormWidget extends GetView<OperationController> {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                         color: controller.checkIfBankingDetailsExists()
-                            ? Colors.black
-                            : secondaryColor,
+                            ? (ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : Colors.black)
+                            : (ThemeController.to.getIsDarkMode
+                                ? secondaryColorDarkTheme
+                                : secondaryColor),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -80,7 +89,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                         Get.toNamed('/edit-profile', arguments: [true]),
                     icon: Icon(
                       Icons.edit_note_rounded,
-                      color: mainColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                     )),
               ],
             ),
@@ -92,6 +103,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                 decimal: true,
                 signed: false,
               ),
+              inputFormatters: [
+                DigitPersianFormatter(),
+              ],
               style: TextStyle(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
@@ -99,6 +113,12 @@ class WithdrawFormWidget extends GetView<OperationController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value?.isEmpty ?? true) {
+                  return 'required_field'.trParams({
+                    'name': 'amount'.tr,
+                  });
+                }
+                double? parsedValue = double.tryParse(value!);
+                if (parsedValue == null) {
                   return 'required_field'.trParams({
                     'name': 'amount'.tr,
                   });
@@ -113,7 +133,10 @@ class WithdrawFormWidget extends GetView<OperationController> {
                 errorMaxLines: 2,
                 hintText: 'amount'.tr,
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: ThemeController.to.getIsDarkMode
+                    ? containerColorDarkTheme
+                    : containerColorLightTheme,
+                // fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide(
@@ -124,7 +147,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide(
-                    color: strokeColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? greyColor.withOpacity(.39)
+                        : strokeColor,
                     width: 1.0,
                   ),
                 ),
@@ -147,9 +172,15 @@ class WithdrawFormWidget extends GetView<OperationController> {
               // height: 52.h,
               padding: EdgeInsets.symmetric(horizontal: 15.w),
               decoration: BoxDecoration(
-                border: Border.all(color: strokeColor),
+                border: Border.all(
+                  color: ThemeController.to.getIsDarkMode
+                      ? greyColor.withOpacity(.39)
+                      : strokeColor,
+                ),
                 borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorDarkTheme
+                    : Colors.white,
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButtonFormField<String>(
@@ -166,12 +197,14 @@ class WithdrawFormWidget extends GetView<OperationController> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   icon: const Icon(Icons.keyboard_arrow_down_outlined),
                   decoration: InputDecoration(
-                    constraints: BoxConstraints(minHeight: 52.h),
+                    constraints: BoxConstraints(minHeight: 48.h),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Colors.transparent),
                     ),
                     // errorBorder:
                     //     UnderlineInputBorder(borderSide: BorderSide(width: 0)),
@@ -186,14 +219,18 @@ class WithdrawFormWidget extends GetView<OperationController> {
                           : FontFamily.inter,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
-                      color: textFieldColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : textFieldColor,
                     ),
                   ),
                   style: TextStyle(
                     //fontFamily: FontFamily.inter,
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
-                    color: textColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : textColor,
                   ),
                   isDense: true,
                   isExpanded: true,
@@ -234,7 +271,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   // primary: mainColor,
-                  backgroundColor: secondaryColor,
+                  backgroundColor: (ThemeController.to.getIsDarkMode
+                      ? secondaryColorDarkTheme
+                      : secondaryColor),
                 ),
                 child: Text(
                   'submit'.tr,

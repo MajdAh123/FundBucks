@@ -1,10 +1,10 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:phone_text_field/phone_text_field.dart';
 
 import '../controllers/personal_information_controller.dart';
 
@@ -12,7 +12,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 600.h,
         title: '3 / 3',
@@ -62,7 +64,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -70,6 +74,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -117,7 +124,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -125,6 +134,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -170,7 +182,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -178,6 +192,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -224,7 +241,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -232,6 +251,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -250,7 +272,11 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                           // height: 52.h,
                           padding: EdgeInsets.symmetric(horizontal: 15.w),
                           decoration: BoxDecoration(
-                            border: Border.all(color: strokeColor),
+                            border: Border.all(
+                              color: ThemeController.to.getIsDarkMode
+                                  ? greyColor.withOpacity(.39)
+                                  : strokeColor,
+                            ),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -267,12 +293,14 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                                 return null;
                               },
                               decoration: InputDecoration(
-                                constraints: BoxConstraints(minHeight: 52.h),
+                                constraints: BoxConstraints(minHeight: 48.h),
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 // errorBorder: UnderlineInputBorder(
                                 //     borderSide: BorderSide(width: 0)),
@@ -290,19 +318,23 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                                       : FontFamily.inter,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: textFieldColor,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : textFieldColor,
                                 ),
                               ),
                               style: TextStyle(
                                 //fontFamily: FontFamily.inter,
-                                fontFamily: Get.locale?.languageCode
-                                            .compareTo('ar') ==
-                                        0
-                                    ? FontFamily.tajawal
-                                    : FontFamily.inter,
+                                fontFamily:
+                                    Get.locale?.languageCode.compareTo('ar') ==
+                                            0
+                                        ? FontFamily.tajawal
+                                        : FontFamily.inter,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w500,
-                                color: textColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : textColor,
                               ),
                               isDense: true,
                               isExpanded: true,
@@ -310,8 +342,7 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                                 DropdownMenuItem(
                                     child: Text("male".tr), value: "male"),
                                 DropdownMenuItem(
-                                    child: Text("female".tr),
-                                    value: "female"),
+                                    child: Text("female".tr), value: "female"),
                               ],
                               onChanged: controller.setGenderSelect,
                             ),
@@ -322,8 +353,7 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       Expanded(
                         child: TextFormField(
                           controller: controller.cityTextEditController.value,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
@@ -350,7 +380,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -358,6 +390,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                               //fontFamily: FontFamily.inter,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : null,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
@@ -406,7 +441,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -414,6 +451,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                         //fontFamily: FontFamily.inter,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : null,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -424,91 +464,6 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                       ),
                     ),
                   ),
-                  // Obx(
-                  //   () => PhoneTextField(
-                  //     locale: Get.locale ?? Locale('en'),
-                  //     controller: controller.phoneNumberController.value,
-                  //     autovalidateMode: AutovalidateMode.disabled,
-                  //     textAlign: Get.locale?.languageCode.compareTo('ar') == 0
-                  //         ? TextAlign.end
-                  //         : TextAlign.start,
-                  //     decoration: InputDecoration(
-                  //       errorMaxLines: 2,
-                  //       hintText: 'phone_number'.tr,
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(8.0),
-                  //         borderSide: BorderSide(
-                  //           color: strokeColor,
-                  //           width: 1.0,
-                  //         ),
-                  //       ),
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(8.0),
-                  //         borderSide: BorderSide(
-                  //           color: strokeColor,
-                  //           width: 1.0,
-                  //         ),
-                  //       ),
-                  //       hintStyle: TextStyle(
-                  //         fontSize: 12.sp,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //       border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(8.0),
-                  //         borderSide: BorderSide(
-                  //           color: strokeColor,
-                  //           width: 1.0,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     searchFieldInputDecoration: InputDecoration(
-                  //       // filled: true,
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderRadius:
-                  //             BorderRadius.all(Radius.circular(10.0)),
-                  //         borderSide: BorderSide(
-                  //           color: strokeColor,
-                  //           width: 1.0,
-                  //         ),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderRadius:
-                  //             BorderRadius.all(Radius.circular(10.0)),
-                  //         borderSide: BorderSide(
-                  //           color: strokeColor,
-                  //           width: 1.0,
-                  //         ),
-                  //       ),
-                  //       suffixIcon: Icon(
-                  //         Icons.search,
-                  //         color: strokeColor,
-                  //       ),
-                  //       hintText: "search_by_country".tr,
-                  //     ),
-                  //     initialCountryCode: controller.countryCode.value,
-                  //     invalidNumberMessage: 'invalid_phone_number'.tr,
-                  //     dialogTitle: 'select_country'.tr,
-                  //     onChanged: (phone) {
-                  //       debugPrint(phone.completeNumber);
-                  //     },
-                  //   ),
-                  // ),
-                  // PhoneNumberInput(
-                  //   controller: controller.phoneNumberController.value,
-                  //   locale: Get.locale?.languageCode ?? 'ar',
-                  //   allowPickFromContacts: false,
-                  //   initialCountry: 'SA',
-                  //   countryListMode: CountryListMode.dialog,
-                  //   contactsPickerPosition: ContactsPickerPosition.suffix,
-                  //   enabledBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(8.r),
-                  //       borderSide: BorderSide(color: strokeColor)),
-                  //   focusedBorder: OutlineInputBorder(
-                  //     borderRadius: BorderRadius.circular(8.r),
-                  //     borderSide: BorderSide(color: strokeColor),
-                  //   ),
-                  //   hint: 'XXXXXXXXXXX',
-                  // ),
                   SizedBox(height: 8.h),
                   FittedBox(
                     child: Row(
@@ -532,7 +487,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
-                            color: textFieldColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : textFieldColor,
                           ),
                         ),
                         GestureDetector(
@@ -545,7 +502,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: mainColor,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor,
                             ),
                           ),
                         ),
@@ -580,7 +539,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                             // primary: mainColor,
-                            backgroundColor: mainColor,
+                            backgroundColor: ThemeController.to.getIsDarkMode
+                                ? mainColorDarkTheme
+                                : mainColor,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

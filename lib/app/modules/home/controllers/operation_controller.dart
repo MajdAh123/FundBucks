@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/home/providers/operation_page_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -80,14 +81,14 @@ class OperationController extends GetxController {
   }
 
   bool checkIfBankingDetailsExists() =>
-      homeController.getUser()?.bankName != null &&
-      homeController.getUser()?.bankName.isNotEmpty &&
-      homeController.getUser()?.bankUserId != null &&
-      homeController.getUser()?.bankUserId.isNotEmpty &&
-      homeController.getUser()?.bankUsername != null &&
-      homeController.getUser()?.bankUsername.isNotEmpty &&
-      homeController.getUser()?.iban != null &&
-      homeController.getUser()?.iban.isNotEmpty;
+      (homeController.getUser()?.bankName != null &&
+          homeController.getUser()?.bankName.isNotEmpty &&
+          homeController.getUser()?.bankUserId != null &&
+          homeController.getUser()?.bankUserId.isNotEmpty &&
+          homeController.getUser()?.bankUsername != null &&
+          homeController.getUser()?.bankUsername.isNotEmpty &&
+          homeController.getUser()?.iban != null &&
+          homeController.getUser()?.iban.isNotEmpty);
 
 /* ** Start Deposit Form ** */
   var currencyDeposit = Currency().obs;
@@ -187,7 +188,9 @@ class OperationController extends GetxController {
     Get.bottomSheet(
       Container(
           // height: 100.h,
-          color: Colors.white,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,

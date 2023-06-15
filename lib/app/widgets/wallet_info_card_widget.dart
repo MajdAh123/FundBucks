@@ -1,4 +1,7 @@
 import 'package:app/app/modules/home/controllers/account_controller.dart';
+import 'package:app/app/modules/home/views/account_page_view.dart';
+import 'package:app/app/modules/home/views/home_view.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
@@ -22,6 +25,9 @@ class WalletInfoCardWidget extends GetView<AccountController> {
           painter: CardWidgetPainter(
             percent: 0.91,
             borderRadius: 12.r,
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
           ),
           willChange: true,
           child: Container(
@@ -56,7 +62,7 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                               ? 'inactive'.tr
                               : 'active'.tr,
                       style: TextStyle(
-                        fontSize: 9.sp,
+                        fontSize: 10.sp,
                         //fontFamily: FontFamily.inter,
                         fontWeight: FontWeight.w400,
                         color: controller.homeController
@@ -82,7 +88,10 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                           '\$${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.currentValue!) != 0 ? controller.homeController.getUser()!.currentValue! : controller.homeController.getUser()!.balance!)}',
                       // maxWidth: 150.w,
                       isCenter: true,
-                      textValueSize: 15.sp,
+                      textValueSize: 17.sp,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                     ),
                   ],
                 ),
@@ -95,6 +104,7 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                     children: [
                       ColumnCardWidget(
                         title: 'income_value'.tr,
+                        textValueSize: 16.sp,
                         value:
                             '\$${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.returnValue!) < 0 ? (double.parse(controller.homeController.getUser()!.returnValue!) * -1).toString() : controller.homeController.getUser()!.returnValue!)}',
                         beforeValue:
@@ -131,6 +141,7 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                       // SizedBox(width: 44.w),
                       ColumnCardWidget(
                         title: 'percent_of_change'.tr,
+                        textValueSize: 16.sp,
                         value:
                             '%${double.parse(controller.homeController.getUser()!.returnPercent!) == 0 ? '00.00' : (double.parse(controller.homeController.getUser()!.returnPercent!) < 0 ? (double.parse(controller.homeController.getUser()!.returnPercent!) * -1).toString() : controller.homeController.getUser()!.returnPercent!)}',
                         beforeValue:

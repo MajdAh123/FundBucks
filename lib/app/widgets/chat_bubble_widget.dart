@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -310,7 +311,10 @@ class ChatBubbleWidget extends StatelessWidget {
                                       Flexible(
                                         child: Text(message,
                                             style: TextStyle(
-                                              color: chatTextColor,
+                                              color: ThemeController
+                                                      .to.getIsDarkMode
+                                                  ? unselectedBottomBarItemColorDarkTheme
+                                                  : chatTextColor,
                                               fontSize: 14.sp,
                                               //fontFamily: FontFamily.inter,
                                               fontWeight: FontWeight.w500,

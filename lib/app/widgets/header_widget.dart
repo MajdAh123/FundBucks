@@ -32,6 +32,7 @@ class HeaderWidget extends GetView<AccountController> {
                           value:
                               '\$${Functions.moneyFormat(controller.homeController.getUser()!.balance ?? '')}',
                           isRight: false,
+                          textWidth: 15.sp,
                         ),
                         SizedBox(width: 10.w),
                         controller.homeController.getUser()!.avatar == null
@@ -50,6 +51,7 @@ class HeaderWidget extends GetView<AccountController> {
                         SizedBox(width: 10.w),
                         HeaderColumnWidget(
                           title: '${"plan_new".tr}:',
+                          textWidth: 13.sp,
                           value: Functions.getTranslate(
                               enValue: controller.homeController
                                       .getUser()!

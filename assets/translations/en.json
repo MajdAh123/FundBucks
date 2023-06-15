@@ -227,5 +227,8 @@
   "must_disable_test_mode": "Must disable demo mode to do current operation.",
   "test_mode_label": "Demo Mode",
   "alert_will_enable_test_mode": "A demo mode investment account of $10,000 will be activated, Are you sure?",
-  "alert_will_disable_test_mode": "Are you sure to cancel the demo mode of the account?"
+  "alert_will_disable_test_mode": "Are you sure to cancel the demo mode of the account?",
+  "dark_mode": "Dark Mode",
+  "light_mode": "Light Mode",
+  "mode": "Theme"
 }

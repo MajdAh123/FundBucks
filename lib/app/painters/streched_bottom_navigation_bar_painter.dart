@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class StretchedBottomNavigationBarPainter extends CustomPainter {
+  final Color color;
+
+  StretchedBottomNavigationBarPainter({
+    required this.color,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint();
@@ -26,11 +32,11 @@ class StretchedBottomNavigationBarPainter extends CustomPainter {
     middlePath.close();
 
     // Use the `color` property to set the color of the bottom navigation bar
-    paint.color = Colors.white;
+    paint.color = color;
 
     // Use the `fillPath` method to fill the path with the specified color
     canvas.drawPath(path, paint);
-    paint.color = Colors.white;
+    paint.color = color;
     canvas.drawPath(middlePath, paint);
   }
 

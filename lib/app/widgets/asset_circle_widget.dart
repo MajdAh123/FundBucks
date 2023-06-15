@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +38,9 @@ class AssetCircleWidget extends StatelessWidget {
                   ? 13.sp
                   : 12.sp,
               fontWeight: FontWeight.w500,
-              color: unselectedBottomBarItemColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? unselectedBottomBarItemColorDarkTheme
+                  : unselectedBottomBarItemColorLightTheme,
               //fontFamily: FontFamily.inter,
             ),
           ),

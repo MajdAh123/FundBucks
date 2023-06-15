@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/account_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,11 +18,11 @@ class MutliTimeChartChoiceWidget extends GetView<AccountController> {
         vertical: 4.h,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
-        // border: Border.all(
-        //   color: mainColor,
-        // ),
-      ),
+          // color: Colors.white,
+          // border: Border.all(
+          //   color: mainColor,
+          // ),
+          ),
       child: Obx(
         () => Row(
           mainAxisSize: MainAxisSize.min,
@@ -56,8 +57,12 @@ class MutliTimeChartChoiceWidget extends GetView<AccountController> {
                     //     ? FontWeight.w400
                     //     : FontWeight.w800,
                     color: controller.getChoice() == 0
-                        ? mainColor
-                        : unselectedBottomBarItemColor,
+                        ? (ThemeController.to.getIsDarkMode
+                            ? bottomBarItemColorDarkTheme
+                            : mainColor)
+                        : (ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme),
                     // color:
                     //     controller.getChoice() != 0 ? mainColor : Colors.white,
                   ),
@@ -79,8 +84,12 @@ class MutliTimeChartChoiceWidget extends GetView<AccountController> {
                     //     ? FontWeight.w400
                     //     : FontWeight.w700,
                     color: controller.getChoice() == 1
-                        ? mainColor
-                        : unselectedBottomBarItemColor,
+                        ? (ThemeController.to.getIsDarkMode
+                            ? bottomBarItemColorDarkTheme
+                            : mainColor)
+                        : (ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme),
                     // color:
                     //     controller.getChoice() != 1 ? mainColor : Colors.white,
                   ),
@@ -116,8 +125,12 @@ class MutliTimeChartChoiceWidget extends GetView<AccountController> {
                     //     ? FontWeight.w400
                     //     : FontWeight.w700,
                     color: controller.getChoice() == 2
-                        ? mainColor
-                        : unselectedBottomBarItemColor,
+                        ? (ThemeController.to.getIsDarkMode
+                            ? bottomBarItemColorDarkTheme
+                            : mainColor)
+                        : (ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme),
                     // color:
                     //     controller.getChoice() != 2 ? mainColor : Colors.white,
                   ),

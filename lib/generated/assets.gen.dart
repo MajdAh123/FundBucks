@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +16,19 @@ class $AssetsImagesGen {
 
   $AssetsImagesPngGen get png => const $AssetsImagesPngGen();
   $AssetsImagesSvgGen get svg => const $AssetsImagesSvgGen();
+}
+
+class $AssetsSoundsGen {
+  const $AssetsSoundsGen();
+
+  /// File path: assets/sounds/message-pop.mp3
+  String get messagePop => 'assets/sounds/message-pop.mp3';
+
+  /// File path: assets/sounds/send-click.wav
+  String get sendClick => 'assets/sounds/send-click.wav';
+
+  /// List of all assets
+  List<String> get values => [messagePop, sendClick];
 }
 
 class $AssetsTranslationsGen {
@@ -33,6 +46,9 @@ class $AssetsTranslationsGen {
 
 class $AssetsImagesPngGen {
   const $AssetsImagesPngGen();
+
+  /// File path: assets/images/png/alert.png
+  AssetGenImage get alert => const AssetGenImage('assets/images/png/alert.png');
 
   /// File path: assets/images/png/logo-app-2.png
   AssetGenImage get logoApp2 =>
@@ -53,13 +69,25 @@ class $AssetsImagesPngGen {
   AssetGenImage get splash =>
       const AssetGenImage('assets/images/png/splash.jpeg');
 
+  /// File path: assets/images/png/splashUpdated.png
+  AssetGenImage get splashUpdated =>
+      const AssetGenImage('assets/images/png/splashUpdated.png');
+
   /// File path: assets/images/png/wire-transfer.png
   AssetGenImage get wireTransfer =>
       const AssetGenImage('assets/images/png/wire-transfer.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [logoApp2, logoApp, logo, profile, splash, wireTransfer];
+  List<AssetGenImage> get values => [
+        alert,
+        logoApp2,
+        logoApp,
+        logo,
+        profile,
+        splash,
+        splashUpdated,
+        wireTransfer
+      ];
 }
 
 class $AssetsImagesSvgGen {
@@ -89,6 +117,10 @@ class $AssetsImagesSvgGen {
   /// File path: assets/images/svg/logo.svg
   SvgGenImage get logo => const SvgGenImage('assets/images/svg/logo.svg');
 
+  /// File path: assets/images/svg/logoDark.svg
+  SvgGenImage get logoDark =>
+      const SvgGenImage('assets/images/svg/logoDark.svg');
+
   /// File path: assets/images/svg/splashLogo.svg
   SvgGenImage get splashLogo =>
       const SvgGenImage('assets/images/svg/splashLogo.svg');
@@ -99,6 +131,10 @@ class $AssetsImagesSvgGen {
 
   /// File path: assets/images/svg/user.svg
   SvgGenImage get user => const SvgGenImage('assets/images/svg/user.svg');
+
+  /// File path: assets/images/svg/userDark.svg
+  SvgGenImage get userDark =>
+      const SvgGenImage('assets/images/svg/userDark.svg');
 
   /// File path: assets/images/svg/wire-transfer.svg
   SvgGenImage get wireTransfer =>
@@ -113,9 +149,11 @@ class $AssetsImagesSvgGen {
         heroiconsUser,
         home,
         logo,
+        logoDark,
         splashLogo,
         uploadIcon,
         user,
+        userDark,
         wireTransfer
       ];
 }
@@ -124,6 +162,7 @@ class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 
@@ -185,7 +224,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
@@ -208,13 +256,14 @@ class SvgGenImage {
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,
-    Color? color,
-    BlendMode colorBlendMode = BlendMode.srcIn,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
+    SvgTheme theme = const SvgTheme(),
+    ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
-    bool cacheColorFilter = false,
-    SvgTheme? theme,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -228,13 +277,14 @@ class SvgGenImage {
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
-      color: color,
-      colorBlendMode: colorBlendMode,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
+      theme: theme,
+      colorFilter: colorFilter,
+      color: color,
+      colorBlendMode: colorBlendMode,
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
-      theme: theme,
     );
   }
 

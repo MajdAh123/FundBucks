@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/operation_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,9 @@ class OperationListWidget extends GetView<OperationController> {
                 fontSize: 14.sp,
                 //fontFamily: FontFamily.inter,
                 fontWeight: FontWeight.w600,
-                color: chartTitleColor,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorLightTheme
+                    : chartTitleColor,
               ),
             ),
             SizedBox(height: 12.h),

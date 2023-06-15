@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,9 +30,13 @@ class OptionItemWidget extends StatelessWidget {
         margin: EdgeInsets.only(bottom: isLastItem ? 2.h : 8.h),
         padding: EdgeInsets.fromLTRB(17.w, 18.h, 16.w, 18.h),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           border: Border.all(
-            color: strokeColor,
+            color: ThemeController.to.getIsDarkMode
+                ? greyColor.withOpacity(.39)
+                : strokeColor,
           ),
         ),
         child: Row(
@@ -48,14 +53,22 @@ class OptionItemWidget extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: textColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : textColor,
                     //fontFamily: FontFamily.inter,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
-            Icon(Icons.chevron_right, size: 20, color: softGreyColor),
+            Icon(
+              Icons.chevron_right,
+              size: 20,
+              color: ThemeController.to.getIsDarkMode
+                  ? unselectedBottomBarItemColorDarkTheme
+                  : softGreyColor,
+            ),
           ],
         ),
       ),

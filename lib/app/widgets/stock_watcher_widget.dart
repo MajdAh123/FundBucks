@@ -1,4 +1,6 @@
 import 'package:app/app/modules/home/controllers/account_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
+import 'package:app/app/utils/colors.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +25,9 @@ class StockWatcherWidget extends GetView<AccountController> {
           padding: EdgeInsets.only(top: 11.h, left: 12.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

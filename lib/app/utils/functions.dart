@@ -6,9 +6,11 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 class Functions {
@@ -249,5 +251,37 @@ class Functions {
     print(frPhone.isValid(type: PhoneNumberType.mobile));
 
     return !frPhone.isValid(type: PhoneNumberType.mobile);
+  }
+}
+
+String replaceFarsiNumber(String input) {
+  const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '.'];
+  const farsi = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', ',', '٫'];
+
+  for (int i = 0; i < english.length; i++) {
+    input = input.replaceAll(farsi[i], english[i]);
+  }
+
+  return input;
+}
+
+bool isValidNumber(String input) {
+  RegExp reg = RegExp(r'^-?\d*\.?\d*$');
+  return reg.hasMatch(input);
+}
+
+class DigitPersianFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String persianInput = newValue.text.toEnglishDigit();
+    if (newValue.text.contains(',') || newValue.text.contains('٫')) {
+      persianInput = replaceFarsiNumber(persianInput);
+    }
+    int selectionIndex = newValue.selection.end;
+    return newValue.copyWith(
+      text: persianInput.toString(),
+      selection: TextSelection.collapsed(offset: selectionIndex),
+    );
   }
 }

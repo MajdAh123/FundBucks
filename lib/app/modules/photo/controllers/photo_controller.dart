@@ -1,7 +1,5 @@
 import 'package:app/app/modules/photo/providers/photo_provider.dart';
 import 'package:app/app/utils/utils.dart';
-import 'package:dio/dio.dart';
-import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:get/get.dart';
 
 class PhotoController extends GetxController {

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class CardWidgetPainter extends CustomPainter {
   final double percent;
   final double borderRadius;
+  final Color color;
 
   CardWidgetPainter({
     required this.percent,
     required this.borderRadius,
+    required this.color,
   });
 
   @override
@@ -19,7 +21,7 @@ class CardWidgetPainter extends CustomPainter {
     // double r = 15;
 
     var paint1 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..color = color
       ..style = PaintingStyle.fill;
 
     RRect fullRect = RRect.fromRectAndRadius(
@@ -41,8 +43,8 @@ class CardWidgetPainter extends CustomPainter {
     paint1.strokeWidth = 2;
     paint1.strokeCap = StrokeCap.round;
     paint1.style = PaintingStyle.stroke;
-    paint1.shader = const LinearGradient(
-            colors: [Color.fromARGB(255, 168, 168, 168), Colors.white],
+    paint1.shader = LinearGradient(
+            colors: [Color.fromARGB(255, 168, 168, 168), color],
             stops: [0, 0.5],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter)
@@ -54,7 +56,7 @@ class CardWidgetPainter extends CustomPainter {
         Offset(size.width / 2, size.height), paint1);
 
     paint1.shader = LinearGradient(
-            colors: [Colors.white, linearGradientColor, Colors.white],
+            colors: [color, linearGradientColor, color],
             stops: const [0, 0.5, 1],
             begin: Alignment.center,
             end: Alignment.centerRight)
@@ -63,12 +65,6 @@ class CardWidgetPainter extends CustomPainter {
 
     canvas.drawLine(Offset(58, size.height / 2),
         Offset(size.width - 59, size.height / 2), paint1);
-
-    // path.moveTo(size.width / 2, 0);
-    // path.lineTo(size.width / 2, 0);
-    // path.lineTo(size.width / 2, size.height);
-    // // path.lineTo(size.width, size.height);
-    // path.close();
 
     canvas.drawPath(path, paint1);
   }

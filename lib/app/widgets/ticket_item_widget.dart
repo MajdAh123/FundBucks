@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/contact_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,7 +58,9 @@ class TicketItemWidget extends GetView<ContactController> {
         padding:
             EdgeInsets.only(left: 15.w, right: 15.w, top: 10.h, bottom: 11.h),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -85,7 +88,9 @@ class TicketItemWidget extends GetView<ContactController> {
                       //fontFamily: FontFamily.inter,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
-                      color: chartTitleColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorLightTheme
+                          : chartTitleColor,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -99,7 +104,9 @@ class TicketItemWidget extends GetView<ContactController> {
                       //fontFamily: FontFamily.inter,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: chartTitleColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorLightTheme
+                          : chartTitleColor,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -113,7 +120,9 @@ class TicketItemWidget extends GetView<ContactController> {
                             //fontFamily: FontFamily.inter,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
-                            color: chartTitleColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : chartTitleColor,
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -172,7 +181,9 @@ class TicketItemWidget extends GetView<ContactController> {
                                 //fontFamily: FontFamily.inter,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
-                                color: chartTitleColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? containerColorLightTheme
+                                    : chartTitleColor,
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,

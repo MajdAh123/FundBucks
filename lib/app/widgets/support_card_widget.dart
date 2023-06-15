@@ -1,5 +1,7 @@
 import 'package:app/app/modules/support_card/controllers/support_card_controller.dart';
 import 'package:app/app/modules/support_card/providers/support_card_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
+import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,12 +21,15 @@ class SupportCardWidget extends GetView<SupportCardController> {
             controller.supportCardItemList[index].isExpanded = !isExpanded;
             controller.update();
           },
-          expandedHeaderPadding: EdgeInsets.symmetric(vertical: 10.h),
+          expandedHeaderPadding: EdgeInsets.symmetric(vertical: 1.h),
           children: controller.supportCardItemList
               .map<ExpansionPanel>(
                 (e) => ExpansionPanel(
                   isExpanded: e.isExpanded,
                   canTapOnHeader: true,
+                  backgroundColor: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
                   headerBuilder: (context, isExpanded) => Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.w,

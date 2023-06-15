@@ -104,7 +104,7 @@ class AccountController extends GetxController {
 
   Color getAmountColor(double value) {
     if (value == 0) {
-      return unselectedBottomBarItemColor;
+      return unselectedBottomBarItemColorLightTheme;
     }
 
     return value > 0 ? successColor : Colors.red;

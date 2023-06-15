@@ -1,5 +1,6 @@
 import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/home/views/account_page_view.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:easy_refresh/easy_refresh.dart';
@@ -32,7 +33,9 @@ class OperationPageView extends GetView<OperationController> {
           children: [
             Container(
               height: 110.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
             ),
             PageHeaderWidget(title: 'transfer'.tr),
             const OperationButtonDisplayWidget(),
@@ -59,7 +62,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
               margin: EdgeInsets.only(left: 25.w, right: 25.w),
               padding: EdgeInsets.only(left: 3.w, right: 3.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorDarkTheme
+                    : containerColorLightTheme,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -67,8 +72,7 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        controller
-                            .setIndex(controller.getIndex() == 0 ? 1 : 0);
+                        controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
@@ -80,7 +84,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: controller.getIndex() == 0
-                              ? secondaryColor
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? secondaryColorDarkTheme
+                                  : secondaryColor)
                               : Colors.transparent,
                         ),
                         child: Center(
@@ -92,7 +98,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 0
                                   ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
                             ),
                           ),
                         ),
@@ -102,8 +110,7 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        controller
-                            .setIndex(controller.getIndex() == 0 ? 1 : 0);
+                        controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
                         // controller.operationController.reset();
                         // controller.operationController.forward();
                       },
@@ -115,7 +122,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: controller.getIndex() == 1
-                              ? mainColor
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? mainColorDarkTheme
+                                  : mainColor)
                               : Colors.transparent,
                         ),
                         child: Center(
@@ -127,7 +136,9 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 1
                                   ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
                             ),
                           ),
                         ),

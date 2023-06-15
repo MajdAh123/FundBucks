@@ -2,18 +2,24 @@ import 'dart:convert';
 
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
+import 'package:app/app/modules/gateway_detail/views/gateway_detail_view.dart';
 import 'package:app/app/modules/home/controllers/account_controller.dart';
 import 'package:app/app/modules/home/controllers/contact_controller.dart';
 import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/home/controllers/report_controller.dart';
 import 'package:app/app/modules/home/providers/auth_provider.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:open_store/open_store.dart';
 import 'package:pusher_client/pusher_client.dart';
+import 'package:timezone/standalone.dart' as tz;
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeController extends GetxController {
   final index = 0.obs;
@@ -78,7 +84,15 @@ class HomeController extends GetxController {
 
   void showAlerts() {
     for (var alert in alerts.reversed) {
+      var now = tz.TZDateTime.now(kuwaitTimezoneLocation);
+      if (alert.deleteAt != null) {
+        if (now.isAfter(alert.deleteAt!)) {
+          continue;
+        }
+      }
+
       showAlertDialog(alert.id, alert.title, alert.description);
+      return;
     }
   }
 
@@ -99,44 +113,82 @@ class HomeController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.h),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Material(
+                padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorDarkTheme
+                          : containerColorLightTheme,
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                        color: ThemeController.to.getIsDarkMode
+                            ? greyColor.withOpacity(.39)
+                            : greyColor,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
                           SizedBox(height: 10.h),
-                          Text(
-                            'alert'.tr,
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Assets.images.png.alert.image(
+                                width: 135.w,
+                                // height: 120.h,
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 15.h),
+                          SizedBox(height: 20.h),
                           Text(
                             title ?? '',
                             style: TextStyle(
                               fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 8.h),
-                          Text(
-                            description ?? '',
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
+                          SizedBox(height: 20.h),
+                          Container(
+                            constraints: BoxConstraints(
+                              maxHeight: 350.h,
                             ),
-                            textAlign: TextAlign.center,
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: SingleChildScrollView(
+                                child: HtmlWidget(
+                                  description ?? '',
+                                  factoryBuilder: () => MyHtmlWidgetFactory(),
+                                  onTapUrl: (url) async {
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      return await launchUrl(
+                                        Uri.parse(url),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    } else {
+                                      return false;
+                                      // throw 'Could not launch $url';
+                                    }
+                                  },
+                                  textStyle: TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
+                          // Text(
+                          //   description ?? '',
+                          //   style: TextStyle(
+                          //     fontSize: 11.sp,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          //   textAlign: TextAlign.center,
+                          // ),
                           SizedBox(height: 30.h),
                           //Buttons
                           Row(
@@ -162,7 +214,10 @@ class HomeController extends GetxController {
                                                   BorderRadius.circular(8),
                                             ),
                                             // primary: mainColor,
-                                            backgroundColor: mainColor,
+                                            backgroundColor:
+                                                ThemeController.to.getIsDarkMode
+                                                    ? mainColorDarkTheme
+                                                    : mainColor,
                                           ),
                                           child: Center(
                                             child: Text(
@@ -240,15 +295,23 @@ class HomeController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.h),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Material(
+              padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorDarkTheme
+                        : containerColorLightTheme,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: ThemeController.to.getIsDarkMode
+                          ? greyColor.withOpacity(.39)
+                          : greyColor,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         SizedBox(height: 10.h),
@@ -292,7 +355,10 @@ class HomeController extends GetxController {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     // primary: mainColor,
-                                    backgroundColor: mainColor,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
                                   ),
                                   child: Center(
                                     child: Text(
@@ -340,7 +406,10 @@ class HomeController extends GetxController {
                                               //fontFamily: FontFamily.inter,
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: mainColor,
+                                              color: ThemeController
+                                                      .to.getIsDarkMode
+                                                  ? mainColorDarkTheme
+                                                  : mainColor,
                                             ),
                                           ),
                                         ),
@@ -593,7 +662,7 @@ class HomeController extends GetxController {
   }
 
   void setIndex(value) {
-    print(value);
+    // print(value);
     index.value = value;
   }
 }

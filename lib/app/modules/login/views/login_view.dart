@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +10,21 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LogoCardWidget(
-              cardHeight: 480.h,
-              subTitle: 'sign_in_to_you_account'.tr,
-              content: Container(
-                margin: EdgeInsets.only(right: 16.w, left: 16.w, top: 45.h),
-                child: Obx(
-                  () => Form(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: ThemeController.to.getIsDarkMode
+            ? backgroundColorDarkTheme
+            : backgroundColorLightTheme,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              LogoCardWidget(
+                cardHeight: 480.h,
+                subTitle: 'sign_in_to_you_account'.tr,
+                content: Container(
+                  margin: EdgeInsets.only(right: 16.w, left: 16.w, top: 45.h),
+                  child: Form(
                     key: controller.getFormKey(),
                     autovalidateMode: AutovalidateMode.disabled,
                     child: Column(
@@ -63,7 +66,9 @@ class LoginView extends GetView<LoginController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -110,11 +115,14 @@ class LoginView extends GetView<LoginController> {
                             suffixIcon: IconButton(
                               onPressed: () => controller.setObscureInput(),
                               icon: Icon(
-                                  !controller.obscureInput.value
-                                      ? Icons.remove_red_eye_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color: eyeIconColor,
-                                  size: 20),
+                                !controller.obscureInput.value
+                                    ? Icons.remove_red_eye_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? eyeIconColorDarkTheme
+                                    : eyeIconColor,
+                                size: 20,
+                              ),
                             ),
                             hintText: 'password'.tr,
                             focusedBorder: OutlineInputBorder(
@@ -127,7 +135,9 @@ class LoginView extends GetView<LoginController> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: strokeColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? greyColor.withOpacity(.39)
+                                    : strokeColor,
                                 width: 1.0,
                               ),
                             ),
@@ -156,7 +166,9 @@ class LoginView extends GetView<LoginController> {
                                         BorderRadius.all(Radius.circular(6.r))),
                                 value: controller.getSaveLogin(),
                                 onChanged: controller.setSaveLogin,
-                                activeColor: mainColor,
+                                activeColor: ThemeController.to.getIsDarkMode
+                                    ? mainColorDarkTheme
+                                    : mainColor,
                               ),
                             ),
                             SizedBox(width: 2.w),
@@ -185,7 +197,10 @@ class LoginView extends GetView<LoginController> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   // primary: mainColor,
-                                  backgroundColor: mainColor,
+                                  backgroundColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? mainColorDarkTheme
+                                          : mainColor,
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -268,24 +283,39 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
               // footer: Text('adw'),
-            ),
-            SizedBox(height: 8.h),
-            InkWell(
-              onTap: () => controller.changeLanguage(
-                  Get.locale?.languageCode.compareTo('ar') == 0 ? 'en' : 'ar'),
-              child: Text(
-                Get.locale?.languageCode.compareTo('ar') == 0
-                    ? 'English'
-                    : 'العربية',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
+              SizedBox(height: 8.h),
+              InkWell(
+                onTap: () => controller.changeLanguage(
+                    Get.locale?.languageCode.compareTo('ar') == 0
+                        ? 'en'
+                        : 'ar'),
+                child: Text(
+                  Get.locale?.languageCode.compareTo('ar') == 0
+                      ? 'English'
+                      : 'العربية',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 10.h),
-          ],
+              // SizedBox(height: 10.h),
+              // InkWell(
+              //   onTap: () => controller.changeTheme(),
+              //   child: Text(
+              //     !ThemeController.to.getIsDarkMode
+              //         ? 'Dark Mode'
+              //         : 'Light Mode',
+              //     style: TextStyle(
+              //       fontSize: 13.sp,
+              //       fontWeight: FontWeight.w500,
+              //       color: Colors.grey,
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

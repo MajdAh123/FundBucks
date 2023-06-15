@@ -1,7 +1,6 @@
 import 'package:app/app/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class LanguageController extends GetxController {

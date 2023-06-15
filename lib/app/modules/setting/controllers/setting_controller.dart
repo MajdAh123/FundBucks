@@ -1,3 +1,6 @@
+import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/home/controllers/profile_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +42,19 @@ class SettingController extends GetxController {
       presistentData.writeLocaleCode(lang);
       Get.updateLocale(Locale(lang));
     }
+  }
+
+  void changeTheme(bool? themeMode) {
+    if (themeMode == null) {
+      return;
+    }
+
+    final themeController = Get.find<ThemeController>();
+    themeController.toggleTheme();
+    // themeController.update();
+    // update();
+
+    Get.forceAppUpdate();
   }
 
   void initNotifications() {

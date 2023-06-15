@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _StockColumnWidgetState extends State<StockColumnWidget> {
 
   Color getAmountColor(double value) {
     if (value == 0) {
-      return unselectedBottomBarItemColor;
+      return unselectedBottomBarItemColorLightTheme;
     }
 
     return value > 0 ? successColor : Colors.red;
@@ -71,17 +72,24 @@ class _StockColumnWidgetState extends State<StockColumnWidget> {
                   ),
                 ),
               ),
-              backgroundColor: mainColor,
+              backgroundColor: ThemeController.to.getIsDarkMode
+                  ? bottomBarItemColorDarkTheme
+                  : mainColor,
               controller: tooltipController,
               child: widget.isDowJones
                   ? Assets.images.svg.dowJonesIcon.svg(
                       width: 28.w,
                       height: 28.h,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                     )
                   : Iconify(
                       widget.icon,
                       size: widget.iconSize,
-                      color: mainColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? bottomBarItemColorDarkTheme
+                          : mainColor,
                     ),
             ),
             SizedBox(height: 5.h),
@@ -89,11 +97,11 @@ class _StockColumnWidgetState extends State<StockColumnWidget> {
               '\$${(widget.close < 0 ? widget.close * -1 : widget.close).toStringAsFixed(2)}',
               style: TextStyle(
                 fontSize: (Get.locale?.languageCode.compareTo('ar') == 0)
-                    ? 13.sp
-                    : 12.sp,
+                    ? 14.sp
+                    : 13.sp,
                 fontWeight: FontWeight.w600,
                 color: widget.close == 0
-                    ? unselectedBottomBarItemColor
+                    ? unselectedBottomBarItemColorLightTheme
                     : !(widget.change < 0 || widget.change_p < 0)
                         ? successColor
                         : Colors.red,
@@ -107,8 +115,8 @@ class _StockColumnWidgetState extends State<StockColumnWidget> {
                   '${(widget.change < 0 ? widget.change * -1 : widget.change * 1).toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: (Get.locale?.languageCode.compareTo('ar') == 0)
-                        ? 12.sp
-                        : 11.sp,
+                        ? 13.sp
+                        : 12.sp,
                     fontWeight: FontWeight.w500,
                     color: getAmountColor(widget.change),
                     //fontFamily: FontFamily.inter,

@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/account_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
@@ -36,7 +37,9 @@ class AccountPageView extends GetView<AccountController> {
           children: [
             Container(
               height: 208.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
             ),
             const HeaderWidget(),
             const Align(
@@ -54,7 +57,9 @@ class AccountPageView extends GetView<AccountController> {
               padding: EdgeInsets.only(top: 11.h, left: 12.w, right: 12.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorDarkTheme
+                    : containerColorLightTheme,
               ),
               child: Obx(
                 () => Column(
@@ -68,7 +73,9 @@ class AccountPageView extends GetView<AccountController> {
                             fontSize: 14.sp,
                             //fontFamily: FontFamily.inter,
                             fontWeight: FontWeight.w600,
-                            color: chartTitleColor,
+                            color: ThemeController.to.getIsDarkMode
+                                ? containerColorLightTheme
+                                : chartTitleColor,
                           ),
                         ),
                         // Spacer(),
@@ -112,7 +119,9 @@ class AccountPageView extends GetView<AccountController> {
                       fontSize: 14.sp,
                       //fontFamily: FontFamily.inter,
                       fontWeight: FontWeight.w600,
-                      color: chartTitleColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? containerColorLightTheme
+                          : chartTitleColor,
                     ),
                   ),
                   SizedBox(height: 8.h),
@@ -145,9 +154,12 @@ class AccountPageView extends GetView<AccountController> {
                                         WrapCrossAlignment.center,
                                     alignment: WrapAlignment.spaceBetween,
                                     children: [
-                                      ...controller.getWallets().map((e) =>
-                                          AssetCircleWidget(
-                                              color: e.color, name: e.name)),
+                                      ...controller.getWallets().map(
+                                            (e) => AssetCircleWidget(
+                                              color: e.color,
+                                              name: e.name,
+                                            ),
+                                          ),
                                     ],
                                   ),
                                 ),
@@ -216,11 +228,13 @@ class InvestmentChangesChart extends GetView<AccountController> {
 
   LineChartData mainData() {
     return LineChartData(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.white,
+          tooltipBgColor: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : Colors.white,
           showOnTopOfTheChartBoxArea: true,
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             List<LineTooltipItem> tooltips = [];
@@ -230,7 +244,9 @@ class InvestmentChangesChart extends GetView<AccountController> {
                   '\$' + Functions.moneyFormat(element.y.toString()),
                   TextStyle(
                     fontSize: 10.sp,
-                    color: mainColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? Colors.white
+                        : bottomBarItemColorDarkTheme,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -239,7 +255,9 @@ class InvestmentChangesChart extends GetView<AccountController> {
             return tooltips;
           },
           tooltipBorder: BorderSide(
-            color: mainColor,
+            color: ThemeController.to.getIsDarkMode
+                ? bottomBarItemColorDarkTheme
+                : mainColor,
           ),
         ),
       ),
@@ -251,13 +269,17 @@ class InvestmentChangesChart extends GetView<AccountController> {
         // verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xffF4F6FA),
+            color: ThemeController.to.getIsDarkMode
+                ? chartLinesColorDarkTheme
+                : const Color(0xffF4F6FA),
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xffF4F6FA),
+            color: ThemeController.to.getIsDarkMode
+                ? chartLinesColorDarkTheme
+                : const Color(0xffF4F6FA),
             strokeWidth: 1,
           );
         },
@@ -300,7 +322,9 @@ class InvestmentChangesChart extends GetView<AccountController> {
               return Text(
                 meta.formattedValue,
                 style: TextStyle(
-                  color: Color(0xff5A5A5C),
+                  color: ThemeController.to.getIsDarkMode
+                      ? unselectedBottomBarItemColorDarkTheme
+                      : Color(0xff5A5A5C),
                   fontWeight: FontWeight.w400,
                   fontSize: 10.sp,
                 ),
@@ -311,7 +335,10 @@ class InvestmentChangesChart extends GetView<AccountController> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
+        border: Border.all(
+            color: ThemeController.to.getIsDarkMode
+                ? chartLinesColorDarkTheme
+                : Color.fromARGB(255, 255, 255, 255)),
       ),
       lineBarsData: [
         LineChartBarData(
@@ -341,15 +368,21 @@ class InvestmentChangesChart extends GetView<AccountController> {
             ),
           ],
           isCurved: true,
-          color: Color(0xFF0A71B9),
+          color: ThemeController.to.getIsDarkMode
+              ? bottomBarItemColorDarkTheme
+              : Color(0xFF0A71B9),
           barWidth: 2.h,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (p0, p1, p2, p3) {
               return FlDotCirclePainter(
-                color: mainColor,
-                strokeColor: Colors.white,
+                color: ThemeController.to.getIsDarkMode
+                    ? unselectedBottomBarItemColorDarkTheme
+                    : mainColor,
+                strokeColor: ThemeController.to.getIsDarkMode
+                    ? chartCircleColorDarkTheme
+                    : Colors.white,
                 strokeWidth: 1.5.w,
               );
             },
@@ -361,7 +394,9 @@ class InvestmentChangesChart extends GetView<AccountController> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: gradientColors.map((color) => color).toList(),
+              colors: ThemeController.to.getIsDarkMode
+                  ? gradientColorsDarkTheme.map((color) => color).toList()
+                  : gradientColorsLightTheme.map((color) => color).toList(),
             ),
           ),
         ),
@@ -371,7 +406,9 @@ class InvestmentChangesChart extends GetView<AccountController> {
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     var style = TextStyle(
-      color: Color(0xff68737d),
+      color: ThemeController.to.getIsDarkMode
+          ? unselectedBottomBarItemColorDarkTheme
+          : Color(0xff68737d),
       fontWeight: FontWeight.bold,
       fontSize: 8.sp,
     );
@@ -467,9 +504,14 @@ class InvestmentChangesChart extends GetView<AccountController> {
   }
 }
 
-List<Color> gradientColors = [
+List<Color> gradientColorsLightTheme = [
   const Color(0xff0171AA),
   const Color(0xff0171AA).withOpacity(0),
+];
+
+List<Color> gradientColorsDarkTheme = [
+  bottomBarItemColorDarkTheme,
+  bottomBarItemColorDarkTheme.withOpacity(0),
 ];
 
 class MyData {

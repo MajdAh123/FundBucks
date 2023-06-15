@@ -1,5 +1,6 @@
 import 'package:app/app/modules/home/controllers/contact_controller.dart';
 import 'package:app/app/modules/home/views/account_page_view.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:easy_refresh/easy_refresh.dart';
@@ -34,7 +35,9 @@ class ContactPageView extends GetView<ContactController> {
           children: [
             Container(
               height: 110.h,
-              color: mainColor,
+              color: ThemeController.to.getIsDarkMode
+                  ? mainColorDarkTheme
+                  : mainColor,
             ),
             PageHeaderWidget(title: 'contact'.tr),
             const DisplayTicketsTypeButtonWidget(),
@@ -60,7 +63,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
               margin: EdgeInsets.only(left: 25.w, right: 25.w, top: 90.h),
               padding: EdgeInsets.only(left: 3.w, right: 3.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: ThemeController.to.getIsDarkMode
+                    ? containerColorDarkTheme
+                    : containerColorLightTheme,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -80,7 +85,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: controller.getIndex() == 0
-                              ? controller.getColor()
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? mainColorDarkTheme
+                                  : mainColor)
                               : Colors.transparent,
                         ),
                         child: Center(
@@ -92,7 +99,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 0
                                   ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
                             ),
                           ),
                         ),
@@ -114,7 +123,7 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: controller.getIndex() == 1
-                              ? controller.getColor()
+                              ? greyColor
                               : Colors.transparent,
                         ),
                         child: Center(
@@ -126,7 +135,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 1
                                   ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
                             ),
                           ),
                         ),
@@ -148,7 +159,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: controller.getIndex() == 2
-                              ? controller.getColor()
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? secondaryColorDarkTheme
+                                  : secondaryColor)
                               : Colors.transparent,
                         ),
                         child: Center(
@@ -160,7 +173,9 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 2
                                   ? Colors.white
-                                  : unselectedBottomBarItemColor,
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
                             ),
                           ),
                         ),

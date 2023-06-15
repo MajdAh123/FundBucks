@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,9 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme
+          : backgroundColorLightTheme,
       body: LogoCardWidget(
         cardHeight: 480.h,
         subTitle: 'reset_password'.tr,
@@ -26,8 +29,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextFormField(
-                    controller:
-                        controller.passwordTextEditingController.value,
+                    controller: controller.passwordTextEditingController.value,
                     cursorColor: mainColor,
                     obscureText: controller.getIsObscureTextForPassword(),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -77,7 +79,9 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -124,8 +128,8 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       errorMaxLines: 2,
                       hintText: 'password_confirmation'.tr,
                       suffixIcon: IconButton(
-                        onPressed: controller
-                            .setIsObscureTextForPasswordConfirmation,
+                        onPressed:
+                            controller.setIsObscureTextForPasswordConfirmation,
                         icon: Icon(
                             !controller
                                     .getIsObscureTextForPasswordConfirmation()
@@ -144,7 +148,9 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
-                          color: strokeColor,
+                          color: ThemeController.to.getIsDarkMode
+                              ? greyColor.withOpacity(.39)
+                              : strokeColor,
                           width: 1.0,
                         ),
                       ),
@@ -180,7 +186,9 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             // primary: mainColor,
-                            backgroundColor: mainColor,
+                            backgroundColor: ThemeController.to.getIsDarkMode
+                                ? mainColorDarkTheme
+                                : mainColor,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

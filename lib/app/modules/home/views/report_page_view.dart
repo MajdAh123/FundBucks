@@ -1,5 +1,6 @@
 import 'package:app/app/modules/home/controllers/report_controller.dart';
 import 'package:app/app/modules/home/views/account_page_view.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/app/widgets/widgets.dart';
@@ -55,7 +56,9 @@ class ReportPageView extends GetView<ReportController> {
                   children: [
                     Container(
                       height: 110.h,
-                      color: mainColor,
+                      color: ThemeController.to.getIsDarkMode
+                          ? mainColorDarkTheme
+                          : mainColor,
                     ),
                     PageHeaderWidget(title: 'reports'.tr),
                     const ReportInfoCardWidget(),
@@ -70,7 +73,7 @@ class ReportPageView extends GetView<ReportController> {
                         : Container(
                             width: 375.w,
                             height: 120.h,
-                            margin: EdgeInsets.only(top: 325.h),
+                            margin: EdgeInsets.only(top: 360.h),
                             // padding: EdgeInsets.only(top: 30.h),
                             child: CustomPaint(
                               painter: BalanceWidgetPainter(
@@ -274,7 +277,7 @@ class ReportPageView extends GetView<ReportController> {
                             ),
                           ),
                     Container(
-                      margin: EdgeInsets.only(top: 286.h),
+                      margin: EdgeInsets.only(top: 315.h),
                       child: Row(
                         // crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -320,7 +323,7 @@ class ReportPageView extends GetView<ReportController> {
                       autovalidateMode: AutovalidateMode.disabled,
                       child: Container(
                         margin: EdgeInsets.only(
-                            left: 17.w, right: 16.w, top: 450.h),
+                            left: 17.w, right: 16.w, top: 465.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -330,7 +333,7 @@ class ReportPageView extends GetView<ReportController> {
                                 fontSize: 14.sp,
                                 //fontFamily: FontFamily.inter,
                                 fontWeight: FontWeight.w600,
-                                color: chartTitleColor,
+                                // color: chartTitleColor,
                               ),
                             ),
                             SizedBox(height: 10.h),
@@ -343,7 +346,9 @@ class ReportPageView extends GetView<ReportController> {
                                     fontSize: 12.sp,
                                     //fontFamily: FontFamily.inter,
                                     fontWeight: FontWeight.w400,
-                                    color: unselectedBottomBarItemColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : unselectedBottomBarItemColorLightTheme,
                                   ),
                                 ),
                                 SizedBox(height: 7.h),
@@ -375,12 +380,19 @@ class ReportPageView extends GetView<ReportController> {
                                         child: Iconify(
                                           Ic.twotone_date_range,
                                           size: 27,
-                                          color: mainColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? bottomBarItemColorDarkTheme
+                                                  : mainColor,
                                         ),
                                       ),
                                       suffixIconConstraints: BoxConstraints(
                                           maxWidth: 27.w, maxHeight: 27.h),
-                                      fillColor: Colors.white,
+                                      fillColor:
+                                          ThemeController.to.getIsDarkMode
+                                              ? containerColorDarkTheme
+                                              : containerColorLightTheme,
+                                      // fillColor: Colors.white,
                                       filled: true,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
@@ -392,9 +404,12 @@ class ReportPageView extends GetView<ReportController> {
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(8.r),
+                                            BorderRadius.circular(8.0),
                                         borderSide: BorderSide(
-                                          color: strokeColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
                                           width: 1.0,
                                         ),
                                       ),
@@ -420,7 +435,9 @@ class ReportPageView extends GetView<ReportController> {
                                     fontSize: 12.sp,
                                     //fontFamily: FontFamily.inter,
                                     fontWeight: FontWeight.w400,
-                                    color: unselectedBottomBarItemColor,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : unselectedBottomBarItemColorLightTheme,
                                   ),
                                 ),
                                 SizedBox(height: 7.h),
@@ -475,12 +492,18 @@ class ReportPageView extends GetView<ReportController> {
                                         child: Iconify(
                                           Ic.twotone_date_range,
                                           size: 27,
-                                          color: mainColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? bottomBarItemColorDarkTheme
+                                                  : mainColor,
                                         ),
                                       ),
                                       suffixIconConstraints: BoxConstraints(
                                           maxWidth: 27.w, maxHeight: 27.h),
-                                      fillColor: Colors.white,
+                                      fillColor:
+                                          ThemeController.to.getIsDarkMode
+                                              ? containerColorDarkTheme
+                                              : containerColorLightTheme,
                                       filled: true,
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
@@ -492,9 +515,12 @@ class ReportPageView extends GetView<ReportController> {
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(8.r),
+                                            BorderRadius.circular(8.0),
                                         borderSide: BorderSide(
-                                          color: strokeColor,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
                                           width: 1.0,
                                         ),
                                       ),
@@ -521,7 +547,10 @@ class ReportPageView extends GetView<ReportController> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   // primary: mainColor,
-                                  backgroundColor: mainColor,
+                                  backgroundColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? mainColorDarkTheme
+                                          : mainColor,
                                 ),
                                 child: Text(
                                   "search".tr,
@@ -535,8 +564,9 @@ class ReportPageView extends GetView<ReportController> {
                               ),
                             ),
                             ReportListWidget(
-                                title: 'investment_reports'.tr,
-                                marginTop: 20.h),
+                              title: 'investment_reports'.tr,
+                              marginTop: 20.h,
+                            ),
                           ],
                         ),
                       ),

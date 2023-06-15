@@ -1,3 +1,4 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,8 +27,10 @@ class OperationItemWidget extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 12.h),
         padding:
             EdgeInsets.only(left: 15.w, right: 15.w, top: 10.h, bottom: 11.h),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
           // borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -42,7 +45,9 @@ class OperationItemWidget extends StatelessWidget {
                     fontSize: 13.sp,
                     //fontFamily: FontFamily.inter,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorLightTheme
+                        : Colors.black,
                   ),
                 ),
                 Text(
@@ -51,7 +56,9 @@ class OperationItemWidget extends StatelessWidget {
                     fontSize: 13.sp,
                     //fontFamily: FontFamily.inter,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorLightTheme
+                        : Colors.black,
                   ),
                 ),
               ],
@@ -66,7 +73,9 @@ class OperationItemWidget extends StatelessWidget {
                     fontSize: 12.sp,
                     //fontFamily: FontFamily.inter,
                     fontWeight: FontWeight.w500,
-                    color: textFieldColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : textFieldColor,
                   ),
                 ),
                 Text(
@@ -75,7 +84,9 @@ class OperationItemWidget extends StatelessWidget {
                     fontSize: 12.sp,
                     //fontFamily: FontFamily.inter,
                     fontWeight: FontWeight.w500,
-                    color: textFieldColor,
+                    color: ThemeController.to.getIsDarkMode
+                        ? unselectedBottomBarItemColorDarkTheme
+                        : textFieldColor,
                   ),
                 ),
               ],

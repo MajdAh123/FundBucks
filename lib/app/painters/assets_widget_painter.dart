@@ -36,7 +36,7 @@ class AssetsWidgetPainter extends CustomPainter {
           style: TextStyle(
             fontSize: screenUtil.setSp(12),
             fontWeight: FontWeight.w500,
-            color: unselectedBottomBarItemColor,
+            color: unselectedBottomBarItemColorLightTheme,
             //fontFamily: FontFamily.inter,
           ),
         ),
@@ -77,7 +77,7 @@ class AssetsWidgetPainter extends CustomPainter {
           style: TextStyle(
             fontSize: screenUtil.setSp(12),
             fontWeight: FontWeight.w500,
-            color: unselectedBottomBarItemColor,
+            color: unselectedBottomBarItemColorLightTheme,
             //fontFamily: FontFamily.inter,
           ),
         ),
@@ -125,7 +125,7 @@ class AssetsWidgetPainter extends CustomPainter {
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w500,
-                color: unselectedBottomBarItemColor,
+                color: unselectedBottomBarItemColorLightTheme,
                 //fontFamily: FontFamily.inter,
               ),
             ),
@@ -134,7 +134,7 @@ class AssetsWidgetPainter extends CustomPainter {
           style: TextStyle(
             fontSize: 10.sp,
             fontWeight: FontWeight.w500,
-            color: unselectedBottomBarItemColor,
+            color: unselectedBottomBarItemColorLightTheme,
             //fontFamily: FontFamily.inter,
           ),
         ),

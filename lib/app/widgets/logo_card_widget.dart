@@ -1,7 +1,9 @@
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LogoCardWidget extends StatelessWidget {
   final String? title;
@@ -25,7 +27,9 @@ class LogoCardWidget extends StatelessWidget {
         children: [
           Container(
             height: 305.h,
-            color: mainColor,
+            color: ThemeController.to.getIsDarkMode
+                ? mainColorDarkTheme
+                : mainColor,
           ),
           if (title != null)
             Center(
@@ -85,11 +89,17 @@ class LogoCardWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Assets.images.svg.logo.svg(
-                width: 119.w,
-                height: 119.h,
-                fit: BoxFit.contain,
-              ),
+              child: ThemeController.to.getIsDarkMode
+                  ? Assets.images.svg.logoDark.svg(
+                      width: 119.w,
+                      height: 119.h,
+                      fit: BoxFit.contain,
+                    )
+                  : Assets.images.svg.logo.svg(
+                      width: 119.w,
+                      height: 119.h,
+                      fit: BoxFit.contain,
+                    ),
             ),
           ),
           // if (footer != null) ...[

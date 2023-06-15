@@ -1,4 +1,3 @@
-import 'package:app/app/data/data.dart';
 import 'package:app/app/modules/splash/providers/splash_provider.dart';
 import 'package:get/get.dart';
 
