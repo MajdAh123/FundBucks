@@ -71,7 +71,7 @@ class WithdrawFormWidget extends GetView<OperationController> {
                                 ? unselectedBottomBarItemColorDarkTheme
                                 : Colors.black)
                             : (ThemeController.to.getIsDarkMode
-                                ? secondaryColorDarkTheme
+                                ? bottomBarItemColorDarkTheme
                                 : secondaryColor),
                       ),
                       border: OutlineInputBorder(
