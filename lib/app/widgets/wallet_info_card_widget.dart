@@ -85,7 +85,7 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                     ColumnCardWidget(
                       title: 'current_value'.tr,
                       value:
-                          '\$${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.currentValue!) != 0 ? controller.homeController.getUser()!.currentValue! : controller.homeController.getUser()!.balance!)}',
+                          '${Functions.getCurrency(controller.homeController.getUser())}${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.currentValue!) != 0 ? controller.homeController.getUser()!.currentValue! : controller.homeController.getUser()!.balance!)}',
                       // maxWidth: 150.w,
                       isCenter: true,
                       textValueSize: 17.sp,
@@ -105,8 +105,9 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                       ColumnCardWidget(
                         title: 'income_value'.tr,
                         textValueSize: 16.sp,
+                        homePageSpace: true,
                         value:
-                            '\$${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.returnValue!) < 0 ? (double.parse(controller.homeController.getUser()!.returnValue!) * -1).toString() : controller.homeController.getUser()!.returnValue!)}',
+                            '${Functions.getCurrency(controller.homeController.getUser(), null, false)}${Functions.moneyFormat(double.parse(controller.homeController.getUser()!.returnValue!) < 0 ? (double.parse(controller.homeController.getUser()!.returnValue!) * -1).toString() : controller.homeController.getUser()!.returnValue!)}',
                         beforeValue:
                             !(Get.locale?.languageCode.compareTo('ar') == 0)
                                 ? Iconify(

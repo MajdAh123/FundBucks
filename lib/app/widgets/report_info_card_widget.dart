@@ -55,7 +55,8 @@ class ReportInfoCardWidget extends GetView<ReportController> {
                   children: [
                     ColumnCardWidget(
                       title: 'deposits'.tr,
-                      value: '\$' +
+                      value: Functions.getCurrency(
+                              controller.homeController.getUser()) +
                           Functions.moneyFormat(
                               controller.getTotalDeposits().toString()),
                       color: controller.getTotalDeposits() != 0
@@ -67,7 +68,8 @@ class ReportInfoCardWidget extends GetView<ReportController> {
                     ),
                     ColumnCardWidget(
                       title: 'withdraws'.tr,
-                      value: '\$' +
+                      value: Functions.getCurrency(
+                              controller.homeController.getUser()) +
                           Functions.moneyFormat(
                               controller.getTotalWithdraws().toString()),
                       color: controller.getTotalWithdraws() != 0

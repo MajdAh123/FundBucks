@@ -1,5 +1,5 @@
 name: app
-version: 1.1.1+10
+version: 1.2.0+11
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -10,17 +10,17 @@ dependencies:
   audioplayers: 3.0.1
   cached_network_image: 3.2.3
   cupertino_icons: ^1.0.2
+  dark_light_button: ^0.0.2
   date_time_picker: 2.1.0
   device_info_plus: 8.0.0
   dio: 5.0.0
   dotted_border: 2.0.0+3
   downloads_path_provider_28: 0.1.2
   easy_refresh: 3.3.0+1
-  # firebase_analytics: 
   firebase_core: 2.13.1
   firebase_messaging: 14.6.1
   fl_chart: 0.55.2
-  fl_country_code_picker: 0.0.4
+  fl_country_code_picker: 0.1.4
   flutter:
     sdk: flutter
   flutter_linkify: 5.0.2
@@ -64,9 +64,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# dependency_overrides:
-#   iconify_flutter:
-#     git: https://github.com/pnghai/iconify_flutter.git
+dependency_overrides:
+  intl: 0.18.0
+
 flutter_icons:
   android: launcher_icon
   image_path: assets/images/png/logo-app-2.png
@@ -88,6 +88,7 @@ flutter:
     - assets/images/png/
     - assets/images/svg/
     - assets/sounds/
+    - shorebird.yaml
   fonts:
     - family: Inter
       fonts:

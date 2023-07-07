@@ -7,16 +7,18 @@ import 'package:get/get.dart';
 class AssetsWidgetPainter extends CustomPainter {
   final double? lineWidth;
   final List<AssetModel> list;
+  final String currency;
 
   AssetsWidgetPainter({
     required this.list,
+    required this.currency,
   }) : lineWidth = 24.h;
 
   @override
   void paint(Canvas canvas, Size size) {
     final screenUtil = ScreenUtil();
 
-    double radius = 12;
+    double radius = 45;
     var paint = Paint();
 
     var x = 0.0;
@@ -59,8 +61,6 @@ class AssetsWidgetPainter extends CustomPainter {
     double currentMargin = marginAfterItem / 2.w;
 
     for (var asset in list) {
-      bool isFirst = list.indexOf(asset) == 0 || firstRounded;
-
       // Here we will draw the circles
       final circleRadius = 5.h;
       var center = Offset(oneAssetItemWidth + (circleRadius / 2), 0);
@@ -87,14 +87,10 @@ class AssetsWidgetPainter extends CustomPainter {
 
       textPainter.layout();
 
-      // textPainter.paint(
-      //   canvas,
-      //   Offset(oneAssetItemWidth + (maxTextPainterWidth / 2.w),
-      //       -(textPainter.height / 2 + circleRadius / 2) + 2.5.h),
-      // );
-
       // draw the rectangles
       bool isLast = list.indexOf(asset) == (list.length - 1);
+      bool isFirst = list.first == (asset);
+
       paint.color = asset.color;
       // firstRounded = asset.percent > 0 ? true : false;
       var rect = Rect.fromLTWH(x, y + 7.h, width * asset.percent, 24.h);
@@ -121,7 +117,7 @@ class AssetsWidgetPainter extends CustomPainter {
         text: TextSpan(
           children: [
             TextSpan(
-              text: '\$${asset.value}\n',
+              text: '${currency}{asset.value}\n',
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w500,

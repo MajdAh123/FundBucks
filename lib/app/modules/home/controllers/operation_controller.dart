@@ -332,6 +332,11 @@ class OperationController extends GetxController {
         final createPortfolioModel =
             CreatePortfolio.fromJson(baseSuccessModel.data!);
         currencies.value = createPortfolioModel.currencies ?? [];
+        if (currencies.isNotEmpty) {
+          setCurrencySelect(Get.locale?.languageCode.compareTo('ar') == 0
+              ? homeController.getUser()?.currency?.currencyId
+              : homeController.getUser()?.currency?.currencySign);
+        }
       }
       setIsLoading(false);
     }, onError: (error, stacktrace) {

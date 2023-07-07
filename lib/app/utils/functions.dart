@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:app/app/data/models/models.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -36,19 +38,6 @@ class Functions {
     MoneyFormatter fmf = MoneyFormatter(amount: p);
 
     return fmf.output.nonSymbol;
-
-    // price = p != 0 ? double.parse(price).toString() : '0';
-    // if (p == 0) {
-    //   return '0.00';
-    // }
-
-    // if (price.length > 2) {
-    //   var value = price;
-    //   value = value.replaceAll(RegExp(r'\D'), '');
-    //   value = value.replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',');
-    //   return value;
-    // }
-    // return price;
   }
 
   static String getUserAvatar(String avatar) {
@@ -74,6 +63,28 @@ class Functions {
     return (firstname ?? '') + ' ' + (lastname ?? '');
   }
 
+  static String getCurrency([User? user, String? currency, bool space = true]) {
+    log("User: ${user?.currency}");
+    if (user == null && currency == null) {
+      return '\$' + (space ? ' ' : '');
+    }
+
+    if (currency != null) {
+      return currency + (space ? ' ' : '');
+    }
+
+    if (user == null) {
+      return '\$' + (space ? ' ' : '');
+    }
+
+    if (user.currency == null) {
+      return '\$' + (space ? ' ' : '');
+    }
+
+    // if (user.currency?.currencySign!.compareTo('\$') == 0) {}
+    return '${user.currency?.currencySign}' + (space ? ' ' : '');
+  }
+
   static String getAmountOperation(
       num amount, num dollarAmount, String? currency) {
     if (currency == null) {
@@ -82,10 +93,15 @@ class Functions {
     return currency + ' ' + moneyFormat(amount.toString());
   }
 
-  static String getAmountReport(double amount) {
+  static String getAmountReport(double amount, String? currency) {
+    if (currency == null) {
+      return Get.locale?.languageCode.compareTo('ar') == 0
+          ? moneyFormat(amount.toString()) + ' \$'
+          : '\$ ' + moneyFormat(amount.toString());
+    }
     return Get.locale?.languageCode.compareTo('ar') == 0
-        ? moneyFormat(amount.toString()) + ' \$'
-        : '\$ ' + moneyFormat(amount.toString());
+        ? moneyFormat(amount.toString()) + ' ${currency}'
+        : '${currency} ' + moneyFormat(amount.toString());
   }
 
   static String getLatestMessage(bool isAdmin, String message) {

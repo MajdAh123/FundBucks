@@ -9,6 +9,7 @@ import 'package:app/app/utils/utils.dart';
 import 'package:app/firebase_options.dart';
 import 'package:app/generated/generated.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,6 +60,8 @@ Future<void> main() async {
         builder: (context, child) {
           final languageController = Get.find<LanguageController>();
           languageController.setLanguage('ar');
+          final brightness = MediaQuery.platformBrightnessOf(context);
+
 
           final themeController = Get.find<ThemeController>();
 
@@ -70,9 +73,12 @@ Future<void> main() async {
               getPages: AppPages.routes,
               fallbackLocale: Locale(Get.deviceLocale?.languageCode ?? 'en'),
               translationsKeys: AppTranslation.translations,
+              // localizationsDelegates: [
+              //   CountryLocalizations.delegate,
+              // ],
               theme: themeController.lightTheme,
               darkTheme: themeController.darkTheme,
-              themeMode: (presistentData.getDarkMode() ?? false)
+              themeMode: (presistentData.getDarkMode() ?? (brightness == Brightness.dark))
                   ? ThemeMode.dark
                   : ThemeMode.light,
               home: GetBuilder<GlobalNotificationController>(

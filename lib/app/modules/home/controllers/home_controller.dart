@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
@@ -447,6 +448,7 @@ class HomeController extends GetxController {
         try {
           final User? user = User.fromJson(value.body);
           if (user != null) {
+            log("User Api: ${user}");
             setUser(user);
             getIsThereNewNotification();
             websocket();

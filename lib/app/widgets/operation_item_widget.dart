@@ -52,6 +52,7 @@ class OperationItemWidget extends StatelessWidget {
                 ),
                 Text(
                   amount,
+                  textDirection: TextDirection.ltr,
                   style: TextStyle(
                     fontSize: 13.sp,
                     //fontFamily: FontFamily.inter,

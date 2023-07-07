@@ -1,6 +1,7 @@
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:dark_light_button/dark_light_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
     return Container(
       margin: EdgeInsets.only(left: 10.w),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,6 +75,16 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
               )
             ],
           ),
+          DarlightButton(
+            type: Darlights.DarlightTwo,
+            onChange: (ThemeMode theme) {
+              controller.changeTheme(theme == ThemeMode.dark);
+            },
+            options: DarlightTwoOption(
+              lightBackGroundColor: Colors.transparent,
+              darkBackGroundColor: Colors.transparent,
+            ),
+          )
         ],
       ),
     );

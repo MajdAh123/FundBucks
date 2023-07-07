@@ -51,8 +51,6 @@ class SettingController extends GetxController {
 
     final themeController = Get.find<ThemeController>();
     themeController.toggleTheme();
-    // themeController.update();
-    // update();
 
     Get.forceAppUpdate();
   }

@@ -44,7 +44,11 @@ class EditProfileController extends GetxController {
 
   final homeController = Get.find<HomeController>();
 
-  final countryTextFieldController = FlCountryCodePicker();
+  final countryTextFieldController = FlCountryCodePicker(
+    localize: true,
+    showSearchBar: false,
+  );
+  
   final countryTextEditController = TextEditingController().obs;
 
   final passwordTextEditController = TextEditingController().obs;
@@ -107,6 +111,12 @@ class EditProfileController extends GetxController {
     final code = await countryTextFieldController.showPicker(
       context: Get.context!,
       scrollToDeviceLocale: true,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? containerColorDarkTheme
+          : containerColorLightTheme,
+      // barrierColor: ThemeController.to.getIsDarkMode
+      //     ? containerColorDarkTheme
+      //     : containerColorLightTheme,
     );
     countryCode.value = code?.code ?? '';
     countryTextEditController.value.text = code?.name ?? '';

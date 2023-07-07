@@ -92,7 +92,7 @@ class ReportPageView extends GetView<ReportController> {
                                       Container(
                                         margin: EdgeInsets.only(top: 8.5.h),
                                         child: Text(
-                                          '\$' +
+                                          Functions.getCurrency(controller.homeController.getUser()) +
                                               Functions.moneyFormat(controller
                                                           .getInvestmentDifference() <
                                                       0
@@ -176,11 +176,11 @@ class ReportPageView extends GetView<ReportController> {
                                         Get.locale?.languageCode
                                                     .compareTo('ar') ==
                                                 0
-                                            ? '\$' +
+                                            ? Functions.getCurrency(controller.homeController.getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getEndInvestment()
                                                     .toString())
-                                            : '\$' +
+                                            : Functions.getCurrency(controller.homeController.getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getStartInvestment()
                                                     .toString()),
@@ -248,11 +248,11 @@ class ReportPageView extends GetView<ReportController> {
                                         Get.locale?.languageCode
                                                     .compareTo('ar') ==
                                                 0
-                                            ? '\$' +
+                                            ? Functions.getCurrency(controller.homeController.getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getStartInvestment()
                                                     .toString())
-                                            : '\$' +
+                                            : Functions.getCurrency(controller.homeController.getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getEndInvestment()
                                                     .toString()),

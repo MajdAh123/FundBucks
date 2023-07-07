@@ -74,9 +74,10 @@ class OperationListWidget extends GetView<OperationController> {
                                   .getUser()
                                   ?.bankUserId,
                               amount: Functions.getAmountOperation(
-                                  e.amount ?? 0,
-                                  e.amountDollar ?? 0,
-                                  e.currency),
+                                e.amount ?? 0,
+                                e.amountDollar ?? 0,
+                                e.currency,
+                              ),
                               date: e.fromAdmin!
                                   ? intl.DateFormat(Functions.getDateStyle())
                                       .format(e.createdAt!)
@@ -117,9 +118,10 @@ class OperationListWidget extends GetView<OperationController> {
                                     .getUser()
                                     ?.bankUserId,
                                 amount: Functions.getAmountOperation(
-                                    e.amount ?? 0,
-                                    e.amountDollar ?? 0,
-                                    e.currency),
+                                  e.amount ?? 0,
+                                  e.amountDollar ?? 0,
+                                  e.currency,
+                                ),
                                 date: intl.DateFormat(Functions.getDateStyle())
                                     .format(e.createdAt!)
                                     .toString(),

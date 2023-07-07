@@ -7,9 +7,12 @@ import 'package:get/get.dart';
 
 class AssetValuePercentWidget extends StatelessWidget {
   final AssetModel model;
+  final String currency;
+
   const AssetValuePercentWidget({
     Key? key,
     required this.model,
+    required this.currency,
   }) : super(key: key);
 
   @override
@@ -40,7 +43,8 @@ class AssetValuePercentWidget extends StatelessWidget {
           ),
         ),
         Text(
-          '\$${Functions.moneyFormat(model.value.toStringAsFixed(2))}',
+          '${currency}${Functions.moneyFormat(model.value.toStringAsFixed(2))}',
+          textDirection: TextDirection.ltr,
           style: TextStyle(
             fontSize:
                 (Get.locale?.languageCode.compareTo('ar') == 0) ? 11.sp : 10.sp,

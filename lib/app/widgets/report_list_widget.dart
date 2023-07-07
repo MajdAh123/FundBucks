@@ -58,6 +58,8 @@ class ReportListWidget extends GetView<ReportController> {
                               icon: controller
                                   .getIcon(e.returnPercent?.toDouble() ?? 0),
                               notes: e.notes ?? '',
+                              currency: Functions.getCurrency(
+                                  controller.homeController.getUser()),
                               amount: e.balance?.toDouble() ?? 0,
                               totalAmount: e.totalValue?.toDouble() ?? 0,
                               returnPercent: e.returnPercent?.toDouble() ?? 0,

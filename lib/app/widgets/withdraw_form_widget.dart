@@ -256,7 +256,8 @@ class WithdrawFormWidget extends GetView<OperationController> {
                         )
                         .toList(),
                   ],
-                  onChanged: controller.setCurrencySelect,
+                  // onChanged: controller.setCurrencySelect,
+                  onChanged: null,
                 ),
               ),
             ),

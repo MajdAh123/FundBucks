@@ -136,6 +136,8 @@ class AccountPageView extends GetView<AccountController> {
                             list: Get.locale?.languageCode.compareTo('ar') == 0
                                 ? controller.getWallets().reversed.toList()
                                 : controller.getWallets(),
+                            currency: Functions.getCurrency(
+                                controller.homeController.getUser()),
                           ),
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,15 +169,24 @@ class AccountPageView extends GetView<AccountController> {
                               SizedBox(
                                 width: 340.w,
                                 child: Wrap(
-                                  spacing: 8.w,
-                                  runSpacing: 6.h,
+                                  spacing: 6.w,
+                                  runSpacing: 8.h,
                                   runAlignment: WrapAlignment.center,
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   alignment: WrapAlignment.spaceBetween,
                                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    ...controller.getWallets().map((e) =>
-                                        AssetValuePercentWidget(model: e)),
+                                    ...controller
+                                        .getWallets()
+                                        .map((e) => AssetValuePercentWidget(
+                                              model: e,
+                                              currency: Functions.getCurrency(
+                                                controller.homeController
+                                                    .getUser(),
+                                                null,
+                                                false,
+                                              ),
+                                            )),
                                   ],
                                 ),
                               ),
@@ -241,7 +252,8 @@ class InvestmentChangesChart extends GetView<AccountController> {
             for (var element in touchedSpots) {
               tooltips.add(
                 LineTooltipItem(
-                  '\$' + Functions.moneyFormat(element.y.toString()),
+                  Functions.getCurrency(controller.homeController.getUser()) +
+                      Functions.moneyFormat(element.y.toString()),
                   TextStyle(
                     fontSize: 10.sp,
                     color: ThemeController.to.getIsDarkMode

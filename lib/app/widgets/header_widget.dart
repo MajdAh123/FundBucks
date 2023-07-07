@@ -30,7 +30,7 @@ class HeaderWidget extends GetView<AccountController> {
                         HeaderColumnWidget(
                           title: '${"capital".tr}:',
                           value:
-                              '\$${Functions.moneyFormat(controller.homeController.getUser()!.balance ?? '')}',
+                              '${Functions.getCurrency(controller.homeController.getUser())}${Functions.moneyFormat(controller.homeController.getUser()!.balance ?? '')}',
                           isRight: false,
                           textWidth: 15.sp,
                         ),

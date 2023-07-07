@@ -14,6 +14,7 @@ class ColumnCardWidget extends StatefulWidget {
   final double? maxWidth;
   final bool isCenter;
   final bool isRight;
+  final bool homePageSpace;
   final double? textValueSize;
   const ColumnCardWidget({
     super.key,
@@ -25,6 +26,7 @@ class ColumnCardWidget extends StatefulWidget {
     this.maxWidth,
     this.isCenter = false,
     this.isRight = false,
+    this.homePageSpace = false,
     this.textValueSize = 15,
   });
 
@@ -49,6 +51,7 @@ class _ColumnCardWidgetState extends State<ColumnCardWidget> {
         width: widget.isCenter ? 314.w : (314.w / 2.5.w),
         // constraints: BoxConstraints(maxWidth: widget.maxWidth ?? 85.w),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: widget.isCenter
               ? CrossAxisAlignment.center
               : Get.locale?.languageCode.compareTo('ar') == 0
@@ -75,6 +78,7 @@ class _ColumnCardWidgetState extends State<ColumnCardWidget> {
             ),
             SizedBox(height: 3.h),
             Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: widget.isCenter
                   ? MainAxisAlignment.center
                   : Get.locale?.languageCode.compareTo('ar') == 0
@@ -113,20 +117,29 @@ class _ColumnCardWidgetState extends State<ColumnCardWidget> {
                     onTap: () {
                       tooltipController.showTooltip();
                     },
-                    child: Text(
-                      widget.value,
-                      style: TextStyle(
-                        fontSize: widget.textValueSize?.sp,
-                        //fontFamily: FontFamily.inter,
-                        fontWeight: FontWeight.w700,
-                        color: widget.color,
+                    child: Container(
+                      // width: widget.isCenter ? double.maxFinite : 130.w,
+                      constraints: BoxConstraints(
+                          maxWidth: widget.isCenter
+                              ? 300.w
+                              : widget.homePageSpace
+                                  ? 110.w
+                                  : 120.w),
+                      child: Text(
+                        widget.value,
+                        style: TextStyle(
+                          fontSize: widget.textValueSize?.sp,
+                          //fontFamily: FontFamily.inter,
+                          fontWeight: FontWeight.w700,
+                          color: widget.color,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        // softWrap: true,
+                        textAlign: TextAlign.left,
+                        // textDirection:
+                        //     widget.isRight ? TextDirection.ltr : TextDirection.rtl,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.visible,
-                      softWrap: true,
-                      textAlign: TextAlign.left,
-                      // textDirection:
-                      //     widget.isRight ? TextDirection.ltr : TextDirection.rtl,
                     ),
                   ),
                 ),

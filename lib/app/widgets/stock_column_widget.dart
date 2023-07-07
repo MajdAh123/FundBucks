@@ -112,7 +112,7 @@ class _StockColumnWidgetState extends State<StockColumnWidget> {
             Wrap(
               children: [
                 Text(
-                  '${(widget.change < 0 ? widget.change * -1 : widget.change * 1).toStringAsFixed(2)}',
+                  '\$${(widget.change < 0 ? widget.change * -1 : widget.change * 1).toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: (Get.locale?.languageCode.compareTo('ar') == 0)
                         ? 13.sp

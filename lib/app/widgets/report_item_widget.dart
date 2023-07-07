@@ -12,6 +12,7 @@ class ReportItemWidget extends StatelessWidget {
   final double returnValue;
   final String from;
   final String to;
+  final String currency;
   final Widget icon;
   const ReportItemWidget({
     Key? key,
@@ -23,6 +24,7 @@ class ReportItemWidget extends StatelessWidget {
     required this.from,
     required this.to,
     required this.icon,
+    required this.currency,
   }) : super(key: key);
 
   @override
@@ -67,7 +69,7 @@ class ReportItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    Functions.getAmountReport(amount),
+                    Functions.getAmountReport(amount, currency),
                     style: TextStyle(
                       fontSize: 13.sp,
                       //fontFamily: FontFamily.inter,
@@ -78,7 +80,7 @@ class ReportItemWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    Functions.getAmountReport(totalAmount),
+                    Functions.getAmountReport(totalAmount, currency),
                     style: TextStyle(
                       fontSize: 13.sp,
                       //fontFamily: FontFamily.inter,
@@ -133,7 +135,7 @@ class ReportItemWidget extends StatelessWidget {
                         ? inActiveReportBackground
                         : activeBackgroundColor),
                 text:
-                    '( %${getValue(returnPercent)} ) ${Functions.getAmountReport(getValue(returnValue, false))}',
+                    '( %${getValue(returnPercent)} ) ${Functions.getAmountReport(getValue(returnValue, false), currency)}',
                 textColor: returnPercent == 0
                     ? greyReportText
                     : (returnPercent < 0

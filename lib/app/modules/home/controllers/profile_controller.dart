@@ -213,6 +213,17 @@ class ProfileController extends GetxController {
     );
   }
 
+  void changeTheme(bool? themeMode) {
+    if (themeMode == null) {
+      return;
+    }
+
+    final themeController = Get.find<ThemeController>();
+    themeController.toggleTheme();
+
+    Get.forceAppUpdate();
+  }
+
   @override
   void onReady() {
     super.onReady();

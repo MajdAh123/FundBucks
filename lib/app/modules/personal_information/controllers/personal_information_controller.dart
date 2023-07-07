@@ -2,6 +2,7 @@ import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/create_account/controllers/create_account_controller.dart';
 import 'package:app/app/modules/personal_information/providers/user_provider.dart';
 import 'package:app/app/modules/portfolio_information/controllers/portfolio_information_controller.dart';
+import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,11 @@ class PersonalInformationController extends GetxController {
 
   var genderSelect = ''.obs;
 
-  final countryTextFieldController = FlCountryCodePicker();
+  final countryTextFieldController = FlCountryCodePicker(
+    localize: true,
+    showSearchBar: false,
+  );
+
   final countryTextEditController = TextEditingController().obs;
 
   final firstnameTextEditController = TextEditingController().obs;
@@ -58,6 +63,9 @@ class PersonalInformationController extends GetxController {
         .showPicker(
       context: Get.context!,
       scrollToDeviceLocale: false,
+      backgroundColor: ThemeController.to.getIsDarkMode
+          ? containerColorDarkTheme
+          : containerColorLightTheme,
       initialSelectedLocale: 'SA',
     )
         .then((value) {

@@ -313,6 +313,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dark_light_button:
+    dependency: "direct main"
+    description:
+      name: dark_light_button
+      sha256: "46b6685e30415a54f13066f7572297d602f3ab687431e57f77653af24caad1e4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   dart_countries:
     dependency: transitive
     description:
@@ -501,10 +509,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_country_code_picker
-      sha256: feb4108f876f22887ad97bd3a16583e26e32e04d3262091229379106cbf43ce9
+      sha256: "223483758d707a5dc05a4eabf543965199435558d7bfe1255840f98aa812665f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4"
+    version: "0.1.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -590,6 +598,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -786,13 +799,13 @@ packages:
     source: hosted
     version: "1.1.0"
   intl:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: intl
-      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
       url: "https://pub.dev"
     source: hosted
-    version: "0.17.0"
+    version: "0.18.0"
   io:
     dependency: transitive
     description:
@@ -1224,6 +1237,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  sprung:
+    dependency: transitive
+    description:
+      name: sprung
+      sha256: "54322638f5e393d2b808175f7eadbaa4836a4425456e98d93c3d676dc56ebdf1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   sqflite:
     dependency: transitive
     description:
