@@ -1,5 +1,6 @@
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/create_account/controllers/create_account_controller.dart';
+import 'package:app/app/modules/login/controllers/login_controller.dart';
 import 'package:app/app/modules/personal_information/providers/user_provider.dart';
 import 'package:app/app/modules/portfolio_information/controllers/portfolio_information_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
@@ -175,8 +176,11 @@ class PersonalInformationController extends GetxController {
           message: 'registered_successfully'.tr,
           duration: const Duration(seconds: defaultSnackbarDuration),
         ));
-        
+
+
         Get.offAllNamed('/login', arguments: [username, password]);
+        final loginController = Get.find<LoginController>();
+        loginController.setUsernameAndPasswordTextEditing(username, password);
 
         // Timer(Duration(milliseconds: 300),
         //     () => Get.delete<MainPageController>());

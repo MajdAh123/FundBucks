@@ -8,6 +8,6 @@ class LoginBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<UserProvider>(() => UserProvider());
     Get.put<LoginController>(LoginController(userProvider: Get.find()),
-        permanent: false);
+        permanent: true);
   }
 }

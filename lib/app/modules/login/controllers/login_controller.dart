@@ -124,6 +124,12 @@ class LoginController extends GetxController {
     }
   }
 
+  void setUsernameAndPasswordTextEditing(username, password) {
+    log("username: $username, password: $password");
+    usernameOrEmailTextEditingController.value.text = username;
+    passwordTextEditingController.value.text = password;
+  }
+
   void getRememberMe() {
     if (presistentData.getRememberMe() != null) {
       if (presistentData.getRememberMe()!) {
@@ -540,7 +546,7 @@ class LoginController extends GetxController {
                                         onPressed: () {
                                           // Get.clo(1);
                                           if (Get.isDialogOpen ?? false) {
-                                            Get.back(closeOverlays: true);
+                                            Get.close(1);
                                           }
                                         },
                                         style: TextButton.styleFrom(
