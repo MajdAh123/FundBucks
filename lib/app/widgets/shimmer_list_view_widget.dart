@@ -16,11 +16,12 @@ class ShimmerListViewWidget extends StatelessWidget {
       shrinkWrap: true,
       primary: false,
       itemCount: 8,
+      padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
         return Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 0.h),
+              margin: EdgeInsets.fromLTRB(10.w, 20.h, 20.w, 0.h),
               child: Shimmer.fromColors(
                 highlightColor: Colors.white,
                 baseColor: ThemeController.to.getIsDarkMode

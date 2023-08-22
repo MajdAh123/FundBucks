@@ -46,9 +46,29 @@ class EditProfileController extends GetxController {
 
   final countryTextFieldController = FlCountryCodePicker(
     localize: true,
-    showSearchBar: false,
+    showSearchBar: true,
+    title: Container(
+      margin: EdgeInsets.symmetric(vertical: 18.h, horizontal: 10.w),
+      child: Text(
+        'select_country'.tr,
+        style: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    searchBarDecoration: InputDecoration(
+      filled: true,
+      fillColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme.withOpacity(0.7)
+          : backgroundColorLightTheme,
+      hintText: 'search_by_country'.tr,
+      hintStyle: TextStyle(
+        color: ThemeController.to.getIsDarkMode ? textFieldColor : greyColor,
+      ),
+    ),
   );
-  
+
   final countryTextEditController = TextEditingController().obs;
 
   final passwordTextEditController = TextEditingController().obs;
@@ -111,6 +131,7 @@ class EditProfileController extends GetxController {
     final code = await countryTextFieldController.showPicker(
       context: Get.context!,
       scrollToDeviceLocale: true,
+      // initialSelectedLocale: 'ar',
       backgroundColor: ThemeController.to.getIsDarkMode
           ? containerColorDarkTheme
           : containerColorLightTheme,
@@ -118,14 +139,17 @@ class EditProfileController extends GetxController {
       //     ? containerColorDarkTheme
       //     : containerColorLightTheme,
     );
-    countryCode.value = code?.code ?? '';
-    countryTextEditController.value.text = code?.name ?? '';
-    countryDialCode.value = code?.dialCode ?? '';
 
-    if (code != null) {
-      // phoneNumberController.value.selectedCountry =
-      //     phoneNumberController.value.getCountryByCountryCode(code.code);
-    }
+    if (code == null) return;
+
+    countryCode.value = code.code;
+    countryTextEditController.value.text = code.name;
+    countryDialCode.value = code.dialCode;
+
+    // if (code != null) {
+    // phoneNumberController.value.selectedCountry =
+    //     phoneNumberController.value.getCountryByCountryCode(code.code);
+    // }
 
     Get.focusScope?.unfocus();
   }

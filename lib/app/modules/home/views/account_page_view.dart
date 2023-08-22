@@ -33,6 +33,7 @@ class AccountPageView extends GetView<AccountController> {
       },
       onLoad: () async {},
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         child: Stack(
           children: [
             Container(

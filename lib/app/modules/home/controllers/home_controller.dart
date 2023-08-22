@@ -13,10 +13,12 @@ import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/assets.gen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:open_store/open_store.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:timezone/standalone.dart' as tz;
@@ -38,6 +40,8 @@ class HomeController extends GetxController {
   final AuthProvider authProvider;
 
   HomeController({required this.authProvider});
+
+  // final contactController = Get.find<ContactController>();
 
   var channel = null;
 
@@ -264,12 +268,24 @@ class HomeController extends GetxController {
     authProvider.checkUpdate().then((value) {
       if (value.statusCode == 200) {
         print(value.body);
-        if (value.body['data']['version'] == null) {
+        final isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+
+        if ((isAndroid
+                ? value.body['data']['version']
+                : value.body['data']['apple_version']) ==
+            null) {
           return;
         }
-        newAppVersion.value = value.body['data']['version'] as String;
-        newAppDesc.value = (value.body['data']['desc'] ?? '') as String;
-        mustUpdate.value = value.body['data']['must_update'] as bool;
+        newAppVersion.value = (isAndroid
+            ? value.body['data']['version']
+            : value.body['data']['apple_version']) as String;
+        newAppDesc.value = ((isAndroid
+                ? value.body['data']['desc']
+                : value.body['data']['apple_desc']) ??
+            '') as String;
+        mustUpdate.value = (isAndroid
+            ? value.body['data']['must_update']
+            : value.body['data']['apple_must_update']) as bool;
         appleAppId.value = (value.body['data']['apple_app_id'] ?? '') as String;
 
         isThereNewUpdate.value = checkIsThereNewUpdate(newAppVersion.value);
@@ -664,7 +680,31 @@ class HomeController extends GetxController {
   }
 
   void setIndex(value) {
-    // print(value);
     index.value = value;
+    if (value == 3) {
+      final contactController = Get.find<ContactController>();
+      if (contactController.checkIfTheresANewMessage()) {
+        contactController.setIndex(1);
+        // TODO: Open the ticket page if the message on one ticket
+        if (contactController.checkIfMultiTicketMessages()) return;
+        final index = contactController.getNewTicketHaveMessage();
+        if (index == -1) return;
+
+        final ticket = contactController.getTicket(index);
+        if (ticket == null) return;
+
+        Get.toNamed('/ticket', arguments: [
+          index, // 0
+          'ticket'.trParams({'id': ticket.ticket!}), // 1
+          ticket.name, // 2
+          ticket.subject, // 3
+          intl.DateFormat('yyyy-MM-dd h:m a')
+              .format(ticket.createdAt ?? tz.TZDateTime.now(kuwaitTimezoneLocation))
+              .toString(), // 4
+          false, // 5
+          ticket.status, // 6
+        ]);
+      }
+    }
   }
 }

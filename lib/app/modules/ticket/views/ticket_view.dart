@@ -42,11 +42,6 @@ class TicketView extends GetView<TicketController> {
                     return controller.simpleChoice.map((String choice) {
                       return PopupMenuItem(
                         value: choice,
-                        // onTap: () {
-                        //   if (controller.simpleChoice.indexOf(choice) == 0) {
-                        //     controller.showDetailsDialog();
-                        //   }
-                        // },
                         child: Text(
                           choice,
                           style: TextStyle(

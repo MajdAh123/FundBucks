@@ -7,6 +7,7 @@ import 'package:app/app/utils/colors.dart';
 import 'package:app/app/utils/extension.dart';
 import 'package:app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,9 @@ class AccountController extends GetxController {
   });
 
   final homeController = Get.find<HomeController>();
+
+  final ScrollController scrollController = ScrollController();
+
   var stock = Stocks().obs;
   var chart = Chart().obs;
 
@@ -178,6 +182,14 @@ class AccountController extends GetxController {
         }
       }
     });
+  }
+
+  void scrollToItem() {
+    scrollController.animateTo(
+      700.h, // Adjust this value to match the position of the item you want to scroll to
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override

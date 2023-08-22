@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
@@ -6,6 +7,7 @@ import 'package:app/app/modules/login/providers/user_provider.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,12 +78,10 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    initArgs();
-    // checkUpdate();
-    initTooManyAttempts();
-    // navigateBasedOnLogin();
-    getRememberMe();
     getDeviceInfo();
+    initArgs();
+    initTooManyAttempts();
+    getRememberMe();
     setData();
     super.onInit();
   }
@@ -113,8 +113,13 @@ class LoginController extends GetxController {
 
   void initArgs() {
     if (Get.arguments != null) {
-      if (Get.arguments[0] != null) {
+      log(Get.arguments.toString());
+      if (Get.arguments[0] != null && Get.arguments[0] is bool) {
         createAccountChoice.value = Get.arguments[0];
+      } else {
+        log(Get.arguments.toString());
+        usernameOrEmailTextEditingController.value.text = Get.arguments[0];
+        passwordTextEditingController.value.text = Get.arguments[1];
       }
     }
   }
@@ -132,6 +137,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> getDeviceInfo() async {
+    setIsLoading(true);
     var deviceInfo = await deviceInfoPlugin.value.deviceInfo;
     if (deviceInfo is AndroidDeviceInfo) {
       print('android');
@@ -150,8 +156,10 @@ class LoginController extends GetxController {
       print(data['ip']);
     } on IpAddressException catch (exception) {
       // setDeviceIp(data['ip']);
+      setIsLoading(false);
       print(exception.message);
     }
+    setIsLoading(false);
   }
 
   void changeLanguage(String lan) {
@@ -252,15 +260,25 @@ class LoginController extends GetxController {
     userProvider.checkUpdate().then((value) {
       if (value.statusCode == 200) {
         print(value.body);
-        if (value.body['data']['version'] == null) {
+        final isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+
+        if ((isAndroid
+                ? value.body['data']['version']
+                : value.body['data']['apple_version']) ==
+            null) {
           return;
         }
-        newAppVersion.value = value.body['data']['version'] as String;
-        newAppDesc.value = value.body['data']['desc'] as String;
-        mustUpdate.value = value.body['data']['must_update'] as bool;
-        appleAppId.value = value.body['data']['apple_app_id'] as String;
-        // createAccountChoice.value =
-        //     value.body['data']['accept_new_users'] as bool;
+        newAppVersion.value = (isAndroid
+            ? value.body['data']['version']
+            : value.body['data']['apple_version']) as String;
+        newAppDesc.value = ((isAndroid
+                ? value.body['data']['desc']
+                : value.body['data']['apple_desc']) ??
+            '') as String;
+        mustUpdate.value = (isAndroid
+            ? value.body['data']['must_update']
+            : value.body['data']['apple_must_update']) as bool;
+        appleAppId.value = (value.body['data']['apple_app_id'] ?? '') as String;
 
         isThereNewUpdate.value = checkIsThereNewUpdate(newAppVersion.value);
         if (isThereNewUpdate.value) {

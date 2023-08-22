@@ -21,7 +21,7 @@ class OperationPageProvider extends BaseGetConnect {
   Future<Response> getGateways() => get(EndPoints.gateways);
   Future<Response> sendDeposit(body) => post(EndPoints.sendDeposit, body);
   Future<Response> sendWithdraw(body) => post(EndPoints.sendWithdraw, body);
-  Future<Response> getPortfolio() => get(EndPoints.createAccountPortfolio);
+  Future<Response> getPortfolio() => get(EndPoints.currencies);
 
   Future<Response> getDepostis() => get(EndPoints.deposits);
   Future<Response> getWithdraws() => get(EndPoints.withdraws);

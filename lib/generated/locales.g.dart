@@ -245,6 +245,7 @@ class LocaleKeys {
   static const dark_mode = 'dark_mode';
   static const light_mode = 'light_mode';
   static const mode = 'mode';
+  static const maximum_limit_ticket_reached = 'maximum_limit_ticket_reached';
 }
 
 class Locales {
@@ -459,7 +460,7 @@ class Locales {
     'downloading_in_progress': 'يتم الان تحميل الملف...',
     'alert': 'تنبيه !',
     'invalid_phone_number': 'رقم هاتف خاطئ.',
-    'search_by_country': 'البحث عن طريق اسم أو مقدمة الدولة',
+    'search_by_country': 'البحث عن طريق اسم أو مقدمة الدولة...',
     'phone_number': 'رقم الهاتف',
     'select_country': 'اختيار الدولة',
     'delete_account': 'حذف الحساب',
@@ -484,12 +485,14 @@ class Locales {
     'must_disable_test_mode': 'للقيام بالعملية يجب عليك تعطيل الوضع التجريبي',
     'test_mode_label': 'الوضع التجريبي',
     'alert_will_enable_test_mode':
-        'سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000\$، هل أنت متأكد ؟',
+        'سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000 @currency، هل أنت متأكد ؟',
     'alert_will_disable_test_mode':
         'هل أنت متأكد من إلغاء الوضع التجريبي للحساب ؟',
     'dark_mode': 'الوضع الداكن',
     'light_mode': 'الوضع الفاتح',
     'mode': 'المظهر',
+    'maximum_limit_ticket_reached':
+        'لديك بطاقة دعم لازالت مفتوحة، يمكنك مراسلة فريق الدعم من خلالها، او إغلاقها لفتح بطاقة دعم جديدة.',
   };
   static const en = {
     'sign_in_to_you_account': 'Sign in to Your Account',
@@ -704,7 +707,7 @@ class Locales {
     'downloading_in_progress': 'Downloading file is in progress...',
     'alert': 'Alert !',
     'invalid_phone_number': 'Invalid phone number.',
-    'search_by_country': 'Search by country name or dial code',
+    'search_by_country': 'Search by country name or dial code...',
     'phone_number': 'Phone number',
     'select_country': 'Select country',
     'delete_account': 'Delete Account',
@@ -729,11 +732,13 @@ class Locales {
     'must_disable_test_mode': 'Must disable demo mode to do current operation.',
     'test_mode_label': 'Demo Mode',
     'alert_will_enable_test_mode':
-        'A demo mode investment account of \$10,000 will be activated, Are you sure?',
+        'A demo mode investment account of @currency 10,000 will be activated, Are you sure?',
     'alert_will_disable_test_mode':
         'Are you sure to cancel the demo mode of the account?',
     'dark_mode': 'Dark Mode',
     'light_mode': 'Light Mode',
     'mode': 'Theme',
+    'maximum_limit_ticket_reached':
+        'You have a support card that is still open, you can contact the support team through it, or close it to open a new support ticket.',
   };
 }

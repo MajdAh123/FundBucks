@@ -31,6 +31,10 @@ class ProfileController extends GetxController {
         homeController.getUser()?.lastname);
   }
 
+  String getUserCurrency() {
+    return Functions.getCurrency(homeController.getUser());
+  }
+
   bool getIsTestAccount() =>
       homeController.getUser()?.type?.compareTo('test') == 0;
 
@@ -118,7 +122,8 @@ class ProfileController extends GetxController {
                       Text(
                         getIsTestAccount()
                             ? 'alert_will_disable_test_mode'.tr
-                            : 'alert_will_enable_test_mode'.tr,
+                            : 'alert_will_enable_test_mode'
+                                .trParams({'currency': getUserCurrency()}),
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,

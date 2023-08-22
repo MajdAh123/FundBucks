@@ -85,7 +85,7 @@ class NotificationView extends GetView<NotificationController> {
                                     isRead: e.read == 1,
                                     onTap: () => e.read == 1
                                         ? null
-                                        : controller.readNotification(e.id, e.title),
+                                        : controller.readNotification(e.id, e.title, e.action),
                                     onDeleteTap: () =>
                                         controller.deleteNotification(e.id),
                                   ),

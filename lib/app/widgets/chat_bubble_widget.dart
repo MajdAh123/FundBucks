@@ -1,8 +1,10 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatBubbleWidget extends StatelessWidget {
   final bool isMe;
@@ -103,13 +105,22 @@ class ChatBubbleWidget extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Flexible(
-                                          child: Text(message,
-                                              style: TextStyle(
-                                                color: chatTextColor,
-                                                fontSize: 14.sp,
-                                                //fontFamily: FontFamily.inter,
-                                                fontWeight: FontWeight.w500,
-                                              )),
+                                          child: Linkify(
+                                            text: message,
+                                            style: TextStyle(
+                                              color: chatTextColor,
+                                              fontSize: 14.sp,
+                                              //fontFamily: FontFamily.inter,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            onOpen: (link) async {
+                                              if (await canLaunch(link.url)) {
+                                                await launch(link.url);
+                                              } else {
+                                                throw 'Could not launch $link';
+                                              }
+                                            },
+                                          ),
                                         ),
                                         Wrap(
                                           children: [
@@ -151,13 +162,22 @@ class ChatBubbleWidget extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Flexible(
-                                    child: Text(message,
-                                        style: TextStyle(
-                                          color: chatTextColor,
-                                          fontSize: 14.sp,
-                                          //fontFamily: FontFamily.inter,
-                                          fontWeight: FontWeight.w500,
-                                        )),
+                                    child: Linkify(
+                                      text: message,
+                                      style: TextStyle(
+                                        color: chatTextColor,
+                                        fontSize: 14.sp,
+                                        //fontFamily: FontFamily.inter,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      onOpen: (link) async {
+                                        if (await canLaunch(link.url)) {
+                                          await launch(link.url);
+                                        } else {
+                                          throw 'Could not launch $link';
+                                        }
+                                      },
+                                    ),
                                   ),
                                   Wrap(
                                     children: [
@@ -257,13 +277,23 @@ class ChatBubbleWidget extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Flexible(
-                                              child: Text(message,
-                                                  style: TextStyle(
-                                                    color: chatTextColor,
-                                                    fontSize: 14.sp,
-                                                    //fontFamily: FontFamily.inter,
-                                                    fontWeight: FontWeight.w500,
-                                                  )),
+                                              child: Linkify(
+                                                text: message,
+                                                style: TextStyle(
+                                                  color: chatTextColor,
+                                                  fontSize: 14.sp,
+                                                  //fontFamily: FontFamily.inter,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                onOpen: (link) async {
+                                                  if (await canLaunch(
+                                                      link.url)) {
+                                                    await launch(link.url);
+                                                  } else {
+                                                    throw 'Could not launch $link';
+                                                  }
+                                                },
+                                              ),
                                             ),
                                             Wrap(
                                               children: [
@@ -309,16 +339,25 @@ class ChatBubbleWidget extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
-                                        child: Text(message,
-                                            style: TextStyle(
-                                              color: ThemeController
-                                                      .to.getIsDarkMode
-                                                  ? unselectedBottomBarItemColorDarkTheme
-                                                  : chatTextColor,
-                                              fontSize: 14.sp,
-                                              //fontFamily: FontFamily.inter,
-                                              fontWeight: FontWeight.w500,
-                                            )),
+                                        child: Linkify(
+                                          text: message,
+                                          style: TextStyle(
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? unselectedBottomBarItemColorDarkTheme
+                                                : chatTextColor,
+                                            fontSize: 14.sp,
+                                            //fontFamily: FontFamily.inter,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          onOpen: (link) async {
+                                            if (await canLaunch(link.url)) {
+                                              await launch(link.url);
+                                            } else {
+                                              throw 'Could not launch $link';
+                                            }
+                                          },
+                                        ),
                                       ),
                                       Wrap(
                                         children: [

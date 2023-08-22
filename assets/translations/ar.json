@@ -203,7 +203,7 @@
   "downloading_in_progress": "يتم الان تحميل الملف...",
   "alert": "تنبيه !",
   "invalid_phone_number": "رقم هاتف خاطئ.",
-  "search_by_country": "البحث عن طريق اسم أو مقدمة الدولة",
+  "search_by_country": "البحث عن طريق اسم أو مقدمة الدولة...",
   "phone_number": "رقم الهاتف",
   "select_country": "اختيار الدولة",
   "delete_account": "حذف الحساب",
@@ -226,9 +226,10 @@
   "test_mode": "تجريبي",
   "must_disable_test_mode": "للقيام بالعملية يجب عليك تعطيل الوضع التجريبي",
   "test_mode_label": "الوضع التجريبي",
-  "alert_will_enable_test_mode": "سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000$، هل أنت متأكد ؟",
+  "alert_will_enable_test_mode": "سيتم تفعيل حساب الاستثمار التجريبي بقيمة 10,000 @currency، هل أنت متأكد ؟",
   "alert_will_disable_test_mode": "هل أنت متأكد من إلغاء الوضع التجريبي للحساب ؟",
   "dark_mode": "الوضع الداكن",
   "light_mode": "الوضع الفاتح",
-  "mode": "المظهر"
+  "mode": "المظهر",
+  "maximum_limit_ticket_reached": "لديك بطاقة دعم لازالت مفتوحة، يمكنك مراسلة فريق الدعم من خلالها، او إغلاقها لفتح بطاقة دعم جديدة."
 }

@@ -17,6 +17,8 @@ class ReportController extends GetxController {
     required this.reportProvider,
   });
 
+  final ScrollController scrollController = ScrollController();
+
   var isLoading = false.obs;
   final globalFormKey = GlobalKey<FormState>().obs;
 
@@ -199,6 +201,14 @@ class ReportController extends GetxController {
         setReportList(reports.data);
       }
     });
+  }
+
+  void scrollToItem() {
+    scrollController.animateTo(
+      690.h, // Adjust this value to match the position of the item you want to scroll to
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override

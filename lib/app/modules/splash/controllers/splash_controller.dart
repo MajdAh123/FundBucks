@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -51,13 +52,26 @@ class SplashController extends GetxController {
       isLoading.value = false;
       if (value.statusCode == 200) {
         print(value.body);
-        if (value.body['data']['version'] == null) {
+        final isAndroid = (defaultTargetPlatform == TargetPlatform.android);
+
+        if ((isAndroid
+                ? value.body['data']['version']
+                : value.body['data']['apple_version']) ==
+            null) {
           return;
         }
-        newAppVersion.value = value.body['data']['version'] as String;
-        newAppDesc.value = (value.body['data']['desc'] ?? '') as String;
-        mustUpdate.value = value.body['data']['must_update'] as bool;
+        newAppVersion.value = (isAndroid
+            ? value.body['data']['version']
+            : value.body['data']['apple_version']) as String;
+        newAppDesc.value = ((isAndroid
+                ? value.body['data']['desc']
+                : value.body['data']['apple_desc']) ??
+            '') as String;
+        mustUpdate.value = (isAndroid
+            ? value.body['data']['must_update']
+            : value.body['data']['apple_must_update']) as bool;
         appleAppId.value = (value.body['data']['apple_app_id'] ?? '') as String;
+
         creatAccountChoice.value =
             value.body['data']['accept_new_users'] as bool;
 

@@ -27,7 +27,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   Get.put(GlobalNotificationController(), permanent: true);
 
   Get.put<LanguageController>(LanguageController(), permanent: true);
@@ -62,7 +62,6 @@ Future<void> main() async {
           languageController.setLanguage('ar');
           final brightness = MediaQuery.platformBrightnessOf(context);
 
-
           final themeController = Get.find<ThemeController>();
 
           return OverlaySupport.global(
@@ -73,12 +72,13 @@ Future<void> main() async {
               getPages: AppPages.routes,
               fallbackLocale: Locale(Get.deviceLocale?.languageCode ?? 'en'),
               translationsKeys: AppTranslation.translations,
-              // localizationsDelegates: [
-              //   CountryLocalizations.delegate,
-              // ],
+              localizationsDelegates: [
+                CountryLocalizations.delegate,
+              ],
               theme: themeController.lightTheme,
               darkTheme: themeController.darkTheme,
-              themeMode: (presistentData.getDarkMode() ?? (brightness == Brightness.dark))
+              themeMode: (presistentData.getDarkMode() ??
+                      (brightness == Brightness.dark))
                   ? ThemeMode.dark
                   : ThemeMode.light,
               home: GetBuilder<GlobalNotificationController>(

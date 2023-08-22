@@ -6,6 +6,8 @@ import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class PersonalInformationController extends GetxController {
@@ -22,7 +24,27 @@ class PersonalInformationController extends GetxController {
 
   final countryTextFieldController = FlCountryCodePicker(
     localize: true,
-    showSearchBar: false,
+    showSearchBar: true,
+    title: Container(
+      margin: EdgeInsets.symmetric(vertical: 18.h, horizontal: 10.w),
+      child: Text(
+        'select_country'.tr,
+        style: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    searchBarDecoration: InputDecoration(
+      filled: true,
+      fillColor: ThemeController.to.getIsDarkMode
+          ? backgroundColorDarkTheme.withOpacity(0.7)
+          : backgroundColorLightTheme,
+      hintText: 'search_by_country'.tr,
+      hintStyle: TextStyle(
+        color: ThemeController.to.getIsDarkMode ? textFieldColor : greyColor,
+      ),
+    ),
   );
 
   final countryTextEditController = TextEditingController().obs;
@@ -113,6 +135,8 @@ class PersonalInformationController extends GetxController {
     final createAccountController = Get.find<CreateAccountController>();
     final portfolioController = Get.find<PortfolioInformationController>();
 
+    print("The currency is: ${portfolioController.currency.value.id}");
+
     final FormData _formData = FormData({
       'image': createAccountController.getFile().path.isEmpty
           ? null
@@ -134,6 +158,10 @@ class PersonalInformationController extends GetxController {
     });
 
     print('CountryCode: ${countryName.value}');
+    final username =
+        createAccountController.usernameTextEditingController.value.text;
+    final password =
+        createAccountController.passwordTextEditingController.value.text;
 
     userProvider.postUser(_formData).then((value) {
       setIsLoading(false);
@@ -147,12 +175,8 @@ class PersonalInformationController extends GetxController {
           message: 'registered_successfully'.tr,
           duration: const Duration(seconds: defaultSnackbarDuration),
         ));
-        // Get.offUntil('/login');
-        Get.offNamedUntil('/login', ModalRoute.withName('toNewLogin'),
-            arguments: [
-              createAccountController.usernameTextEditingController.value.text,
-              createAccountController.passwordTextEditingController.value.text
-            ]);
+        
+        Get.offAllNamed('/login', arguments: [username, password]);
 
         // Timer(Duration(milliseconds: 300),
         //     () => Get.delete<MainPageController>());

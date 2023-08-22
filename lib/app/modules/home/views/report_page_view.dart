@@ -52,6 +52,7 @@ class ReportPageView extends GetView<ReportController> {
               },
               onLoad: () async {},
               child: SingleChildScrollView(
+                controller: controller.scrollController,
                 child: Stack(
                   children: [
                     Container(

@@ -1,3 +1,4 @@
+import 'package:app/app/modules/home/controllers/contact_controller.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
@@ -10,7 +11,7 @@ import 'package:iconify_flutter/icons/carbon.dart';
 import 'package:iconify_flutter/icons/la.dart';
 
 class StretchedBottomNavigationBar extends GetView<HomeController> {
-  const StretchedBottomNavigationBar({
+  StretchedBottomNavigationBar({
     super.key,
   });
 
@@ -53,6 +54,8 @@ class StretchedBottomNavigationBar extends GetView<HomeController> {
                 isHome: false,
                 icon: Carbon.email_new,
                 index: 3,
+                isNotification:
+                    Get.find<ContactController>().checkIfTheresANewMessage(),
               ),
               StretchedBottomNavigationBarItem(
                 title: 'profile'.tr,

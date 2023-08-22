@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/portfolio_information/providers/portfolio_provider.dart';
 import 'package:app/app/utils/utils.dart';
@@ -48,8 +50,9 @@ class PortfolioInformationController extends GetxController {
       var key = Functions.getTranslate(enValue: e.enName!, arValue: e.name!);
       if (portfolioSelect.compareTo(key) == 0) {
         print('er');
-        if (getCurrencies().isNotEmpty)
+        if (getCurrencies().isNotEmpty) {
           setCurrencySelect(getCurrencies().first.currencyId);
+        }
         plan.value = e;
         planDetailsTextEditingController.value.text = Functions.getTranslate(
           enValue: e.enNotes!,
@@ -75,10 +78,11 @@ class PortfolioInformationController extends GetxController {
       var key = Get.locale?.languageCode.compareTo('ar') == 0
           ? e.currencyId
           : e.currencySign;
-      if (e.currencyId!.compareTo(key!) == 0) {
+      if (getCurrencySelect()?.compareTo(key!) == 0) {
         currency.value = e;
       }
     }
+    log("The currency is ${currency.value}");
   }
 
   void setPlan(Plan v) => plan.value = v;
@@ -92,6 +96,7 @@ class PortfolioInformationController extends GetxController {
   void getPortfolios() {
     setIsLoading(true);
     portfolioProvider.getPortfolio().then((value) {
+      log("getPortfolios() status code: ${value.statusCode}");
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
         print(baseSuccessModel);

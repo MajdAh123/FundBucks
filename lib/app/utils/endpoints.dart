@@ -50,6 +50,8 @@ class EndPoints {
   static String readAlert = '/alert/read';
   static String deleteAccount = '/user/delete-account';
   static String changeAccountMode = '/user/change-mode';
+  static String currencies = '/currencies';
+  
 
   static String userAvatarUrl() => getBaseUrl() + userAvatar;
 

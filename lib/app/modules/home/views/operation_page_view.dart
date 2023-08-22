@@ -29,6 +29,7 @@ class OperationPageView extends GetView<OperationController> {
       },
       onLoad: () async {},
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         child: Stack(
           children: [
             Container(

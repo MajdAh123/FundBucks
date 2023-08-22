@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:app/app/data/models/models.dart';
+import 'package:app/app/modules/home/controllers/account_controller.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/home/providers/operation_page_provider.dart';
 import 'package:app/app/modules/theme_controller.dart';
@@ -21,6 +23,7 @@ class OperationController extends GetxController {
   });
 
   final homeController = Get.find<HomeController>();
+  final ScrollController scrollController = ScrollController();
 
   var gateways = <Gateway>[].obs;
 
@@ -67,7 +70,7 @@ class OperationController extends GetxController {
       var key = Get.locale?.languageCode.compareTo('ar') == 0
           ? e.currencyId
           : e.currencySign;
-      if (e.currencyId!.compareTo(key!) == 0) {
+      if (getDepositCurrencySelect()?.compareTo(key!) == 0) {
         currencyDeposit.value = e;
       }
     }
@@ -140,10 +143,27 @@ class OperationController extends GetxController {
   final withdrawBankTextEditingController = TextEditingController().obs;
 
   bool checkWithdrawAmount() {
-    return double.parse(homeController.getUser()?.currentValue ?? '0') <
+    if (double.parse(withdrawAmountTextEditingController.value.text) < 1)
+      return true;
+    return checkCashValue() <
         (withdrawAmountTextEditingController.value.text.isEmpty
             ? 0
             : double.parse(withdrawAmountTextEditingController.value.text));
+    // return double.parse(homeController.getUser()?.currentValue ?? '0') <
+    //     (withdrawAmountTextEditingController.value.text.isEmpty
+    //         ? 0
+    //         : double.parse(withdrawAmountTextEditingController.value.text));
+  }
+
+  double checkCashValue() {
+    final accountController = Get.find<AccountController>();
+    for (var assetModel in accountController.getWallets()) {
+      if (assetModel.name.compareTo('cash'.tr) == 0) {
+        return assetModel.value;
+      }
+    }
+
+    return 0.0;
   }
 
   void onWithdrawSendButtonClick() {
@@ -280,7 +300,7 @@ class OperationController extends GetxController {
       if (value.statusCode == 200) {
         getDepositAmountTextEditingController().text = '';
         getDepositDateTextEditingController().text = '';
-        setCurrencySelect('');
+        // setCurrencySelect('');
         setFilePath('');
         setImageFilePath(File(''));
         Get.showSnackbar(GetSnackBar(
@@ -311,7 +331,7 @@ class OperationController extends GetxController {
 
       if (value.statusCode == 200) {
         withdrawAmountTextEditingController.value.text = '';
-        setCurrencySelect('');
+        // setCurrencySelect('');
 
         Get.showSnackbar(GetSnackBar(
           title: 'success'.tr,
@@ -325,13 +345,16 @@ class OperationController extends GetxController {
   void getPortfolios() {
     setIsLoading(true);
     operationPageProvider.getPortfolio().then((value) {
+      log("Get Portfolios sttaus code is : ${value.statusCode}");
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
         print(baseSuccessModel);
 
-        final createPortfolioModel =
-            CreatePortfolio.fromJson(baseSuccessModel.data!);
-        currencies.value = createPortfolioModel.currencies ?? [];
+        final currency = Currency.fromJson(
+            baseSuccessModel.data?['currencies'] as Map<String, dynamic>);
+
+        log("Currency: ${currency}");
+        currencies.value = [currency];
         if (currencies.isNotEmpty) {
           setCurrencySelect(Get.locale?.languageCode.compareTo('ar') == 0
               ? homeController.getUser()?.currency?.currencyId
@@ -453,6 +476,14 @@ class OperationController extends GetxController {
       );
     }
     return SizedBox.shrink();
+  }
+
+  void scrollToItem() {
+    scrollController.animateTo(
+      700.h, // Adjust this value to match the position of the item you want to scroll to
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override

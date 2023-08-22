@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app/app/modules/support_card/controllers/support_card_controller.dart';
 import 'package:app/app/modules/support_card/providers/support_card_provider.dart';
 import 'package:app/app/modules/theme_controller.dart';
@@ -18,7 +20,9 @@ class SupportCardWidget extends GetView<SupportCardController> {
         child: ExpansionPanelList(
           elevation: 4,
           expansionCallback: (int index, bool isExpanded) {
-            controller.supportCardItemList[index].isExpanded = !isExpanded;
+            log("the update is: ${isExpanded}");
+            controller.supportCardItemList[index].isExpanded =
+                !controller.supportCardItemList[index].isExpanded;
             controller.update();
           },
           expandedHeaderPadding: EdgeInsets.symmetric(vertical: 1.h),
@@ -41,10 +45,12 @@ class SupportCardWidget extends GetView<SupportCardController> {
                           Get.locale?.languageCode.compareTo('ar') == 0
                               ? e.title
                               : e.enTitle,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
+                          maxLines: 2,
                         ),
                       ],
                     ),

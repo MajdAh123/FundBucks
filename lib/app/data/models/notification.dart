@@ -6,6 +6,7 @@ class Notification {
   int? id;
   String? title;
   String? description;
+  String? action;
   int? userId;
   String? notifiableType;
   int? notifiableId;
@@ -19,6 +20,7 @@ class Notification {
     this.id,
     this.title,
     this.description,
+    this.action,
     this.userId,
     this.notifiableType,
     this.notifiableId,
@@ -31,13 +33,14 @@ class Notification {
 
   @override
   String toString() {
-    return 'Notification(id: $id, title: $title, description: $description, userId: $userId, notifiableType: $notifiableType, notifiableId: $notifiableId, read: $read, createdAt: $createdAt, updatedAt: $updatedAt, emailLogId: $emailLogId, notificationTemplateId: $notificationTemplateId)';
+    return 'Notification(id: $id, title: $title, description: $description, action: $action, userId: $userId, notifiableType: $notifiableType, notifiableId: $notifiableId, read: $read, createdAt: $createdAt, updatedAt: $updatedAt, emailLogId: $emailLogId, notificationTemplateId: $notificationTemplateId)';
   }
 
   factory Notification.fromJson(Map<String, dynamic> json) => Notification(
         id: json['id'] as int?,
         title: json['title'] as String?,
         description: json['description'] as String?,
+        action: json['action'] as String?,
         userId: json['user_id'] as int?,
         notifiableType: json['notifiable_type'] as String?,
         notifiableId: json['notifiable_id'] as int?,
@@ -58,6 +61,7 @@ class Notification {
         'id': id,
         'title': title,
         'description': description,
+        'action': action,
         'user_id': userId,
         'notifiable_type': notifiableType,
         'notifiable_id': notifiableId,
@@ -72,6 +76,7 @@ class Notification {
     int? id,
     String? title,
     String? description,
+    String? action,
     int? userId,
     String? notifiableType,
     int? notifiableId,
@@ -85,6 +90,7 @@ class Notification {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      action: action ?? this.action,
       userId: userId ?? this.userId,
       notifiableType: notifiableType ?? this.notifiableType,
       notifiableId: notifiableId ?? this.notifiableId,

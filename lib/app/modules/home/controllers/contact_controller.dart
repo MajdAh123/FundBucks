@@ -7,7 +7,9 @@ import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pusher_client/pusher_client.dart';
 
@@ -96,6 +98,10 @@ class ContactController extends GetxController {
   }
 
   void createTicket() {
+    if (openTicketsList.length > 0) {
+      showMaximumLimitTicketReachedDialog();
+      return;
+    }
     setIsLoading(true);
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     final FormData _formData = FormData({
@@ -152,11 +158,8 @@ class ContactController extends GetxController {
   void _handleNewMessage(data) {
     final json = jsonDecode(data);
     final supportMessage = SupportMessage.fromJson(json);
-    // supportMessages.add(supportMessage);
-    // Functions.playMessagePopUpSound();
     updateTicketNotifications(supportMessage.ticketId, 1);
     setLatestMessageTicket(supportMessage.ticketId, supportMessage);
-    // goToLastestMessage();
   }
 
   void setLatestMessageTicket(id, supportMessage) {
@@ -181,6 +184,7 @@ class ContactController extends GetxController {
   }
 
   void updateTicketNotifications(ticketId, int? value) {
+    setIndex(1);
     if (ticketNotifications[ticketId] == null) {
       ticketNotifications[ticketId] = 1;
     }
@@ -196,6 +200,141 @@ class ContactController extends GetxController {
       }
     }
     return false;
+  }
+
+  bool checkIfTheresANewMessage() {
+    for (var ticket in ticketNotifications.keys) {
+      if (ticketNotifications[ticket] != null) {
+        if (ticketNotifications[ticket]! > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  bool checkIfMultiTicketMessages() {
+    int multi = 0;
+    for (var ticket in ticketNotifications.keys) {
+      if (ticketNotifications[ticket] != null) {
+        if (ticketNotifications[ticket]! > 0) {
+          multi += 1;
+        }
+      }
+    }
+    return multi > 1;
+  }
+
+  Ticket? getTicket(int id) {
+    return openTicketsList.firstWhereOrNull((element) => element.id == id);
+  }
+
+  int getNewTicketHaveMessage() {
+    for (var ticket in ticketNotifications.keys) {
+      if (ticketNotifications[ticket] != null) {
+        if (ticketNotifications[ticket]! > 0) {
+          return ticket;
+        }
+      }
+    }
+    return -1;
+  }
+
+  void showMaximumLimitTicketReachedDialog() {
+    Get.dialog(
+      barrierDismissible: true,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: ThemeController.to.getIsDarkMode
+                        ? greyColor.withOpacity(.39)
+                        : greyColor,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.h),
+                      Text(
+                        'alert'.tr,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 15.h),
+                      Text(
+                        'maximum_limit_ticket_reached'.tr,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30.h),
+                      //Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: TextButton(
+                                onPressed: () {
+                                  if (Get.isDialogOpen ?? false) {
+                                    // Get.back(closeOverlays: true);
+                                    Get.close(1);
+                                  }
+                                  setIndex(1);
+                                },
+                                style: TextButton.styleFrom(
+                                  // minimumSize: const Size.fromHeight(50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  // primary: mainColor,
+                                  backgroundColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? mainColorDarkTheme
+                                          : mainColor,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'agree'.tr,
+                                    style: TextStyle(
+                                      //fontFamily: FontFamily.inter,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void getCloseTicket() {

@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:timezone/standalone.dart' as tz;
 
 class InvestmentReport {
+  int? id;
   num? balance;
   num? returnPercent;
   num? returnValue;
@@ -12,6 +13,7 @@ class InvestmentReport {
   DateTime? to;
 
   InvestmentReport({
+    this.id,
     this.balance,
     this.returnPercent,
     this.returnValue,
@@ -23,11 +25,12 @@ class InvestmentReport {
 
   @override
   String toString() {
-    return 'InvestmentReport(balance: $balance, returnPercent: $returnPercent, returnValue: $returnValue, totalValue: $totalValue, notes: $notes, from: $from, to: $to)';
+    return 'InvestmentReport(id: $id, balance: $balance, returnPercent: $returnPercent, returnValue: $returnValue, totalValue: $totalValue, notes: $notes, from: $from, to: $to)';
   }
 
   factory InvestmentReport.fromJson(Map<String, dynamic> json) =>
       InvestmentReport(
+        id: json['id'] as int?,
         balance: json['balance'] as num?,
         returnPercent: json['return_percent'] as num?,
         returnValue: json['return_value'] as num?,

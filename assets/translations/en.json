@@ -203,7 +203,7 @@
   "downloading_in_progress": "Downloading file is in progress...",
   "alert": "Alert !",
   "invalid_phone_number": "Invalid phone number.",
-  "search_by_country": "Search by country name or dial code",
+  "search_by_country": "Search by country name or dial code...",
   "phone_number": "Phone number",
   "select_country": "Select country",
   "delete_account": "Delete Account",
@@ -226,9 +226,10 @@
   "test_mode": "Demo",
   "must_disable_test_mode": "Must disable demo mode to do current operation.",
   "test_mode_label": "Demo Mode",
-  "alert_will_enable_test_mode": "A demo mode investment account of $10,000 will be activated, Are you sure?",
+  "alert_will_enable_test_mode": "A demo mode investment account of @currency 10,000 will be activated, Are you sure?",
   "alert_will_disable_test_mode": "Are you sure to cancel the demo mode of the account?",
   "dark_mode": "Dark Mode",
   "light_mode": "Light Mode",
-  "mode": "Theme"
+  "mode": "Theme",
+  "maximum_limit_ticket_reached": "You have a support card that is still open, you can contact the support team through it, or close it to open a new support ticket."
 }

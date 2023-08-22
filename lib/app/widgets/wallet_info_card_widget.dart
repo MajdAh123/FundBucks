@@ -90,7 +90,7 @@ class WalletInfoCardWidget extends GetView<AccountController> {
                       isCenter: true,
                       textValueSize: 17.sp,
                       color: ThemeController.to.getIsDarkMode
-                          ? bottomBarItemColorDarkTheme
+                          ? Colors.white
                           : mainColor,
                     ),
                   ],

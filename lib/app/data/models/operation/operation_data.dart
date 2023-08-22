@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:timezone/standalone.dart' as tz;
 
 class OperationData {
+  int? id;
   String? trx;
   dynamic currency;
   num? amount;
@@ -12,6 +13,7 @@ class OperationData {
   DateTime? createdAt;
 
   OperationData({
+    this.id,
     this.trx,
     this.currency,
     this.amount,
@@ -23,10 +25,11 @@ class OperationData {
 
   @override
   String toString() {
-    return 'Datum(trx: $trx, currency: $currency, amount: $amount, amountDollar: $amountDollar, fromAdmin: $fromAdmin, approveDate: $approveDate createdAt: $createdAt)';
+    return 'Datum(id: $id, trx: $trx, currency: $currency, amount: $amount, amountDollar: $amountDollar, fromAdmin: $fromAdmin, approveDate: $approveDate createdAt: $createdAt)';
   }
 
   factory OperationData.fromJson(Map<String, dynamic> json) => OperationData(
+        id: json['id'] as int?,
         trx: json['trx'] as String?,
         currency: json['currency'] as dynamic,
         amount: json['amount'] as num?,
