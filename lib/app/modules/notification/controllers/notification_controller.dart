@@ -7,7 +7,10 @@ import 'package:app/app/modules/home/controllers/report_controller.dart';
 import 'package:app/app/modules/notification/providers/notification_provider.dart';
 import 'package:app/app/routes/app_pages.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/snack_Bar_Awesome_widget.dart';
+import 'package:flutter/material.dart' as mt;
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class NotificationController extends GetxController {
   final loading = true.obs;
@@ -36,25 +39,56 @@ class NotificationController extends GetxController {
     super.onInit();
   }
 
+  Future<List<Notification>> getNoti() async {
+    await notificationProvider.getNotifications().then((value) {
+      // setLoading(false);
+
+      if (value.statusCode == 200) {
+        return (value.body['data'] as List)
+            .map<Notification>((e) => Notification.fromJson(e))
+            .toList();
+      } else {
+        return [];
+      }
+    });
+    return [];
+  }
+
+  RxString errorType = "".obs;
+
   void getAllNotifications() {
     setLoading(true);
     getIsThereNewNotification();
     notificationProvider.getNotifications().then((value) {
       setLoading(false);
       if (value.statusCode == 200) {
-
-        final notifications = (value.body['data'] as List)
+        final notifications_ = (value.body['data'] as List)
             .map<Notification>((e) => Notification.fromJson(e))
             .toList();
-        setNotifications(notifications);
+        notifications.value = notifications_;
+        // Get.snackbar(value.statusCode.toString(),
+        //     "${notifications.length.toString()}, ${notifications_.length.toString()}",
+        //     backgroundColor: mt.Colors.red);
+
+        print("///////////////////////");
+        print(value.body['data']);
+        print("///////////////////////");
+
+        // setNotifications(notifications);
       } else {
         setIsError(true);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
+      errorType.value = value.bodyString!;
     });
   }
 
@@ -66,21 +100,30 @@ class NotificationController extends GetxController {
         if (getNotifications().length == 1) {
           homeController.setIsThereNotification(false);
         }
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'notification_read'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'notification_read'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'notification_read'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         if (title == null) return;
         changePageUsingTitle(title);
         if (action == null) return;
         changePageUsingActions(action);
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
     getAllNotifications();
@@ -190,11 +233,16 @@ class NotificationController extends GetxController {
           homeController.setIsThereNotification(false);
         }
         // delete_notification
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'delete_notification'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'delete_notification'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'delete_notification'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         getAllNotifications();
       }
     });
@@ -207,17 +255,26 @@ class NotificationController extends GetxController {
       if (value.statusCode == 200) {
         final homeController = Get.find<HomeController>();
         homeController.setIsThereNotification(false);
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'all_notifications_read'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'all_notifications_read'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'all_notifications_read'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
     getAllNotifications();

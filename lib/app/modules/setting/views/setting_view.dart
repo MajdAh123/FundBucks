@@ -99,6 +99,11 @@ class SettingView extends GetView<SettingController> {
                                   activeColor: ThemeController.to.getIsDarkMode
                                       ? bottomBarItemColorDarkTheme
                                       : mainColor,
+                                  inactiveTrackColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? greyColor
+                                          : greyReportBackground,
+                                  // inactiveThumbColor: Colors.red,
                                   onChanged: (value) {
                                     controller.changeNotificationsStatus();
                                   },
@@ -150,6 +155,10 @@ class SettingView extends GetView<SettingController> {
                                 ),
                                 const Spacer(),
                                 Switch(
+                                  inactiveTrackColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? greyColor
+                                          : greyReportBackground,
                                   value: ThemeController.to.getIsDarkMode,
                                   activeColor: ThemeController.to.getIsDarkMode
                                       ? bottomBarItemColorDarkTheme
@@ -205,6 +214,7 @@ class SettingView extends GetView<SettingController> {
                                 ),
                                 const Spacer(),
                                 DropdownButton<String>(
+                                  dropdownColor: Theme.of(context).cardColor,
                                   icon: Icon(
                                     Icons.chevron_right,
                                     color: softGreyColor,

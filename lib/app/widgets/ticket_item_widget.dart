@@ -82,8 +82,10 @@ class TicketItemWidget extends GetView<ContactController> {
                 children: [
                   Text(
                     !isClosed
-                        ? 'opened_ticket'.trParams({'id': ticketId, 'name': title})
-                        : 'closed_ticket'.trParams({'id': ticketId, 'name': title}),
+                        ? 'opened_ticket'
+                            .trParams({'id': ticketId, 'name': title})
+                        : 'closed_ticket'
+                            .trParams({'id': ticketId, 'name': title}),
                     style: TextStyle(
                       //fontFamily: FontFamily.inter,
                       fontSize: 14.sp,
@@ -137,9 +139,9 @@ class TicketItemWidget extends GetView<ContactController> {
                             Text(
                               created_at,
                               style: TextStyle(
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey),
                               // textAlign: TextAlign.end,
                             ),
                           ],

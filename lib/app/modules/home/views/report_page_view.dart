@@ -93,7 +93,9 @@ class ReportPageView extends GetView<ReportController> {
                                       Container(
                                         margin: EdgeInsets.only(top: 8.5.h),
                                         child: Text(
-                                          Functions.getCurrency(controller.homeController.getUser()) +
+                                          Functions.getCurrency(controller
+                                                  .homeController
+                                                  .getUser()) +
                                               Functions.moneyFormat(controller
                                                           .getInvestmentDifference() <
                                                       0
@@ -177,11 +179,15 @@ class ReportPageView extends GetView<ReportController> {
                                         Get.locale?.languageCode
                                                     .compareTo('ar') ==
                                                 0
-                                            ? Functions.getCurrency(controller.homeController.getUser()) +
+                                            ? Functions.getCurrency(controller
+                                                    .homeController
+                                                    .getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getEndInvestment()
                                                     .toString())
-                                            : Functions.getCurrency(controller.homeController.getUser()) +
+                                            : Functions.getCurrency(controller
+                                                    .homeController
+                                                    .getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getStartInvestment()
                                                     .toString()),
@@ -249,11 +255,15 @@ class ReportPageView extends GetView<ReportController> {
                                         Get.locale?.languageCode
                                                     .compareTo('ar') ==
                                                 0
-                                            ? Functions.getCurrency(controller.homeController.getUser()) +
+                                            ? Functions.getCurrency(controller
+                                                    .homeController
+                                                    .getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getStartInvestment()
                                                     .toString())
-                                            : Functions.getCurrency(controller.homeController.getUser()) +
+                                            : Functions.getCurrency(controller
+                                                    .homeController
+                                                    .getUser()) +
                                                 Functions.moneyFormat(controller
                                                     .getEndInvestment()
                                                     .toString()),
@@ -334,7 +344,9 @@ class ReportPageView extends GetView<ReportController> {
                                 fontSize: 14.sp,
                                 //fontFamily: FontFamily.inter,
                                 fontWeight: FontWeight.w600,
-                                // color: chartTitleColor,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme,
                               ),
                             ),
                             SizedBox(height: 10.h),
@@ -356,70 +368,86 @@ class ReportPageView extends GetView<ReportController> {
                                 // const Spacer(),
                                 SizedBox(
                                   // width: 280.w,
-                                  child: DateTimePicker(
-                                    controller: controller
-                                        .getFromTextEditingController(),
-                                    autovalidate: false,
-                                    validator: (value) {
-                                      if (value?.isEmpty ?? true) {
-                                        return 'required_field'.trParams({
-                                          'name': 'start_date'.trParams({
-                                            'date': '',
-                                          }),
-                                        });
-                                      }
-                                      return null;
-                                    },
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                    dateLabelText: 'Date',
-                                    decoration: InputDecoration(
-                                      suffixIcon: Padding(
-                                        padding:
-                                            marginHorizontalBasedOnLanguage(
-                                                11.w),
-                                        child: Iconify(
-                                          Ic.twotone_date_range,
-                                          size: 27,
-                                          color:
-                                              ThemeController.to.getIsDarkMode
-                                                  ? bottomBarItemColorDarkTheme
-                                                  : mainColor,
+                                  child: Theme(
+                                    data: ThemeController.to.getIsDarkMode
+                                        ? ThemeData.dark(useMaterial3: true)
+                                            .copyWith(
+                                                colorScheme:
+                                                    ColorScheme.fromSeed(
+                                                        brightness:
+                                                            Brightness.dark,
+                                                        seedColor: Colors.blue))
+                                        : ThemeData.light().copyWith(
+                                            colorScheme: ColorScheme.fromSeed(
+                                                seedColor: Colors.blue)),
+                                    child: DateTimePicker(
+                                      controller: controller
+                                          .getFromTextEditingController(),
+                                      autovalidate: false,
+                                      validator: (value) {
+                                        if (value?.isEmpty ?? true) {
+                                          return 'required_field'.trParams({
+                                            'name': 'start_date'.trParams({
+                                              'date': '',
+                                            }),
+                                          });
+                                        }
+                                        return null;
+                                      },
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2100),
+                                      dateLabelText: 'Date',
+                                      decoration: InputDecoration(
+                                        suffixIcon: Padding(
+                                          padding:
+                                              marginHorizontalBasedOnLanguage(
+                                                  11.w),
+                                          child: Iconify(
+                                            Ic.twotone_date_range,
+                                            size: 27,
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? bottomBarItemColorDarkTheme
+                                                : mainColor,
+                                          ),
+                                        ),
+                                        suffixIconConstraints: BoxConstraints(
+                                            maxWidth: 27.w, maxHeight: 27.h),
+                                        fillColor:
+                                            ThemeController.to.getIsDarkMode
+                                                ? containerColorDarkTheme
+                                                : containerColorLightTheme,
+                                        // fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          borderSide: BorderSide(
+                                            color: strokeColor,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                            color:
+                                                ThemeController.to.getIsDarkMode
+                                                    ? greyColor.withOpacity(.39)
+                                                    : strokeColor,
+                                            width: 1.0,
+                                          ),
                                         ),
                                       ),
-                                      suffixIconConstraints: BoxConstraints(
-                                          maxWidth: 27.w, maxHeight: 27.h),
-                                      fillColor:
-                                          ThemeController.to.getIsDarkMode
-                                              ? containerColorDarkTheme
-                                              : containerColorLightTheme,
-                                      // fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                          color: strokeColor,
-                                          width: 1.0,
-                                        ),
+                                      onChanged: (val) => print(val),
+                                      onSaved: (val) => print(val),
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: ThemeController.to.getIsDarkMode
+                                            ? unselectedBottomBarItemColorDarkTheme
+                                            : unselectedBottomBarItemColorLightTheme,
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        borderSide: BorderSide(
-                                          color:
-                                              ThemeController.to.getIsDarkMode
-                                                  ? greyColor.withOpacity(.39)
-                                                  : strokeColor,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                    ),
-                                    onChanged: (val) => print(val),
-                                    onSaved: (val) => print(val),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
@@ -445,92 +473,111 @@ class ReportPageView extends GetView<ReportController> {
                                 // const Spacer(),
                                 SizedBox(
                                   // width: 280.w,
-                                  child: DateTimePicker(
-                                    controller:
-                                        controller.getToTextEditingController(),
-                                    autovalidate: false,
-                                    validator: (value) {
-                                      if (value?.isEmpty ?? true) {
-                                        return 'required_field'.trParams({
-                                          'name': 'end_date'.trParams({
-                                            'date': '',
-                                          }),
-                                        });
-                                      }
-                                      if (value != null) {
-                                        if (controller
-                                            .getFromTextEditingController()
-                                            .text
-                                            .isNotEmpty) {
-                                          DateTime from = DateTime.parse(
-                                              controller
-                                                  .getFromTextEditingController()
-                                                  .text);
-                                          DateTime to = DateTime.parse(value);
-                                          if (!to.isAfter(from)) {
-                                            return 'start_date_before_end_date'
-                                                .tr;
+                                  child: Theme(
+                                    data: ThemeController.to.getIsDarkMode
+                                        ? ThemeData.dark(useMaterial3: true)
+                                            .copyWith(
+                                                colorScheme:
+                                                    ColorScheme.fromSeed(
+                                                        brightness:
+                                                            Brightness.dark,
+                                                        seedColor: Colors.blue))
+                                        : ThemeData.light().copyWith(
+                                            colorScheme: ColorScheme.fromSeed(
+                                                seedColor: Colors.blue)),
+                                    child: DateTimePicker(
+                                      controller: controller
+                                          .getToTextEditingController(),
+                                      autovalidate: false,
+                                      validator: (value) {
+                                        if (value?.isEmpty ?? true) {
+                                          return 'required_field'.trParams({
+                                            'name': 'end_date'.trParams({
+                                              'date': '',
+                                            }),
+                                          });
+                                        }
+                                        if (value != null) {
+                                          if (controller
+                                              .getFromTextEditingController()
+                                              .text
+                                              .isNotEmpty) {
+                                            DateTime from = DateTime.parse(
+                                                controller
+                                                    .getFromTextEditingController()
+                                                    .text);
+                                            DateTime to = DateTime.parse(value);
+                                            if (!to.isAfter(from)) {
+                                              return 'start_date_before_end_date'
+                                                  .tr;
+                                            }
                                           }
                                         }
-                                      }
-                                      return null;
-                                    },
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(
-                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
-                                          .year,
-                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
-                                          .month,
-                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
-                                          .day,
-                                    ),
-                                    dateLabelText: 'Date',
-                                    decoration: InputDecoration(
-                                      suffixIcon: Padding(
-                                        padding:
-                                            marginHorizontalBasedOnLanguage(
-                                                11.w),
-                                        child: Iconify(
-                                          Ic.twotone_date_range,
-                                          size: 27,
-                                          color:
-                                              ThemeController.to.getIsDarkMode
-                                                  ? bottomBarItemColorDarkTheme
-                                                  : mainColor,
+                                        return null;
+                                      },
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(
+                                        tz.TZDateTime.now(
+                                                kuwaitTimezoneLocation)
+                                            .year,
+                                        tz.TZDateTime.now(
+                                                kuwaitTimezoneLocation)
+                                            .month,
+                                        tz.TZDateTime.now(
+                                                kuwaitTimezoneLocation)
+                                            .day,
+                                      ),
+                                      dateLabelText: 'Date',
+                                      decoration: InputDecoration(
+                                        suffixIcon: Padding(
+                                          padding:
+                                              marginHorizontalBasedOnLanguage(
+                                                  11.w),
+                                          child: Iconify(
+                                            Ic.twotone_date_range,
+                                            size: 27,
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? bottomBarItemColorDarkTheme
+                                                : mainColor,
+                                          ),
+                                        ),
+                                        suffixIconConstraints: BoxConstraints(
+                                            maxWidth: 27.w, maxHeight: 27.h),
+                                        fillColor:
+                                            ThemeController.to.getIsDarkMode
+                                                ? containerColorDarkTheme
+                                                : containerColorLightTheme,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          borderSide: BorderSide(
+                                            color: strokeColor,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          borderSide: BorderSide(
+                                            color:
+                                                ThemeController.to.getIsDarkMode
+                                                    ? greyColor.withOpacity(.39)
+                                                    : strokeColor,
+                                            width: 1.0,
+                                          ),
                                         ),
                                       ),
-                                      suffixIconConstraints: BoxConstraints(
-                                          maxWidth: 27.w, maxHeight: 27.h),
-                                      fillColor:
-                                          ThemeController.to.getIsDarkMode
-                                              ? containerColorDarkTheme
-                                              : containerColorLightTheme,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                          color: strokeColor,
-                                          width: 1.0,
-                                        ),
+                                      onChanged: (val) => print(val),
+                                      onSaved: (val) => print(val),
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: ThemeController.to.getIsDarkMode
+                                            ? unselectedBottomBarItemColorDarkTheme
+                                            : unselectedBottomBarItemColorLightTheme,
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        borderSide: BorderSide(
-                                          color:
-                                              ThemeController.to.getIsDarkMode
-                                                  ? greyColor.withOpacity(.39)
-                                                  : strokeColor,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                    ),
-                                    onChanged: (val) => print(val),
-                                    onSaved: (val) => print(val),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),

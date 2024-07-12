@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -32,6 +33,12 @@
                    android:resource="@color/myColor" />
         <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id"
                    android:value="high_importance_channel" />
+                    <meta-data
+      android:name="com.appsflyer.sdk.AF_DEV_KEY"
+      android:value="TCVM5ETERvE937YUfeCG4K"/>
+    <meta-data
+      android:name="com.google.android.gms.version"
+      android:value="@integer/google_play_services_version"/>
         <!-- <provider android:name="com.ko2ic.imagedownloader.FileProvider"
                   android:authorities="${applicationId}.image_downloader.provider"
                   android:exported="false"

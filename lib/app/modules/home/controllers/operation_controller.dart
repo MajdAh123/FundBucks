@@ -15,6 +15,8 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:colorful_iconify_flutter/icons/logos.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class OperationController extends GetxController {
   final OperationPageProvider operationPageProvider;
 
@@ -126,11 +128,15 @@ class OperationController extends GetxController {
     }
     if (getDepositFormKey().currentState.validate()) {
       if (homeController.getUser()?.type?.compareTo('test') == 0) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'error'.tr,
-          message: 'must_disable_test_mode'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'error'.tr,
+          'must_disable_test_mode'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'error'.tr,
+        //   message: 'must_disable_test_mode'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         return;
       }
       sendDepositRequest();
@@ -170,11 +176,15 @@ class OperationController extends GetxController {
     if (getWithdrawFormKey().currentState.validate() &&
         checkIfBankingDetailsExists()) {
       if (homeController.getUser()?.type?.compareTo('test') == 0) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'error'.tr,
-          message: 'must_disable_test_mode'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'error'.tr,
+          'must_disable_test_mode'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'error'.tr,
+        //   message: 'must_disable_test_mode'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         return;
       }
       sendWithdrawRequest();
@@ -303,11 +313,16 @@ class OperationController extends GetxController {
         // setCurrencySelect('');
         setFilePath('');
         setImageFilePath(File(''));
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'we_recieve_your_order'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'we_recieve_your_order'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'we_recieve_your_order'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }
@@ -333,11 +348,15 @@ class OperationController extends GetxController {
         withdrawAmountTextEditingController.value.text = '';
         // setCurrencySelect('');
 
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'we_recieve_your_order'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'we_recieve_your_order'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'we_recieve_your_order'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

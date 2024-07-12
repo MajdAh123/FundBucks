@@ -48,6 +48,9 @@ class ReportListWidget extends GetView<ReportController> {
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w400,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : unselectedBottomBarItemColorLightTheme,
                             ),
                           ),
                         ),
@@ -55,28 +58,28 @@ class ReportListWidget extends GetView<ReportController> {
                     : controller
                         .getReportList()
                         .map((e) => ReportItemWidget(
-                          icon: controller
-                              .getIcon(e.returnPercent?.toDouble() ?? 0),
-                          notes: e.notes ?? '',
-                          currency: Functions.getCurrency(
-                              controller.homeController.getUser()),
-                          amount: e.balance?.toDouble() ?? 0,
-                          totalAmount: e.totalValue?.toDouble() ?? 0,
-                          returnPercent: e.returnPercent?.toDouble() ?? 0,
-                          returnValue: e.returnValue?.toDouble() ?? 0,
-                          from: 'start_date'.trParams({
-                            'date':
-                                intl.DateFormat(Functions.getDateStyle())
-                                    .format(e.from!)
-                                    .toString()
-                          }),
-                          to: 'end_date'.trParams({
-                            'date':
-                                intl.DateFormat(Functions.getDateStyle())
-                                    .format(e.to!)
-                                    .toString()
-                          }),
-                        ))
+                              icon: controller
+                                  .getIcon(e.returnPercent?.toDouble() ?? 0),
+                              notes: e.notes ?? '',
+                              currency: Functions.getCurrency(
+                                  controller.homeController.getUser()),
+                              amount: e.balance?.toDouble() ?? 0,
+                              totalAmount: e.totalValue?.toDouble() ?? 0,
+                              returnPercent: e.returnPercent?.toDouble() ?? 0,
+                              returnValue: e.returnValue?.toDouble() ?? 0,
+                              from: 'start_date'.trParams({
+                                'date':
+                                    intl.DateFormat(Functions.getDateStyle())
+                                        .format(e.from!)
+                                        .toString()
+                              }),
+                              to: 'end_date'.trParams({
+                                'date':
+                                    intl.DateFormat(Functions.getDateStyle())
+                                        .format(e.to!)
+                                        .toString()
+                              }),
+                            ))
                         .toList()),
             SizedBox(height: controller.getReportList().isEmpty ? 20.h : 5.h),
           ],

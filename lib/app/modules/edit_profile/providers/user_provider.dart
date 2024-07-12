@@ -19,6 +19,9 @@ class UserProvider extends BaseGetConnect {
   }
 
   Future<Response> updateUser(body) => post(EndPoints.updateUser, body);
+  Future<Response> update_tokenUser(body) =>
+      post(EndPoints.update_tokenUser, body);
+  Future<Response> getCountries() => get(EndPoints.getCountries);
   Future<Response> resetAvatar() => get(EndPoints.resetAvatar);
   Future<Response> deleteAccount(body) => post(EndPoints.deleteAccount, body);
 }

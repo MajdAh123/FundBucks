@@ -84,6 +84,7 @@ class LocaleKeys {
   static const type_here = 'type_here';
   static const mark_all_as_read = 'mark_all_as_read';
   static const first_name = 'first_name';
+  static const gander = 'gander';
   static const last_name = 'last_name';
   static const update = 'update';
   static const plan_details = 'plan_details';
@@ -246,10 +247,32 @@ class LocaleKeys {
   static const light_mode = 'light_mode';
   static const mode = 'mode';
   static const maximum_limit_ticket_reached = 'maximum_limit_ticket_reached';
+  static const select_nationalty = "select_nationalty";
+  static const passport_number = "passport_number";
+  static const nationalty = "nationalty";
+  static const search_ = "search_";
+  static const acction_requird = "acction_requird";
+  static const passprot_requird = "passprot_requird";
+  static const upload_passport = "upload_passport";
+  static const passport_update = "passport_update";
+  static const passport_update_massage = "passport_update_massage";
+  static const rejected_passport = 'rejected_passport';
+  static const processing_passport = 'processing_passport';
+  static const confirmation = "_confirmation";
+  static const confirm_saveing = "_confirm_saveing";
+  static const save_leave = "save_leave";
+  static const cancel = "cancel";
+  static const passport_rejetced = "passport_rejetced";
+  static const passport_rejetced_massage = "passport_rejetced_massage";
 }
 
 class Locales {
   static const ar = {
+    "passport_rejetced": "تم رفض جواز السفر",
+    "passport_rejetced_massage": "يرجى إرسال جواز سفر صالح",
+    "_confirmation": "تأكيد",
+    "_confirm_saveing": "هل تريد حفظ التغيرات قبل المغادرة",
+    "save_leave": "حفظ",
     'sign_in_to_you_account': 'تسجيل الدخول لحسابك',
     'username_or_email': 'اسم المستخدم أو البريد الإلكتروني',
     'password': 'كلمة المرور',
@@ -323,6 +346,7 @@ class Locales {
     'type_here': 'اكتب هنا',
     'mark_all_as_read': 'تعيين الكل كمقروء',
     'first_name': 'الاسم الأول',
+    'gander': 'الجنس',
     'last_name': 'اسم العائلة',
     'update': 'التعديل',
     'plan_details': 'تفاصيل المحفظة',
@@ -493,8 +517,30 @@ class Locales {
     'mode': 'المظهر',
     'maximum_limit_ticket_reached':
         'لديك بطاقة دعم لازالت مفتوحة، يمكنك مراسلة فريق الدعم من خلالها، او إغلاقها لفتح بطاقة دعم جديدة.',
+    'select_nationalty': 'اختر جنسيتك',
+    'passport_number': 'رقم جواز السفر',
+    'nationalty': 'الجنسية',
+    'search_': 'ابحث',
+    'acction_requird': 'توثيق مطلوب',
+    'passprot_requird': 'مطلوب توثيق الحساب بصورة جواز السفر',
+    'upload_passport': 'تحميل صورة الجواز',
+    'passport_update': 'تحديث معلومات',
+    'passport_update_massage': 'يرجى رفع صورة جواز السفر',
+    'rejected_passport': 'جواز سفر مرفوض\nارفع جوازك مجدداً',
+    'processing_passport': 'قيد المراجعة',
+    "cancel": "خروج"
   };
   static const en = {
+    "passport_rejetced": "passport has been Rejected",
+    "passport_rejetced_massage": "Please submit a valid passport",
+    "save_leave": "Save",
+    "_confirm_saveing": "Would you like to save your changes before leaving?",
+    "_confirmation": "Confirmation",
+    "cancel": "Leave",
+    'search_': 'Search...',
+    'nationalty': 'Nationality',
+    'passport_number': 'PassPort Number',
+    'select_nationalty': 'Choose your nationality',
     'sign_in_to_you_account': 'Sign in to Your Account',
     'username_or_email': 'Username or Email',
     'password': 'Password',
@@ -568,6 +614,7 @@ class Locales {
     'type_here': 'Type here',
     'mark_all_as_read': 'Mark all as read',
     'first_name': 'First Name',
+    'gander': 'Gander',
     'last_name': 'Last Name',
     'update': 'Update',
     'plan_details': 'Plan Details',
@@ -740,5 +787,13 @@ class Locales {
     'mode': 'Theme',
     'maximum_limit_ticket_reached':
         'You have a support card that is still open, you can contact the support team through it, or close it to open a new support ticket.',
+    'upload_passport': 'Submit passport',
+    'passprot_requird':
+        'Account verification with a passport photo is required',
+    'acction_requird': 'Action required',
+    'passport_update': 'Update information',
+    'passport_update_massage': 'Please upload a copy of your passport',
+    'rejected_passport': 'Rejected passport\nUpload again',
+    'processing_passport': 'Processing now',
   };
 }

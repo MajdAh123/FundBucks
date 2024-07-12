@@ -50,6 +50,9 @@ class DepositFormWidget extends GetView<OperationController> {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w400,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme,
                       ),
                     ),
                   )
@@ -151,6 +154,9 @@ class DepositFormWidget extends GetView<OperationController> {
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w500,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : unselectedBottomBarItemColorLightTheme,
                             ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -312,77 +318,93 @@ class DepositFormWidget extends GetView<OperationController> {
                             ),
                           ),
                           SizedBox(height: 12.h),
-                          DateTimePicker(
-                            controller: controller
-                                .getDepositDateTextEditingController(),
-                            // initialValue: 'date here',
-                            // locale: Locale('ar'),
-                            validator: (value) {
-                              if (value?.isEmpty ?? true) {
-                                return 'required_field'.trParams({
-                                  'name': 'date'.tr,
-                                });
-                              }
-                              return null;
-                            },
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(
-                              tz.TZDateTime.now(kuwaitTimezoneLocation).year,
-                              tz.TZDateTime.now(kuwaitTimezoneLocation).month,
-                              tz.TZDateTime.now(kuwaitTimezoneLocation).day,
-                            ),
-                            // dateLabelText: 'date'.tr,
-                            decoration: InputDecoration(
-                              // labelText: 'date'.tr,
-                              hintText: 'date'.tr,
-                              hintStyle: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
+                          Theme(
+                            data: ThemeController.to.getIsDarkMode
+                                ? ThemeData.dark(useMaterial3: true).copyWith(
+                                    colorScheme: ColorScheme.fromSeed(
+                                        brightness: Brightness.dark,
+                                        seedColor: Colors.blue))
+                                : ThemeData.light().copyWith(
+                                    colorScheme: ColorScheme.fromSeed(
+                                        seedColor: Colors.blue)),
+                            child: DateTimePicker(
+                              controller: controller
+                                  .getDepositDateTextEditingController(),
+                              // initialValue: 'date here',
+                              // locale: Locale('ar'),
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  return 'required_field'.trParams({
+                                    'name': 'date'.tr,
+                                  });
+                                }
+                                return null;
+                              },
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(
+                                tz.TZDateTime.now(kuwaitTimezoneLocation).year,
+                                tz.TZDateTime.now(kuwaitTimezoneLocation).month,
+                                tz.TZDateTime.now(kuwaitTimezoneLocation).day,
+                              ),
+                              // dateLabelText: 'date'.tr,
+                              style: TextStyle(
                                 color: ThemeController.to.getIsDarkMode
                                     ? unselectedBottomBarItemColorDarkTheme
-                                    : null,
+                                    : unselectedBottomBarItemColorLightTheme,
                               ),
-                              suffixIcon: Padding(
-                                padding: marginHorizontalBasedOnLanguage(11.w),
-                                child: Iconify(
-                                  Ic.twotone_date_range,
-                                  size: 27,
+                              decoration: InputDecoration(
+                                // labelText: 'date'.tr,
+                                hintText: 'date'.tr,
+                                hintStyle: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
                                   color: ThemeController.to.getIsDarkMode
-                                      ? bottomBarItemColorDarkTheme
-                                      : mainColor,
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : null,
+                                ),
+                                suffixIcon: Padding(
+                                  padding:
+                                      marginHorizontalBasedOnLanguage(11.w),
+                                  child: Iconify(
+                                    Ic.twotone_date_range,
+                                    size: 27,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? bottomBarItemColorDarkTheme
+                                        : mainColor,
+                                  ),
+                                ),
+                                suffixIconConstraints: BoxConstraints(
+                                    maxWidth: 27.w, maxHeight: 27.h),
+                                fillColor: ThemeController.to.getIsDarkMode
+                                    ? containerColorDarkTheme
+                                    : containerColorLightTheme,
+                                // fillColor: Colors.white,
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  borderSide: BorderSide(
+                                    color: strokeColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide(
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? greyColor.withOpacity(.39)
+                                        : strokeColor,
+                                    width: 1.0,
+                                  ),
                                 ),
                               ),
-                              suffixIconConstraints: BoxConstraints(
-                                  maxWidth: 27.w, maxHeight: 27.h),
-                              fillColor: ThemeController.to.getIsDarkMode
-                                  ? containerColorDarkTheme
-                                  : containerColorLightTheme,
-                              // fillColor: Colors.white,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  color: strokeColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide(
-                                  color: ThemeController.to.getIsDarkMode
-                                      ? greyColor.withOpacity(.39)
-                                      : strokeColor,
-                                  width: 1.0,
-                                ),
-                              ),
+                              onChanged: (val) => print(val),
+                              onSaved: (val) => print(val),
+                              // style: TextStyle(
+                              //   fontSize: 13.sp,
+                              //   fontWeight: FontWeight.w500,
+                              //   color: Colors.black,
+                              // ),
                             ),
-                            onChanged: (val) => print(val),
-                            onSaved: (val) => print(val),
-                            // style: TextStyle(
-                            //   fontSize: 13.sp,
-                            //   fontWeight: FontWeight.w500,
-                            //   color: Colors.black,
-                            // ),
                           ),
                           SizedBox(height: 12.h),
                           !controller.getIsErrorImage()

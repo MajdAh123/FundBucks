@@ -5,6 +5,7 @@ import 'package:app/app/modules/personal_information/providers/user_provider.dar
 import 'package:app/app/modules/portfolio_information/controllers/portfolio_information_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/snack_Bar_Awesome_widget.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -171,12 +172,16 @@ class PersonalInformationController extends GetxController {
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
         print(baseSuccessModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'registered_successfully'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
 
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'registered_successfully'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'registered_successfully'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
 
         Get.offAllNamed('/login', arguments: [username, password]);
         final loginController = Get.find<LoginController>();
@@ -186,17 +191,26 @@ class PersonalInformationController extends GetxController {
         //     () => Get.delete<MainPageController>());
       } else if (value.statusCode == 405) {
         final baseErrorModel = BaseErrorModel.fromJson(value.body);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'email_already_taken'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'email_already_taken'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'email_already_taken'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

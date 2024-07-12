@@ -244,9 +244,15 @@ class InvestmentChangesChart extends GetView<AccountController> {
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: ThemeController.to.getIsDarkMode
-              ? containerColorDarkTheme
-              : Colors.white,
+          // getTooltipColor: ,
+          getTooltipColor: (touchedSpot) {
+            return ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : Colors.white;
+          },
+          // tooltipBgColor: ThemeController.to.getIsDarkMode
+          //     ? containerColorDarkTheme
+          //     : Colors.white,
           showOnTopOfTheChartBoxArea: true,
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             List<LineTooltipItem> tooltips = [];

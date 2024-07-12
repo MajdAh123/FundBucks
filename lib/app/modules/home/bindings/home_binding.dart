@@ -11,6 +11,8 @@ import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
 import 'package:app/app/modules/home/controllers/report_controller.dart';
 
+import '../../edit_profile/controllers/edit_profile_controller.dart';
+import '../../edit_profile/providers/user_provider.dart';
 import '../controllers/home_controller.dart';
 
 class HomeBinding extends Bindings {

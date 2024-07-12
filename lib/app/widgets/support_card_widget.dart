@@ -65,6 +65,9 @@ class SupportCardWidget extends GetView<SupportCardController> {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
+                        color: ThemeController.to.getIsDarkMode
+                            ? Colors.grey
+                            : unselectedBottomBarItemColorLightTheme,
                       ),
                       textAlign: TextAlign.center,
                     ),

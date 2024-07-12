@@ -13,6 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pusher_client/pusher_client.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class ContactController extends GetxController {
   final ContactProvider contactProvider;
   ContactController({
@@ -82,6 +84,7 @@ class ContactController extends GetxController {
     //   controller.forward();
     //   operationController.reverse(from: 0);
     // });
+
     getAllTickets();
     super.onInit();
   }
@@ -116,11 +119,16 @@ class ContactController extends GetxController {
         descriptionTextEditingController.value.text = '';
         getOpenTicket();
         // successfully_created_ticket
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'successfully_created_ticket'.tr,
-          duration: Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'successfully_created_ticket'.tr,
+        );
+
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'successfully_created_ticket'.tr,
+        //   duration: Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }
@@ -143,6 +151,7 @@ class ContactController extends GetxController {
 
   void listenToTickets() {
     for (var element in openTicketsList) {
+      // LaravelEcho.init(token: token)
       Channel channel = LaravelEcho.pusherClient
           .subscribe('private-ticket.${element.id!.toString()}');
 

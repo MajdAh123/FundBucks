@@ -149,7 +149,7 @@ class AccountController extends GetxController {
 
   void startTimer() {
     getStocksApi();
-    _timer = Timer.periodic(Duration(minutes: 1), (_) {
+    _timer = Timer.periodic(Duration(seconds: 30), (_) {
       getStocksApi();
     });
   }

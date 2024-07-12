@@ -49,57 +49,99 @@ class LogoCardWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.fromLTRB(16.w, 190.h, 16.w, 5.h),
             // height: cardHeight,
-            child: Card(
+            child: Material(
+              borderRadius: BorderRadius.circular(20),
               elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  SizedBox(height: 70.h),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      subTitle,
-                      style: TextStyle(
-                        //fontFamily: FontFamily.inter,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorDarkTheme
+                      : containerColorLightTheme,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                // elevation: 5,
+                // // color: Colors.white,
+                // // color: ,
+                // shape: RoundedRectangleBorder(
+
+                // ),
+                child: ListView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  children: [
+                    SizedBox(height: 70.h),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        subTitle,
+                        style: TextStyle(
+                          //fontFamily: FontFamily.inter,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  content
-                ],
+                    content
+                  ],
+                ),
               ),
             ),
           ),
           Center(
-            child: Container(
-              margin: EdgeInsets.only(top: 138.h),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 0,
-                    blurRadius: 24,
-                    offset: const Offset(0, 9),
-                  ),
-                ],
-              ),
-              child: ThemeController.to.getIsDarkMode
-                  ? Assets.images.svg.logoDark.svg(
-                      width: 119.w,
-                      height: 119.h,
-                      fit: BoxFit.contain,
-                    )
-                  : Assets.images.svg.logo.svg(
-                      width: 119.w,
-                      height: 119.h,
-                      fit: BoxFit.contain,
+            child: Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 138.h),
+                  // color: Colors.red,
+                  height: 150,
+                  width: 150,
+                  child: Center(
+                    child: Container(
+                      // margin: EdgeInsets.only(top: 138.h),
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                          // color: Colors.amber,
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black45.withOpacity(0.3),
+                                offset: Offset(5, 5),
+                                blurRadius: 5,
+                                spreadRadius: 2)
+                          ]
+                          // border: Border.all(width: 5, color: mainColor)),
+                          ),
                     ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 138.h),
+                  decoration: BoxDecoration(
+
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.black.withOpacity(0.1),
+                      //     spreadRadius: 0,
+                      //     blurRadius: 24,
+                      //     offset: const Offset(0, 9),
+                      //   ),
+                      // ],
+                      ),
+                  child: ThemeController.to.getIsDarkMode
+                      ? Assets.images.svg.logoDark.svg(
+                          width: 150.w,
+                          height: 150.h,
+                          fit: BoxFit.contain,
+                        )
+                      : Assets.images.svg.logo.svg(
+                          width: 150.w,
+                          height: 150.h,
+                          fit: BoxFit.contain,
+                        ),
+                ),
+              ],
             ),
           ),
           // if (footer != null) ...[

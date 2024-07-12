@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -11,6 +12,7 @@ class OptionItemWidget extends StatelessWidget {
   final bool isLastItem;
   final bool haveIcon;
   final Iconify? icon;
+  final iswarning;
   const OptionItemWidget({
     Key? key,
     required this.title,
@@ -19,6 +21,7 @@ class OptionItemWidget extends StatelessWidget {
     this.isLastItem = false,
     this.haveIcon = false,
     this.icon = null,
+    this.iswarning = false,
   }) : super(key: key);
 
   @override
@@ -62,12 +65,26 @@ class OptionItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: ThemeController.to.getIsDarkMode
-                  ? unselectedBottomBarItemColorDarkTheme
-                  : softGreyColor,
+            Row(
+              children: [
+                iswarning
+                    ? Icon(
+                        CupertinoIcons.info_circle,
+                        size: 18,
+                        color: Colors.amber,
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: ThemeController.to.getIsDarkMode
+                      ? unselectedBottomBarItemColorDarkTheme
+                      : softGreyColor,
+                ),
+              ],
             ),
           ],
         ),

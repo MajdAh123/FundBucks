@@ -15,6 +15,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pusher_client/pusher_client.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class TicketController extends GetxController {
   final TicketProvider ticketProvider;
   TicketController({
@@ -192,11 +194,16 @@ class TicketController extends GetxController {
     );
     setIsClosed(true);
     contactController.getAllTickets();
-    Get.showSnackbar(GetSnackBar(
-      title: 'success'.tr,
-      message: 'successfully_closed_ticket'.tr,
-      duration: const Duration(seconds: defaultSnackbarDuration),
-    ));
+
+    SnackBarWidgetAwesome(
+      'success'.tr,
+      'successfully_closed_ticket'.tr,
+    );
+    // Get.showSnackbar(GetSnackBar(
+    //   title: 'success'.tr,
+    //   message: 'successfully_closed_ticket'.tr,
+    //   duration: const Duration(seconds: defaultSnackbarDuration),
+    // ));
   }
 
   void _handleNewMessage(data) {
@@ -307,11 +314,16 @@ class TicketController extends GetxController {
         setIsSendingMessage(false);
         setIsClosed(true);
         contactController.getAllTickets();
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'successfully_closed_ticket'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'successfully_closed_ticket'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'successfully_closed_ticket'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

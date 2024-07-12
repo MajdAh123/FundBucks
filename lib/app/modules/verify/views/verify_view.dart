@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
-
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import '../controllers/verify_controller.dart';
 
 class VerifyView extends GetView<VerifyController> {
@@ -36,18 +34,26 @@ class VerifyView extends GetView<VerifyController> {
                     Center(
                       child: Directionality(
                         textDirection: TextDirection.ltr,
-                        child: OTPTextField(
-                          controller: controller.getOtpTextFieldController(),
-                          length: 6,
-                          width: 200.w,
-                          fieldWidth: 30.w,
-                          style: TextStyle(
+                        child: OtpTextField(
+                          numberOfFields: 6,
+                          textStyle: TextStyle(
                             fontSize: 17.sp,
                           ),
-                          textFieldAlignment: MainAxisAlignment.spaceBetween,
-                          fieldStyle: FieldStyle.underline,
-                          onChanged: controller.setOtp,
-                          onCompleted: (pin) {
+                          decoration: InputDecoration(),
+                          cursorColor: ThemeController.to.isDarkMode.value
+                              ? Color(0xFF004366)
+                              : mainColor,
+                          // controller: controller.getOtpTextFieldController(),
+                          // length: 6,
+                          // width: 200.w,
+                          fieldWidth: 30.w,
+                          // clearText: controller.cleartext.value,
+
+                          autoFocus: true,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // fieldStyle: FieldStyle.underline,
+                          onCodeChanged: controller.setOtp,
+                          onSubmit: (pin) {
                             controller.setOtp(pin);
                             controller.onContinueButtonClick();
                           },

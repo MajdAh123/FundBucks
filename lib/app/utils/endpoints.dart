@@ -14,6 +14,7 @@ class EndPoints {
   static String verify = '/verify';
   static String sendVerify = '/verify/send';
   static String getUser = '/user';
+  static String getCountries = "/getCountries";
   static String stocks = '/stocks';
   static String homePageData = '/account-data';
   static String broadcastAuth = '/broadcasting/auth';
@@ -31,6 +32,7 @@ class EndPoints {
   static String deposits = '/deposits';
   static String withdraws = '/withdraws';
   static String updateUser = '/user/update';
+  static String update_tokenUser = '/user/update_token';
   static String webviewUrl = '/webview/url/';
   static String supportCards = '/support-cards';
   static String findAccount = '/find-account';
@@ -51,11 +53,13 @@ class EndPoints {
   static String deleteAccount = '/user/delete-account';
   static String changeAccountMode = '/user/change-mode';
   static String currencies = '/currencies';
-  
 
   static String userAvatarUrl() => getBaseUrl() + userAvatar;
 
   static String getBroadcastingAuth() => api + broadcastAuth;
 
   static String getUrl(String path) => getEndApiPoint() + path;
+
+  static String passPortPath =
+      "https://app.fundbucks.com/admin/images/user/profile/";
 }

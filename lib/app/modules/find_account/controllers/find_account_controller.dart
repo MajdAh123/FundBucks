@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:app/app/modules/find_account/providers/find_account_provider.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class FindAccountController extends GetxController {
   final FindAccountProvider findAccountProvider;
 
@@ -44,11 +46,16 @@ class FindAccountController extends GetxController {
         // TODO: Navigate to verify
       }
       if (value.statusCode == 404) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'error'.tr,
-          message: 'account_not_found'.tr,
-          duration: Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'error'.tr,
+          'account_not_found'.tr,
+        );
+
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'error'.tr,
+        //   message: 'account_not_found'.tr,
+        //   duration: Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

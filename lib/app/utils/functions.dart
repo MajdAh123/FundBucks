@@ -15,6 +15,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
+import '../widgets/snack_Bar_Awesome_widget.dart';
+
 class Functions {
   static final player = AudioPlayer();
 
@@ -164,11 +166,16 @@ class Functions {
     final permission = await Functions.requestFilePermission();
     if (!permission) {
       print(permission);
-      Get.showSnackbar(GetSnackBar(
-        title: 'fail'.tr,
-        message: 'must_accept_permission'.tr,
-        duration: const Duration(seconds: defaultSnackbarDuration),
-      ));
+
+      SnackBarWidgetAwesome(
+        'fail'.tr,
+        'must_accept_permission'.tr,
+      );
+      // Get.showSnackbar(GetSnackBar(
+      //   title: 'fail'.tr,
+      //   message: 'must_accept_permission'.tr,
+      //   duration: const Duration(seconds: defaultSnackbarDuration),
+      // ));
       return;
     }
     var dir = await DownloadsPathProvider.downloadsDirectory;
@@ -183,11 +190,16 @@ class Functions {
       //output:  /storage/emulated/0/Download/banner.png
 
       try {
-        Get.showSnackbar(GetSnackBar(
-          title: 'downloading'.tr,
-          message: 'downloading_in_progress'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'downloading'.tr,
+        //   message: 'downloading_in_progress'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
+
+        SnackBarWidgetAwesome(
+          'downloading'.tr,
+          'downloading_in_progress'.tr,
+        );
         await Dio().download(url, savePath,
             onReceiveProgress: (received, total) {
           if (total != -1) {
@@ -196,26 +208,38 @@ class Functions {
           }
         });
         print("File is saved to download folder.");
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: isPdf ? 'pdf_saved'.tr : 'photo_saved'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+            'success'.tr, isPdf ? 'pdf_saved'.tr : 'photo_saved'.tr);
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: isPdf ? 'pdf_saved'.tr : 'photo_saved'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } on DioError catch (e) {
         print(e);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } on FileSystemException catch (e) {
         print(e);
         if (e.osError?.errorCode == 17) {
-          Get.showSnackbar(GetSnackBar(
-            title: 'fail'.tr,
-            message: 'something_happened'.tr,
-            duration: const Duration(seconds: defaultSnackbarDuration),
-          ));
+          SnackBarWidgetAwesome(
+            'fail'.tr,
+            'something_happened'.tr,
+          );
+          // Get.showSnackbar(GetSnackBar(
+          //   title: 'fail'.tr,
+          //   message: 'something_happened'.tr,
+          //   duration: const Duration(seconds: defaultSnackbarDuration),
+          // ));
         }
       }
     }

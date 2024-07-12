@@ -7,6 +7,8 @@ import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/verify/providers/verify_provider.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class VerifyController extends GetxController {
   final VerifyProvider verifyProvider;
   VerifyController({
@@ -30,8 +32,8 @@ class VerifyController extends GetxController {
   void setIsPasswordReset(bool value) => isPasswordReset.value = value;
   bool getIsPasswordReset() => isPasswordReset.value;
 
-  OtpFieldController getOtpTextFieldController() =>
-      otpTextFieldController.value;
+  // OtpFieldController getOtpTextFieldController() =>
+  //     otpTextFieldController.value;
 
   void setEmailOtp(String value) => emailOtp.value = value;
 
@@ -53,14 +55,14 @@ class VerifyController extends GetxController {
   }
 
   void onContinueButtonClick() {
-    getOtpTextFieldController().setFocus(0);
+    // getOtpTextFieldController().setFocus(0);
     if (getOtp().length == 6) {
       verify();
     }
   }
 
   void onSendAgainClick() {
-    getOtpTextFieldController().clear();
+    setOtp("");
     sendVerify();
   }
 
@@ -85,36 +87,55 @@ class VerifyController extends GetxController {
           return;
         }
         // successfully_verified_account
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'successfully_verified_account'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'successfully_verified_account'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'successfully_verified_account'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
 
         presistentData.writeAuthToken(value.body['data']['token'] as String);
         Get.offAndToNamed('/home');
       } else if (value.statusCode == 405) {
         final baseErrorModel = BaseErrorModel.fromJson(value.body);
         print(baseErrorModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'please_check_email'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'please_check_email'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'please_check_email'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else if (value.statusCode == 404) {
         final baseErrorModel = BaseErrorModel.fromJson(value.body);
         print(baseErrorModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'please_check_otp'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'please_check_otp'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'please_check_otp'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }
@@ -129,32 +150,46 @@ class VerifyController extends GetxController {
     verifyProvider.sendVerifyCode(_formData).then((value) {
       setIsLoading(false);
       print(value.body);
-      getOtpTextFieldController().setFocus(0);
+      // getOtpTextFieldController().setFocus(0);
 
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
         print(baseSuccessModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'opt_sent_successfully'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'opt_sent_successfully'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'opt_sent_successfully'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         // presistentData.writeAuthToken(baseSuccessModel.data!['token']);
         // Get.toNamed('/home');
       } else if (value.statusCode == 405) {
         final baseErrorModel = BaseErrorModel.fromJson(value.body);
         print(baseErrorModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'please_check_email'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'please_check_email'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'please_check_email'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

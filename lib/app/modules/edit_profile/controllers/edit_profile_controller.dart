@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:app/app/data/models/countryNationl.dart';
 import 'package:app/app/data/presistent/presistent_data.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,8 @@ import 'package:app/app/modules/edit_profile/providers/user_provider.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class EditProfileController extends GetxController {
   final UserProvider userProvider;
 
@@ -18,7 +22,6 @@ class EditProfileController extends GetxController {
     required this.userProvider,
   });
 
-  ScrollController controller = ScrollController();
   ScrollController scrollController = ScrollController();
 
   final presistentData = PresistentData();
@@ -78,12 +81,18 @@ class EditProfileController extends GetxController {
   final firstNameTextEditController = TextEditingController().obs;
   final lastNameTextEditController = TextEditingController().obs;
   final cityTextEditController = TextEditingController().obs;
+  final nationalTextEditController = TextEditingController().obs;
+  final codenationalTextEditController = TextEditingController().obs;
+  final passportTextEditController = TextEditingController().obs;
 
   final bankNameTextEditController = TextEditingController().obs;
   final bankAccountNumberTextEditController = TextEditingController().obs;
   final bankAccountNameTextEditController = TextEditingController().obs;
   final bankIbanNumberTextEditController = TextEditingController().obs;
 
+  RxString passport_image = EndPoints.passPortPath.obs;
+  RxInt passport_status = 5.obs;
+  RxString fcm_token = "".obs;
   // var phoneNumberController = PhoneNumberInputController(Get.context!).obs;
 
   final focusNodes = [
@@ -96,10 +105,13 @@ class EditProfileController extends GetxController {
     FocusNode(),
     FocusNode(),
     FocusNode(),
+    FocusNode(),
   ];
 
   var filePath = ''.obs;
+  var filePathPass = ''.obs;
   var imageFile = File('').obs;
+  var imageFilePass = File('').obs;
 
   var isLoading = false.obs;
 
@@ -110,12 +122,16 @@ class EditProfileController extends GetxController {
   final ImagePicker _picker = ImagePicker();
 
   String getFilePath() => filePath.value;
+  String getFilePathPass() => filePathPass.value;
 
   void setFilePath(String path) => filePath.value = path;
+  void setFilePathPass(String path) => filePathPass.value = path;
 
   File getFile() => imageFile.value;
+  File getFilePass() => imageFilePass.value;
 
   setImageFilePath(File file) => imageFile.value = file;
+  setImageFilePathPass(File file) => imageFilePass.value = file;
 
   var countryCode = ''.obs;
 
@@ -132,6 +148,7 @@ class EditProfileController extends GetxController {
       context: Get.context!,
       scrollToDeviceLocale: true,
       // initialSelectedLocale: 'ar',
+
       backgroundColor: ThemeController.to.getIsDarkMode
           ? containerColorDarkTheme
           : containerColorLightTheme,
@@ -205,6 +222,23 @@ class EditProfileController extends GetxController {
         : (homeController.getUser()?.currency?.currencySign ?? '');
   }
 
+  updateToken() async {
+    await FirebaseMessaging.instance.getToken().then((value) async {
+      print('FCM Token: $value');
+      // setFcmToken(value ?? '');
+      presistentData.writeFcmToken(value!);
+      final userProvider = Get.put(UserProvider());
+
+      userProvider.update_tokenUser({"fcm_token": value}).then((value) {
+        if (value.statusCode == 200) {
+          print("dooooooooooooooooooooon");
+        } else {
+          print("oppps");
+        }
+      });
+    });
+  }
+
   String getGenderValue() {
     switch (homeController.getUser()?.gender) {
       case 'm':
@@ -229,8 +263,179 @@ class EditProfileController extends GetxController {
     return code.name;
   }
 
+  List<CountryNational> allNational = [], searchCountry = [];
+  Future getCountry() async {
+    setIsDeleteLoading(true);
+    allNational = [];
+    await userProvider.getCountries().then((value) {
+      setIsDeleteLoading(false);
+      print(value.statusCode);
+      if (value.statusCode == 200) {
+        List data = value.body['data'];
+        // data.map((e) => allNational.add(CountryNational.fromJson(e)));
+        allNational = data.map((e) => CountryNational.fromJson(e)).toList();
+        searchCountry = allNational;
+        print("----------------------");
+
+        print(allNational.length);
+        print("----------------------");
+      }
+    });
+  }
+
+  Future<bool> showExitConfirmationDialog() {
+    print(checkIfUserEdit());
+    if (checkIfUserEdit()) {
+      return Get.dialog<bool>(
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeController.to.getIsDarkMode
+                        ? containerColorDarkTheme
+                        : containerColorLightTheme,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: ThemeController.to.getIsDarkMode
+                          ? greyColor.withOpacity(.39)
+                          : greyColor,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.h),
+                        Text(
+                          '_confirmation'.tr,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 15.h),
+                        Text(
+                          '_confirm_saveing'.tr,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 30.h),
+                        //Buttons
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: TextButton(
+                                  onPressed: () {
+                                    Get.back(result: false);
+                                    onUpdateButtonClick();
+                                  },
+                                  style: TextButton.styleFrom(
+                                    // minimumSize: const Size.fromHeight(50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    // primary: mainColor,
+                                    backgroundColor:
+                                        ThemeController.to.getIsDarkMode
+                                            ? mainColorDarkTheme
+                                            : mainColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'save_leave'.tr,
+                                      style: TextStyle(
+                                        //fontFamily: FontFamily.inter,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 30.w,
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Get.back(result: true);
+                                },
+                                child: Text("cancel".tr)),
+                            SizedBox(width: 10.w),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        // AlertDialog(
+        //   title: Text('_confirmation'.tr),
+        //   content: Text('_confirm_saveing'.tr),
+        //   actions: [
+        //     TextButton(
+        //       onPressed: () {
+        //         Get.back(result: false); // Do not leave the page
+        //       },
+        //       child: Text('cancel'.tr),
+        //     ),
+        //     TextButton(
+        //       onPressed: () {
+        //         Get.back(result: true); // Leave the page
+        //       },
+        //       style: TextButton.styleFrom(
+        //         // minimumSize: const Size.fromHeight(50),
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(8),
+        //         ),
+        //         // primary: mainColor,
+        //         backgroundColor: ThemeController.to.getIsDarkMode
+        //             ? mainColorDarkTheme
+        //             : mainColor,
+        //       ),
+        //       child: Center(
+        //         child: Text(
+        //           'save_leave'.tr,
+        //           style: TextStyle(
+        //             //fontFamily: FontFamily.inter,
+        //             fontSize: 12.sp,
+        //             fontWeight: FontWeight.w500,
+        //             color: Colors.white,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+      ).then((value) => value ?? false);
+    }
+    return Future.value(true);
+    // Future.delayed(Duration(milliseconds: 1)).then((value) async {
+    //   return await false;
+    // });
+
+    // If dialog is dismissed, default to false
+  }
+
   void setUserData() {
     setGenderSelect(getGenderValue());
+    passport_image.value += homeController.getUser()?.passport_image ?? '';
+    passport_status.value = homeController.getUser()?.passport_status ?? 5;
     firstNameTextEditController.value.text =
         homeController.getUser()?.firstname ?? '';
     lastNameTextEditController.value.text =
@@ -241,7 +446,12 @@ class EditProfileController extends GetxController {
     cityTextEditController.value.text = homeController.getUser()?.city ?? '';
 
     phoneNumberController.value.text = homeController.getUser()?.mobile ?? '';
-
+    passportTextEditController.value.text =
+        homeController.getUser()?.passport ?? '';
+    nationalTextEditController.value.text =
+        homeController.getUser()?.nationality ?? "Kuwait";
+    codenationalTextEditController.value.text =
+        homeController.getUser()?.nationality_code ?? "KW";
     bankNameTextEditController.value.text =
         homeController.getUser()?.bankName ?? '';
     bankAccountNumberTextEditController.value.text =
@@ -250,6 +460,42 @@ class EditProfileController extends GetxController {
         homeController.getUser()?.bankUsername ?? '';
     bankIbanNumberTextEditController.value.text =
         homeController.getUser()?.iban ?? '';
+    fcm_token.value = homeController.getUser()?.fcm_token ?? "";
+  }
+
+  bool checkIfUserEdit() {
+    if (getFilePath().isNotEmpty ||
+        getFilePathPass().isNotEmpty ||
+        firstNameTextEditController.value.text !=
+            homeController.getUser()?.firstname ||
+        lastNameTextEditController.value.text !=
+            homeController.getUser()?.lastname ||
+        countryCode.value != homeController.getUser()?.country?.countryCode ||
+        countryTextEditController.value.text !=
+            getCountryName(
+                homeController.getUser()?.country?.countryCode ?? "") ||
+        cityTextEditController.value.text != homeController.getUser()?.city ||
+        phoneNumberController.value.text != homeController.getUser()?.mobile ||
+        passportTextEditController.value.text !=
+            homeController.getUser()?.passport ||
+        nationalTextEditController.value.text !=
+            homeController.getUser()?.nationality ||
+        codenationalTextEditController.value.text !=
+            homeController.getUser()?.nationality_code ||
+        bankNameTextEditController.value.text !=
+            homeController.getUser()?.bankName ||
+        (bankAccountNumberTextEditController.value.text !=
+                homeController.getUser()?.bankUserId &&
+            bankAccountNumberTextEditController.value.text.isNotEmpty) ||
+        (bankAccountNameTextEditController.value.text !=
+                homeController.getUser()?.bankUsername &&
+            bankAccountNameTextEditController.value.text.isNotEmpty) ||
+        (bankIbanNumberTextEditController.value.text !=
+                homeController.getUser()?.iban &&
+            bankIbanNumberTextEditController.value.text.isNotEmpty)) {
+      return true;
+    }
+    return false;
   }
 
   bool getIsBankingRequired() {
@@ -286,6 +532,15 @@ class EditProfileController extends GetxController {
   void updateUserDate() {
     setIsLoading(true);
     setIsPhotoLoading(getFile().path.isNotEmpty);
+    setIsPhotoLoading(getFilePass().path.isNotEmpty);
+    if (getTextValue(passportTextEditController.value.text) !=
+        homeController.getUser()!.passport) {
+      passport_status.value = 0;
+    }
+    if (getFilePass().path.isNotEmpty) {
+      passport_status.value = 1;
+    }
+
     final FormData _formData = FormData({
       'image': getFile().path.isEmpty
           ? null
@@ -293,6 +548,10 @@ class EditProfileController extends GetxController {
       'password': getTextValue(passwordTextEditController.value.text),
       'firstname': getTextValue(firstNameTextEditController.value.text),
       'lastname': getTextValue(lastNameTextEditController.value.text),
+      'nationality': getTextValue(nationalTextEditController.value.text),
+      'nationality_code':
+          getTextValue(codenationalTextEditController.value.text),
+      'passport': getTextValue(passportTextEditController.value.text),
       'gender': genderSelect.value.compareTo('male') == 0 ? 'm' : 'f',
       'country_code': countryCode.value,
       'city': cityTextEditController.value.text,
@@ -303,6 +562,11 @@ class EditProfileController extends GetxController {
       'bank_account_name':
           getTextValue(bankAccountNameTextEditController.value.text),
       'bank_iban': getTextValue(bankIbanNumberTextEditController.value.text),
+      'passport_status': passport_status.value,
+      //// 'passport_image':
+      'passport_image': getFilePass().path.isEmpty
+          ? null
+          : MultipartFile(getFilePass(), filename: 'user-pass.jpg'),
     });
 
     userProvider.updateUser(_formData).then((value) {
@@ -310,11 +574,16 @@ class EditProfileController extends GetxController {
       setIsPhotoLoading(false);
       print(value.body);
       if (value.statusCode == 200) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'successfully_update_profile'.tr,
-          duration: Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'successfully_update_profile'.tr,
+        );
+
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'successfully_update_profile'.tr,
+        //   duration: Duration(seconds: defaultSnackbarDuration),
+        // ));
         homeController.getUserApi();
         Get.close(1);
       }
@@ -344,11 +613,16 @@ class EditProfileController extends GetxController {
       setIsLoading(false);
       setIsPhotoLoading(false);
       if (value.statusCode == 200) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'reset_avatar'.tr,
-          duration: Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'reset_avatar'.tr,
+        );
+
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'reset_avatar'.tr,
+        //   duration: Duration(seconds: defaultSnackbarDuration),
+        // ));
         homeController.getUserApi();
       }
     });
@@ -774,9 +1048,9 @@ class EditProfileController extends GetxController {
     }
 
     super.onInit();
-
+    updateToken();
     setUserData();
-
+    getCountry();
     ever(countryCode, (callback) {
       countryTextEditController.value.text = callback;
     });
@@ -789,8 +1063,10 @@ class EditProfileController extends GetxController {
     if (Get.arguments != null) {
       if (Get.arguments[0] != null) {
         if (Get.arguments[0]) {
-          controller.animateTo(controller.position.maxScrollExtent,
-              duration: Duration(milliseconds: 700), curve: Curves.easeIn);
+          homeController.controllerEditeProfile.animateTo(
+              homeController.controllerEditeProfile.position.maxScrollExtent,
+              duration: Duration(milliseconds: 700),
+              curve: Curves.easeIn);
           // if (dataKey.currentContext != null) {
           // Scrollable.ensureVisible(GlobalObjectKey('uni').currentContext!);
           // }
@@ -865,5 +1141,70 @@ class EditProfileController extends GetxController {
     if (Get.isBottomSheetOpen ?? false) {
       Get.back();
     }
+  }
+
+  void selectFromGalleryPass() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setFilePathPass(image.path);
+      setImageFilePathPass(File(getFilePathPass()));
+    }
+    if (Get.isBottomSheetOpen ?? false) {
+      Get.back();
+    }
+  }
+
+  void selectFromCameraPass() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setFilePathPass(image.path);
+      setImageFilePathPass(File(getFilePathPass()));
+    }
+    print("22222222222222222");
+    print(image);
+    print(getFilePathPass());
+
+    print("22222222222222222");
+    if (Get.isBottomSheetOpen ?? false) {
+      Get.back();
+    }
+  }
+
+  void showImageSelectionPass() {
+    Get.bottomSheet(
+      Container(
+          // height: 100.h,
+          color: ThemeController.to.getIsDarkMode
+              ? containerColorDarkTheme
+              : containerColorLightTheme,
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text(
+                  'from_gallery'.tr,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onTap: this.selectFromGalleryPass,
+              ),
+              ListTile(
+                title: Text(
+                  'from_camera'.tr,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onTap: this.selectFromCameraPass,
+              ),
+            ],
+          )),
+      isDismissible: true,
+      enableDrag: true,
+    );
   }
 }

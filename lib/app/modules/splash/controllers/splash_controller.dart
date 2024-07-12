@@ -2,8 +2,10 @@ import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 
 import 'package:app/app/data/data.dart';
 import 'package:app/app/modules/splash/providers/splash_provider.dart';
@@ -28,9 +30,55 @@ class SplashController extends GetxController {
 
   var isLoading = false.obs;
 
+  static final _auth = LocalAuthentication();
+  static Future<bool> hasBiometrics() async {
+    try {
+      return await _auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      return false;
+    }
+  }
+
+  static Future<List<BiometricType>> getBiometrics() async {
+    try {
+      return await _auth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      return <BiometricType>[];
+    }
+  }
+
+  // getauth() async {
+  Future<bool> authenticate() async {
+    final isAvailable = await hasBiometrics();
+    if (!isAvailable) return false;
+
+    try {
+      return await _auth.authenticate(
+          localizedReason: 'Scan your fingerprint',
+          // useErrorDialogs: true,
+          // stickyAuth: true,
+          options: const AuthenticationOptions(
+            useErrorDialogs: true,
+            stickyAuth: true,
+            // biometricOnly: true,
+          ));
+    } on PlatformException catch (e) {
+      print("{{{{{{{{{{{{{{}}}}}}}}}}}}}}");
+      print(e.message);
+      print(e.code);
+      print("{{{{{{{{{{{{{{}}}}}}}}}}}}}}");
+      return false;
+    }
+  }
+
+  // await authenticate();
+  // }
+
   @override
   Future<void> onInit() async {
     print('onInit');
+    precacheImage(
+        const AssetImage('assets/images/png/snackbarLogo.png'), Get.context!);
     final presistentData = PresistentData();
 
     String? langCode = await presistentData.readLocaleCode();
@@ -232,18 +280,32 @@ class SplashController extends GetxController {
     );
   }
 
-  void navigateBasedOnLogin() {
+  void navigateBasedOnLogin() async {
     final authToken = presistentData.getAuthToken();
     if (authToken != null) {
       if (authToken.isNotEmpty) {
-        // Get.offAndToNamed('/home');
         Get.offNamedUntil(
           '/home',
           ModalRoute.withName('toNewHome'),
         );
-        // if (isThereNewUpdate.value) {
-        //   _showUpdateDiaolog();
+        // bool isAuth = await authenticate();
+        // if (isAuth) {
+        //   Get.offNamedUntil(
+        //     '/home',
+        //     ModalRoute.withName('toNewHome'),
+        //   );
+        // } else {
+        //   while (!isAuth) {
+        //     isAuth = await authenticate();
+        //     if (isAuth) {
+        //       Get.offNamedUntil(
+        //         '/home',
+        //         ModalRoute.withName('toNewHome'),
+        //       );
+        //     }
+        //   }
         // }
+
         return;
       }
     }

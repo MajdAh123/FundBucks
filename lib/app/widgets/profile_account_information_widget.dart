@@ -50,6 +50,8 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // SizedBox(height: 8.h),
+
                   Text(
                     controller.getFullName(),
                     style: TextStyle(
@@ -61,29 +63,97 @@ class ProfileAccountInformationWidget extends GetView<ProfileController> {
                           : mainColor,
                     ),
                   ),
-                  SizedBox(height: 8.h),
-                  Text(controller.homeController.getUser()?.username ?? '',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: ThemeController.to.getIsDarkMode
-                            ? unselectedBottomBarItemColorDarkTheme
-                            : unselectedBottomBarItemColorLightTheme,
-                        //fontFamily: FontFamily.inter,
-                        fontWeight: FontWeight.w500,
-                      )),
+                  SizedBox(height: 6.h),
+                  // Text(
+                  //     "#${controller.homeController.getUser()?.account_number.toString()}" ??
+                  //         '',
+                  //     style: TextStyle(
+                  //       fontSize: 15.sp,
+                  //       letterSpacing: 2,
+                  //       color: ThemeController.to.getIsDarkMode
+                  //           ? unselectedBottomBarItemColorDarkTheme
+                  //           : unselectedBottomBarItemColorLightTheme,
+                  //       //fontFamily: FontFamily.inter,
+                  //       fontWeight: FontWeight.w800,
+                  //     )),
+                  // SizedBox(height: 2.h),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Text(
+                        controller.homeController.getUser()?.username ?? '',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : unselectedBottomBarItemColorLightTheme,
+                            //fontFamily: FontFamily.inter,
+                            fontWeight: FontWeight.w500,
+                            height: 0.9)),
+                  ),
                 ],
               )
             ],
           ),
-          DarlightButton(
-            type: Darlights.DarlightTwo,
-            onChange: (ThemeMode theme) {
-              controller.changeTheme(theme == ThemeMode.dark);
-            },
-            options: DarlightTwoOption(
-              lightBackGroundColor: Colors.transparent,
-              darkBackGroundColor: Colors.transparent,
-            ),
+          Column(
+            children: [
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(20),
+              //     border: Border.all(
+              //         color: ThemeController.to.getIsDarkMode
+              //             ? unselectedBottomBarItemColorDarkTheme
+              //             : unselectedBottomBarItemColorLightTheme,
+              //         width: 2
+              //         // top: BorderSide(
+              //         //     color: ThemeController.to.getIsDarkMode
+              //         //         ? mainColorDarkTheme
+              //         //         : mainColor,
+              //         //     width: 2),
+              //         // bottom: BorderSide(
+
+              //         // color:
+              //         // ThemeController.to.getIsDarkMode
+              //         //     ? bottomBarItemColorDarkTheme
+              //         //     : mainColor,
+              //         // width: 2)
+              //         ),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       Container(
+              //         margin: EdgeInsets.only(top: 3.h),
+              //         child: Text(
+              //           "${controller.homeController.getUser()?.account_number.toString()}",
+              //           style: TextStyle(
+              //             fontSize: 12.sp,
+              //             letterSpacing: 2,
+              //             // fontWeight: FontWeight.bold,
+              //             color: ThemeController.to.getIsDarkMode
+              //                 ? unselectedBottomBarItemColorDarkTheme
+              //                 : unselectedBottomBarItemColorLightTheme,
+              //           ),
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 4.h),
+              DarlightButton(
+                type: Darlights.DarlightTwo,
+                onChange: (ThemeMode theme) {
+                  controller.changeTheme(theme == ThemeMode.dark);
+                },
+                options: DarlightTwoOption(
+                  lightBackGroundColor: Colors.transparent,
+                  darkBackGroundColor: Colors.transparent,
+                ),
+              ),
+            ],
           )
         ],
       ),

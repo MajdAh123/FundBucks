@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:r_get_ip/r_get_ip.dart';
 
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
@@ -12,10 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_ip_address/get_ip_address.dart';
+// import 'package:get_ip_address/get_ip_address.dart';
 import 'package:open_store/open_store.dart';
 import 'package:timezone/timezone.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
 
 class LoginController extends GetxController {
   final globalFormKey = GlobalKey<FormState>().obs;
@@ -156,15 +159,19 @@ class LoginController extends GetxController {
       setDeviceType('unknown');
     }
     try {
-      var ipAddress = IpAddress(type: RequestType.json);
-      dynamic data = await ipAddress.getIpAddress();
-      setDeviceIp(data['ip']);
-      print(data['ip']);
-    } on IpAddressException catch (exception) {
+      // var ipAddress = IpAddress(type: RequestType.json);
+      // dynamic data = await ipAddress.getIpAddress();
+      // setDeviceIp(data['ip']);
+
+      var ipAddress = await RGetIp.externalIP;
+      setDeviceIp(ipAddress!);
+      print(ipAddress);
+    } on Exception catch (exception) {
       // setDeviceIp(data['ip']);
       setIsLoading(false);
-      print(exception.message);
+      print(exception);
     }
+
     setIsLoading(false);
   }
 
@@ -197,11 +204,17 @@ class LoginController extends GetxController {
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
         print(baseSuccessModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'login_successfully'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        // Get.showSnackbar(
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'login_successfully'.tr,
+        );
+        // );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'login_successfully'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
 
         presistentData.writeAuthToken(baseSuccessModel.data!['token']);
         presistentData.writeRememberMe(getSaveLogin());
@@ -213,30 +226,45 @@ class LoginController extends GetxController {
         Get.offAndToNamed('/home');
       } else if (value.statusCode == 201) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'verify_email_to_login'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'opt_sent_successfully'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'verify_email_to_login'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         // Navigate to verify screen
         Get.offAndToNamed('/verify',
             arguments: ['${baseSuccessModel.data!["email"]}', false]);
       } else if (value.statusCode == 404) {
         final baseErrorModel = BaseErrorModel.fromJson(value.body);
         print(baseErrorModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'login_failed'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'login_failed'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'login_failed'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else if (value.statusCode == 405) {
         // final baseErrorModel = BaseErrorModel.fromJson(value.body);
         // print(baseErrorModel);
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'banned'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'banned'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'banned'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else if (value.statusCode == 429) {
         // final baseErrorModel = BaseErrorModel.fromJson(value.body);
         // print(baseErrorModel);
@@ -247,17 +275,26 @@ class LoginController extends GetxController {
           setTooManyAttempts(true);
         }
         _showTooManyAttemptsDialog();
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'too_many_attempts'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'too_many_attempts'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'too_many_attempts'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

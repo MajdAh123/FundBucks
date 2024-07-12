@@ -145,7 +145,7 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
 
 class MyHtmlWidgetFactory extends WidgetFactory {
   @override
-  Widget buildGestureDetector(
+  Widget buildGestureDetector_(
     BuildMetadata meta,
     Widget child,
     GestureTapCallback onTap,

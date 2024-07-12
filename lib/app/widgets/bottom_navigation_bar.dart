@@ -4,6 +4,7 @@ import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/colors.dart';
 import 'package:app/app/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -57,12 +58,18 @@ class StretchedBottomNavigationBar extends GetView<HomeController> {
                 isNotification:
                     Get.find<ContactController>().checkIfTheresANewMessage(),
               ),
+              // Stack(
+              //   children: [
               StretchedBottomNavigationBarItem(
                 title: 'profile'.tr,
                 isHome: false,
                 icon: La.user,
                 index: 4,
+                iswarning: controller.passport_status.value == 0,
               ),
+              // Icon(Icons.warning_amber_rounded)
+              //   ],
+              // ),
             ],
           ),
         ),

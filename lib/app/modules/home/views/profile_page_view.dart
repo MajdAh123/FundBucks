@@ -18,7 +18,49 @@ class ProfilePageView extends GetView<ProfileController> {
                 ? mainColorDarkTheme
                 : mainColor,
           ),
-          PageHeaderWidget(title: 'profile'.tr),
+          PageHeaderWidget(
+            title: 'profile'.tr,
+            leading: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.white, width: 1
+                    // top: BorderSide(
+                    //     color: ThemeController.to.getIsDarkMode
+                    //         ? mainColorDarkTheme
+                    //         : mainColor,
+                    //     width: 2),
+                    // bottom: BorderSide(
+
+                    // color:
+                    // ThemeController.to.getIsDarkMode
+                    //     ? bottomBarItemColorDarkTheme
+                    //     : mainColor,
+                    // width: 2)
+                    ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 3.h),
+                    child: Text(
+                      "${controller.homeController.getUser()?.account_number.toString()}",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        letterSpacing: 2,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(top: 70.h),
             child: ListView(
@@ -30,6 +72,9 @@ class ProfilePageView extends GetView<ProfileController> {
                   SizedBox(height: 15.h),
                   SwitchListTile.adaptive(
                     // shape: ShapeBorder,
+                    inactiveTrackColor: ThemeController.to.getIsDarkMode
+                        ? greyColor
+                        : greyReportBackground,
                     value: controller.getIsTestAccount(),
                     onChanged: (value) {
                       controller.showTestModeDialog();
@@ -38,6 +83,9 @@ class ProfilePageView extends GetView<ProfileController> {
                       'test_mode_label'.tr,
                       style: TextStyle(
                         //fontFamily: FontFamily.inter,
+                        color: ThemeController.to.getIsDarkMode
+                            ? unselectedBottomBarItemColorDarkTheme
+                            : unselectedBottomBarItemColorLightTheme,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
                       ),
@@ -49,6 +97,8 @@ class ProfilePageView extends GetView<ProfileController> {
 
                 OptionItemWidget(
                     title: 'account_information'.tr,
+                    iswarning:
+                        controller.homeController.passport_status.value == 0,
                     onTap: () {
                       Get.toNamed('/edit-profile');
                     }),

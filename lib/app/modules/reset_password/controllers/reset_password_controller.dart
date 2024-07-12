@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:app/app/modules/reset_password/providers/reset_password_provider.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class ResetPasswordController extends GetxController {
   final ResetPasswordProvider resetPasswordProvider;
   ResetPasswordController({
@@ -54,18 +56,26 @@ class ResetPasswordController extends GetxController {
       print(value.body);
       setIsLoading(false);
       if (value.statusCode == 200) {
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'reset_password_success'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'reset_password_success'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'reset_password_success'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         Get.offNamedUntil('/login', ModalRoute.withName('toNewLogin'));
       } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'fail'.tr,
-          message: 'something_happened'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+        SnackBarWidgetAwesome(
+          'fail'.tr,
+          'something_happened'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'fail'.tr,
+        //   message: 'something_happened'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
     });
   }

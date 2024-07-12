@@ -31,6 +31,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : unselectedBottomBarItemColorLightTheme,
                     ),
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
@@ -90,6 +93,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : unselectedBottomBarItemColorLightTheme,
                     ),
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
@@ -193,6 +199,9 @@ class NewCaseFormWidget extends GetView<ContactController> {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : unselectedBottomBarItemColorLightTheme,
                           ),
                         ),
                         // SizedBox(width: 5.w),

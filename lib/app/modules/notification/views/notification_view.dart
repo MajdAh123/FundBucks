@@ -36,10 +36,11 @@ class NotificationView extends GetView<NotificationController> {
               margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
               child: controller.loading.value
                   ? ShimmerListViewWidget()
-                  : controller.getNotifications().isEmpty
+                  : controller.notifications.isEmpty
                       ? Center(
                           child: Text(
-                            'no_new_notifications'.tr,
+                            // 'no_new_notifications'.tr,
+                            controller.errorType.value,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -50,7 +51,7 @@ class NotificationView extends GetView<NotificationController> {
                           shrinkWrap: true,
                           padding: EdgeInsets.only(top: 0),
                           children: [
-                            controller.getNotifications().length > 0
+                            controller.notifications.length > 0
                                 ? InkWell(
                                     onTap: controller.readAllNotifications,
                                     child: Row(
@@ -74,22 +75,23 @@ class NotificationView extends GetView<NotificationController> {
                                   )
                                 : SizedBox.shrink(),
                             SizedBox(height: 10.h),
-                            ...controller.getNotifications().map(
-                                  (e) => NotificationItemWidget(
-                                    title: e.title ?? '',
-                                    time: e.createdAt != null
-                                        ? DateFormat('yyyy-MM-dd kk:mm a')
-                                            .format(e.createdAt!)
-                                        : '',
-                                    description: e.description ?? '',
-                                    isRead: e.read == 1,
-                                    onTap: () => e.read == 1
-                                        ? null
-                                        : controller.readNotification(e.id, e.title, e.action),
-                                    onDeleteTap: () =>
-                                        controller.deleteNotification(e.id),
-                                  ),
-                                ),
+                            ...controller.notifications.map(
+                              (e) => NotificationItemWidget(
+                                title: e.title ?? '',
+                                time: e.createdAt != null
+                                    ? DateFormat('yyyy-MM-dd kk:mm a')
+                                        .format(e.createdAt!)
+                                    : '',
+                                description: e.description ?? '',
+                                isRead: e.read == 1,
+                                onTap: () => e.read == 1
+                                    ? null
+                                    : controller.readNotification(
+                                        e.id, e.title, e.action),
+                                onDeleteTap: () =>
+                                    controller.deleteNotification(e.id),
+                              ),
+                            ),
                           ],
                         ),
             )),

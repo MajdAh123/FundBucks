@@ -68,17 +68,18 @@ class SettingController extends GetxController {
     activateNotifications.value = false;
   }
 
-  void updateNotifications() {
+  void updateNotifications() async {
     setIsLoading(true);
     final fcm = presistentData.getFcmToken();
     final FormData _formData = FormData({
       'fcm': getActivateNotification() ? fcm : null,
     });
-    settingProvider.setNotification(_formData).then((value) {
+    await settingProvider.setNotification(_formData).then((value) {
       setIsLoading(false);
       if (value.statusCode == 200) {
         print('success');
         presistentData.writeNotifications(getActivateNotification());
+        print(getActivateNotification());
       }
     });
   }

@@ -6,6 +6,8 @@ import 'package:app/app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class PortfolioInformationController extends GetxController {
   final globalFormKey = GlobalKey<FormState>().obs;
 
@@ -105,11 +107,16 @@ class PortfolioInformationController extends GetxController {
             CreatePortfolio.fromJson(baseSuccessModel.data!);
         portfolios.value = createPortfolioModel.plans ?? [];
         currencies.value = createPortfolioModel.currencies ?? [];
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message: 'data_fetched'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          'data_fetched'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message: 'data_fetched'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
       }
       setIsLoading(false);
     }, onError: (error, stacktrace) {

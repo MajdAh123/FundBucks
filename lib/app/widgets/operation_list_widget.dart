@@ -51,6 +51,9 @@ class OperationListWidget extends GetView<OperationController> {
                               style: TextStyle(
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w400,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme,
                               ),
                             ),
                           ),
@@ -96,6 +99,9 @@ class OperationListWidget extends GetView<OperationController> {
                               style: TextStyle(
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w400,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme,
                               ),
                             ),
                           ),

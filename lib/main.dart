@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:app/app/data/presistent/presistent_data.dart';
 import 'package:app/app/modules/lanuage_controller.dart';
 import 'package:app/app/modules/notification_controller.dart';
@@ -18,12 +16,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
-
 import 'app/routes/app_pages.dart';
+import 'generated/appsflyer_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AppsFlyerService().initSdk();
   await GetStorage.init();
+  // await Pusher
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -33,6 +33,8 @@ Future<void> main() async {
   Get.put<LanguageController>(LanguageController(), permanent: true);
   Get.put<PresistentData>(PresistentData(), permanent: true);
   Get.put<ThemeController>(ThemeController(), permanent: true);
+  // Get.put<UserProvider>(UserProvider(), permanent: true);
+  // UserProvider userProvider = Get.put<UserProvider>(UserProvider());
 
   final presistentData = Get.find<PresistentData>();
   var isDark = presistentData.getDarkMode() ?? false;

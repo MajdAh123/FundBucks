@@ -11,14 +11,18 @@ class PageHeaderWidget extends GetView<HomeController> {
   final bool canBack;
   final bool hasNotificationIcon;
   final Widget? icon;
+  final Widget? leading;
   final double paddingTop;
+  final void Function()? onTapBack;
   const PageHeaderWidget({
     Key? key,
     required this.title,
     this.canBack = false,
     this.hasNotificationIcon = false,
     this.icon,
+    this.leading,
     this.paddingTop = 35,
+    this.onTapBack,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,9 @@ class PageHeaderWidget extends GetView<HomeController> {
         children: [
           canBack
               ? InkWell(
-                  onTap: () => Navigator.of(context).pop(),
+                  onTap: onTapBack == null
+                      ? () => Navigator.of(context).pop()
+                      : onTapBack,
                   child: Container(
                     width: 32.67.w,
                     height: 32.67.h,
@@ -59,17 +65,26 @@ class PageHeaderWidget extends GetView<HomeController> {
                     // color: Colors.white,
                   ),
                 )
-              : SizedBox(width: 25.67.w),
+              : leading != null
+                  ? leading!
+                  : SizedBox(width: 25.67.w),
           // canBack ? const SizedBox.shrink() : SizedBox(width: 25.67.w),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18.sp,
-              //fontFamily: FontFamily.inter,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  //fontFamily: FontFamily.inter,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: leading != null ? 30 : 0,
+              ),
+            ],
           ),
           hasNotificationIcon || icon == null
               ? NotificationIndicatorWidget(

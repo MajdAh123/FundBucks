@@ -30,6 +30,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
+                      color: ThemeController.to.getIsDarkMode
+                          ? unselectedBottomBarItemColorDarkTheme
+                          : unselectedBottomBarItemColorLightTheme,
                     ),
                     validator: (value) {
                       if (value == null) {
@@ -109,6 +112,9 @@ class WithdrawFormWidget extends GetView<OperationController> {
               style: TextStyle(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
+                color: ThemeController.to.getIsDarkMode
+                    ? unselectedBottomBarItemColorDarkTheme
+                    : unselectedBottomBarItemColorLightTheme,
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {

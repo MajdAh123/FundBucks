@@ -18,6 +18,8 @@ class AuthProvider extends BaseGetConnect {
     });
   }
 
+  Future<Response> update_tokenUser(body) =>
+      post(EndPoints.update_tokenUser, body);
   Future<Response> checkUpdate() => get(EndPoints.checkUpdate);
   Future<Response> getUser() => get(EndPoints.getUser);
   Future<Response> isThereNotification() => get(EndPoints.isThereNotification);

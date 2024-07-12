@@ -8,6 +8,8 @@ import 'package:app/app/data/data.dart';
 import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/home/providers/auth_provider.dart';
 
+import '../../../widgets/snack_Bar_Awesome_widget.dart';
+
 class ProfileController extends GetxController {
   final AuthProvider authProvider;
 
@@ -47,12 +49,12 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  void signOut() {
+  void signOut() async {
     setIsLoading(true);
     final FormData _formData = FormData({
       'fcm': null,
     });
-    authProvider.setNotification(_formData).then((value) {
+    await authProvider.setNotification(_formData).then((value) {
       setIsLoading(false);
       if (value.statusCode == 200) {
         print('success');
@@ -71,12 +73,17 @@ class ProfileController extends GetxController {
         homeController.getUserApi();
         final getIsTestMode =
             homeController.getUser()?.type?.compareTo('test') == 0;
-        Get.showSnackbar(GetSnackBar(
-          title: 'success'.tr,
-          message:
-              getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
-          duration: const Duration(seconds: defaultSnackbarDuration),
-        ));
+
+        SnackBarWidgetAwesome(
+          'success'.tr,
+          getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
+        );
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'success'.tr,
+        //   message:
+        //       getIsTestMode ? 'enable_test_mode'.tr : 'disable_test_mode'.tr,
+        //   duration: const Duration(seconds: defaultSnackbarDuration),
+        // ));
         print('changed mode');
       }
     });

@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/controllers/home_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:app/generated/generated.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,15 +15,16 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
   final bool isSelected;
   final int index;
   final bool isNotification;
-  const StretchedBottomNavigationBarItem({
-    super.key,
-    required this.title,
-    this.icon,
-    this.isHome = true,
-    this.isSelected = false,
-    this.isNotification = false,
-    required this.index,
-  });
+  final bool iswarning;
+  const StretchedBottomNavigationBarItem(
+      {super.key,
+      required this.title,
+      this.icon,
+      this.isHome = true,
+      this.isSelected = false,
+      this.isNotification = false,
+      required this.index,
+      this.iswarning = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,17 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
         onTap: () => controller.setIndex(index),
         child: Stack(
           children: [
+            index == 4 && iswarning
+                ? Positioned(
+                    right: 15,
+                    top: 5,
+                    child: Icon(
+                      CupertinoIcons.info,
+                      size: 18,
+                      color: Colors.amber,
+                    ),
+                  )
+                : SizedBox(),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -59,13 +72,15 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                     else ...[
                       Iconify(
                         icon!,
-                        color: controller.isSelected(index)
-                            ? (ThemeController.to.getIsDarkMode
-                                ? bottomBarItemColorDarkTheme
-                                : mainColor)
-                            : (ThemeController.to.getIsDarkMode
-                                ? unselectedBottomBarItemColorDarkTheme
-                                : unselectedBottomBarItemColorLightTheme),
+                        color: index == 4 && iswarning
+                            ? Colors.amber
+                            : controller.isSelected(index)
+                                ? (ThemeController.to.getIsDarkMode
+                                    ? bottomBarItemColorDarkTheme
+                                    : mainColor)
+                                : (ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme),
                         size: 20,
                       ),
                     ]
@@ -89,13 +104,15 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                       //fontFamily: FontFamily.inter,
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w600,
-                      color: controller.isSelected(index)
-                          ? (ThemeController.to.getIsDarkMode
-                              ? bottomBarItemColorDarkTheme
-                              : mainColor)
-                          : (ThemeController.to.getIsDarkMode
-                              ? unselectedBottomBarItemColorDarkTheme
-                              : unselectedBottomBarItemColorLightTheme),
+                      color: index == 4 && iswarning
+                          ? Colors.amber
+                          : controller.isSelected(index)
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor)
+                              : (ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : unselectedBottomBarItemColorLightTheme),
                     ),
                   ),
                   SizedBox(height: 7.h),
