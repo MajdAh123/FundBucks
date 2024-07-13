@@ -276,7 +276,7 @@ class LoginView extends GetView<LoginController> {
                         SizedBox(
                             height: !controller.getCreateAccountChoice()
                                 ? 25.h
-                                : 38.h),
+                                : 1.h),
                       ],
                     ),
                   ),
@@ -314,6 +314,7 @@ class LoginView extends GetView<LoginController> {
               //     ),
               //   ),
               // ),
+              SizedBox(height: 20.h),
             ],
           ),
         ),

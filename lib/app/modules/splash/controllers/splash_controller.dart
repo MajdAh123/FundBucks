@@ -129,6 +129,7 @@ class SplashController extends GetxController {
   }
 
   bool checkIsThereNewUpdate(version) {
+    print(appVersion.compareTo("1.2.2+14"));
     return appVersion.compareTo(version) != 0;
   }
 
