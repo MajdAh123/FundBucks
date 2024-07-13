@@ -7,10 +7,10 @@ if (localPropertiesFile.exists()) {
 }
 
 def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
@@ -49,40 +49,31 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.fundbucks.app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
-
     }
 
     signingConfigs {
-       release {
-           keyAlias 'alias_name'
-           keyPassword '123456'
-           storeFile file('my-release-key.keystore')
-           storePassword '123456'
-        //    keyAlias keystoreProperties['keyAlias']
-        //    keyPassword keystoreProperties['keyPassword']
-        //    storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-        //    storePassword keystoreProperties['storePassword']
-       }
-   }
-   buildTypes {
-       release {
-        minifyEnabled true
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        signingConfig signingConfigs.release
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
         }
-   }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
 }
-
-
 
 flutter {
     source '../..'
