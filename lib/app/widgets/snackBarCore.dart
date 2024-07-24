@@ -39,7 +39,6 @@ class AwesomeSnackbarContent extends StatelessWidget {
 
   /// if you want to customize the font size of the message
   final double? messageFontSize;
-
   const AwesomeSnackbarContent({
     Key? key,
     this.color,
@@ -83,7 +82,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         horizontal: horizontalPadding,
       ),
-      height: size.height * 0.125,
+      height: size.height * 0.15,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.topCenter,
@@ -205,7 +204,11 @@ class AwesomeSnackbarContent extends StatelessWidget {
                               .hideCurrentMaterialBanner();
                           return;
                         }
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // overlayEntry.remove();
+                        // Get.back();
+
+                        print("22222222222");
                       },
                       child: SvgPicture.asset(
                         AssetsPath.failure,
