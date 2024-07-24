@@ -31,15 +31,16 @@ import '../utils/colors.dart';
 // }
 
 SnackBarWidgetAwesome(String title, String massage, {void Function()? ontap}) {
-  final snackBar = SnackBar(
-    duration: const Duration(seconds: defaultSnackbarDuration),
+  final snackBar = MaterialBanner(
+    actions: const [SizedBox.shrink()],
+    // duration: const Duration(seconds: defaultSnackbarDuration),
     // action: SnackBarAction(label: "", onPressed: onPressed),
 
     /// need to set following properties for best effect of awesome_snackbar_content
     elevation: 0,
-    hitTestBehavior: HitTestBehavior.deferToChild,
+    // hitTestBehavior: HitTestBehavior.deferToChild,
     // margin: EdgeInsets.only(top: 15),
-    behavior: SnackBarBehavior.floating,
+    // behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: GestureDetector(
       onTap: ontap == null ? null : ontap,
@@ -62,8 +63,8 @@ SnackBarWidgetAwesome(String title, String massage, {void Function()? ontap}) {
   );
 
   ScaffoldMessenger.of(Get.context!)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(snackBar);
+    ..hideCurrentMaterialBanner()
+    ..showMaterialBanner(snackBar);
 }
 
 SnackBarWidgetAwesomeWarning(String title, String massage,
