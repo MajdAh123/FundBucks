@@ -13,7 +13,7 @@ import '../utils/colors.dart';
 // SnackBarWidget() {
 //   final materialBanner = MaterialBanner(
 //     /// need to set following properties for best effect of awesome_snackbar_content
-//     elevation: 0,
+//     elevation: 5,
 //     backgroundColor: Colors.transparent,
 //     forceActionsBelow: true,
 //     content: AwesomeSnackbarContent(
@@ -38,11 +38,10 @@ SnackBarWidgetAwesome(String title, String massage, {void Function()? ontap}) {
   FocusScope.of(Get.context!).unfocus();
   final snackBar = MaterialBanner(
     actions: [SizedBox()],
-    elevation: 0,
+    elevation: 5,
     shadowColor: Colors.transparent,
     dividerColor: Colors.transparent,
-    backgroundColor:
-        ThemeController.to.isDarkMode.isTrue ? mainColorDarkTheme : mainColor,
+    backgroundColor: Colors.transparent,
     content: GestureDetector(
       onTap: ontap == null ? null : ontap,
       child: Padding(
@@ -53,7 +52,7 @@ SnackBarWidgetAwesome(String title, String massage, {void Function()? ontap}) {
           color: Color.fromARGB(255, 0, 170, 255),
           title: title,
           message: massage,
-
+          inMaterialBanner: true,
           // svg: 'assets/images/svg/snackbarLogo.svg',
           // 'This is an example error message that will be shown in the body of snackbar!',
 
@@ -77,11 +76,10 @@ SnackBarWidgetAwesomeWarning(String title, String massage,
   FocusScope.of(Get.context!).unfocus();
   final snackBar = MaterialBanner(
     actions: [SizedBox()],
-    elevation: 0,
+    elevation: 5,
     shadowColor: Colors.transparent,
     dividerColor: Colors.transparent,
-    backgroundColor:
-        ThemeController.to.isDarkMode.isTrue ? mainColorDarkTheme : mainColor,
+    backgroundColor: Colors.transparent,
     content: GestureDetector(
       onTap: ontap == null ? null : ontap,
       child: Padding(
@@ -116,11 +114,10 @@ SnackBarWidgetAwesomeError(String title, String massage,
   FocusScope.of(Get.context!).unfocus();
   final snackBar = MaterialBanner(
     actions: [SizedBox()],
-    elevation: 0,
+    elevation: 5,
     shadowColor: Colors.transparent,
     dividerColor: Colors.transparent,
-    backgroundColor:
-        ThemeController.to.isDarkMode.isTrue ? mainColorDarkTheme : mainColor,
+    backgroundColor: Colors.transparent,
     content: GestureDetector(
       onTap: ontap == null ? null : ontap,
       child: Padding(
@@ -133,7 +130,7 @@ SnackBarWidgetAwesomeError(String title, String massage,
 
           title: title,
           message: massage,
-
+          inMaterialBanner: true,
           // 'This is an example error message that will be shown in the body of snackbar!',
 
           /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
