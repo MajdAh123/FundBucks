@@ -107,7 +107,9 @@ class DepositFormWidget extends GetView<OperationController> {
                                           )
                                         : Column(
                                             children: [
-                                              SizedBox(height: 14.h),
+                                              // SizedBox(height: 14.h),
+                                              Expanded(
+                                                  flex: 2, child: SizedBox()),
                                               Assets.images.svg.uploadIcon.svg(
                                                 width: 20.w,
                                                 height: 24.h,
@@ -116,7 +118,10 @@ class DepositFormWidget extends GetView<OperationController> {
                                                     ? bottomBarItemColorDarkTheme
                                                     : mainColor,
                                               ),
-                                              SizedBox(height: 7.h),
+                                              Expanded(
+                                                  flex: 1, child: SizedBox()),
+
+                                              // SizedBox(height: 7.h),
                                               Text(
                                                 'inform_us_text'.tr,
                                                 style: TextStyle(

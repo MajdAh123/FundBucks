@@ -1460,61 +1460,75 @@ class EditProfilePage extends GetView<EditProfileController> {
                                               ? controller.passport_image
                                                           .value ==
                                                       EndPoints.passPortPath
-                                                  ? SizedBox()
+                                                  ? TextImageExaption(
+                                                      controller)
                                                   : controller.passport_status
                                                               .value ==
                                                           0
-                                                      ? SizedBox()
-                                                      : GestureDetector(
-                                                          onTap: () => Get.to(
-                                                              () => ShowImage(
-                                                                  isfile: false,
-                                                                  imagePath: controller
-                                                                      .passport_image
-                                                                      .value)),
-                                                          child: Container(
-                                                            width: 80,
-                                                            height: 80,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
+                                                      ? TextImageExaption(
+                                                          controller)
+                                                      : controller
+                                                              .sizeOfImageExaption
+                                                              .value
+                                                              .isEmpty
+                                                          ? GestureDetector(
+                                                              onTap: () => Get.to(
+                                                                  () => ShowImage(
+                                                                      isfile:
+                                                                          false,
+                                                                      imagePath: controller
+                                                                          .passport_image
+                                                                          .value)),
+                                                              child: Container(
+                                                                width: 80,
+                                                                height: 80,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             15),
-                                                                image: DecorationImage(
-                                                                    image: NetworkImage(controller
-                                                                        .passport_image
-                                                                        .value),
-                                                                    fit: BoxFit
-                                                                        .fill)),
-                                                          ),
-                                                        )
+                                                                    image: DecorationImage(
+                                                                        image: NetworkImage(controller
+                                                                            .passport_image
+                                                                            .value),
+                                                                        fit: BoxFit
+                                                                            .fill)),
+                                                              ),
+                                                            )
+                                                          : TextImageExaption(
+                                                              controller)
 
                                               //  Image.network(
                                               //     controller
                                               //         .passport_image.value,
 
                                               //     fit: BoxFit.cover)
-                                              : GestureDetector(
-                                                  onTap: () => Get.to(() =>
-                                                      ShowImage(
-                                                          isfile: true,
-                                                          imagePath: controller
-                                                              .getFilePass()
-                                                              .path)),
-                                                  child: Container(
-                                                    width: 80,
-                                                    height: 80,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        image: DecorationImage(
-                                                            image: FileImage(
-                                                                controller
-                                                                    .getFilePass()),
-                                                            fit: BoxFit.fill)),
-                                                  ),
-                                                )
+                                              : controller.sizeOfImageExaption
+                                                      .value.isEmpty
+                                                  ? GestureDetector(
+                                                      onTap: () => Get.to(() =>
+                                                          ShowImage(
+                                                              isfile: true,
+                                                              imagePath: controller
+                                                                  .getFilePass()
+                                                                  .path)),
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 80,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15),
+                                                            image: DecorationImage(
+                                                                image: FileImage(
+                                                                    controller
+                                                                        .getFilePass()),
+                                                                fit: BoxFit
+                                                                    .fill)),
+                                                      ),
+                                                    )
+                                                  : TextImageExaption(
+                                                      controller)
 
                                           //  Image.file(
                                           //     controller.getFilePass(),
@@ -2396,6 +2410,19 @@ class EditProfilePage extends GetView<EditProfileController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Expanded TextImageExaption(EditProfileController controller) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          controller.sizeOfImageExaption.value,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.red),
         ),
       ),
     );

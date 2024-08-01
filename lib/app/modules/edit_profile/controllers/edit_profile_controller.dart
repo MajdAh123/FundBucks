@@ -1143,11 +1143,23 @@ class EditProfileController extends GetxController {
     }
   }
 
+  RxString sizeOfImageExaption = "".obs;
   void selectFromGalleryPass() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setFilePathPass(image.path);
-      setImageFilePathPass(File(getFilePathPass()));
+      final fileSizeInBytes = await File(image.path).length();
+
+      // Convert the file size to megabytes
+      final fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+      print('File size: ${fileSizeInMB.toStringAsFixed(2)} MB');
+      if (fileSizeInMB <= 5) {
+        setFilePathPass(image.path);
+        setImageFilePathPass(File(getFilePathPass()));
+        sizeOfImageExaption.value = "";
+      } else {
+        sizeOfImageExaption.value = "The size of image too big".tr;
+      }
+      print(sizeOfImageExaption.value);
     }
     if (Get.isBottomSheetOpen ?? false) {
       Get.back();
@@ -1157,8 +1169,19 @@ class EditProfileController extends GetxController {
   void selectFromCameraPass() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      setFilePathPass(image.path);
-      setImageFilePathPass(File(getFilePathPass()));
+      final fileSizeInBytes = await File(image.path).length();
+
+      // Convert the file size to megabytes
+      final fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+      print('File size: ${fileSizeInMB.toStringAsFixed(2)} MB');
+      if (fileSizeInMB <= 5) {
+        setFilePathPass(image.path);
+        setImageFilePathPass(File(getFilePathPass()));
+        sizeOfImageExaption.value = "";
+      } else {
+        sizeOfImageExaption.value = "The size of image too big".tr;
+      }
+      print(sizeOfImageExaption.value);
     }
     print("22222222222222222");
     print(image);

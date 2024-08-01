@@ -528,9 +528,11 @@ class Locales {
     'passport_update_massage': 'يرجى رفع صورة جواز السفر',
     'rejected_passport': 'جواز سفر مرفوض\nارفع جوازك مجدداً',
     'processing_passport': 'قيد المراجعة',
-    "cancel": "خروج"
+    "cancel": "خروج",
+    "The size of image too big": "حجم الصورة كبير جدا"
   };
   static const en = {
+    "The size of image too big": "The size of image too big",
     "passport_rejetced": "passport has been Rejected",
     "passport_rejetced_massage": "Please submit a valid passport",
     "save_leave": "Save",

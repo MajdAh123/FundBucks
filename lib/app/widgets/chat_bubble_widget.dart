@@ -145,7 +145,8 @@ class ChatBubbleWidget extends StatelessWidget {
                               ),
                             )
                           : Container(
-                              constraints: BoxConstraints(maxWidth: 200.w),
+                              constraints:
+                                  BoxConstraints(maxWidth: Get.width * 0.7),
                               padding: EdgeInsets.symmetric(
                                   vertical: 8.h, horizontal: 8.w),
                               decoration: BoxDecoration(
@@ -323,7 +324,8 @@ class ChatBubbleWidget extends StatelessWidget {
                                 ),
                                 SizedBox(width: 3.w),
                                 Container(
-                                  constraints: BoxConstraints(maxWidth: 200.w),
+                                  constraints:
+                                      BoxConstraints(maxWidth: Get.width * 0.7),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 8.h, horizontal: 8.w),
                                   decoration: BoxDecoration(

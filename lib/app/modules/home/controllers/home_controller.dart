@@ -122,54 +122,72 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     }
   }
 
+  RxBool startAuth = false.obs;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.inactive:
-        print('appLifeCycleState inactive');
-        break;
-      case AppLifecycleState.resumed:
-        print('appLifeCycleState resumed');
-        if (_pauseTimer != null && _pauseTimer!.isActive) {
-          // Cancel the timer if it's still active
-          _pauseTimer!.cancel();
-        } else {
-          // Proceed with authentication if the timer is not active (meaning more than 1 minute has passed)
+    if (state == AppLifecycleState.inactive) {
+      // startAuth.value = false;
+      // _pauseTimer!.cancel();
+      print("sssssssssssssssss");
+      // fromInactive = true;
+    } else if (state == AppLifecycleState.paused) {
+      _pauseTimer = Timer(Duration(minutes: 2), () {
+        _pauseTimer = null; // Invalidate the timer after 1 minute
+        startAuth.value = true;
+        print(startAuth);
+      });
+      print("qqqqqqqqqqqqqqq");
+    } else if (state == AppLifecycleState.resumed) {
+      print("=++++++++${startAuth.value}");
+      if (_pauseTimer != null && _pauseTimer!.isActive) {
+        // Cancel the timer if it's still active
+        startAuth.value = false;
+        _pauseTimer!.cancel();
+      } else {
+        // Proceed with authentication if the timer is not active (meaning more than 1 minute has passed)
+        if (startAuth.isTrue) {
+          print("================");
+          print(_authInProgress);
           if (_authInProgress) {
             _authInProgress = false; // Cancel the ongoing authentication
           } else {
-            await _handleAuthentication();
+            print("qqqqqqqqqwwwwwwwwwwwwwwwwdddddddddddddddd");
+            await _handleAuthentication().then((value) {
+              if (value) {
+                return;
+              }
+            });
           }
         }
-        break;
-      case AppLifecycleState.paused:
-        print('appLifeCycleState paused');
-        // Set a timer for 1 minute
-        _pauseTimer = Timer(Duration(minutes: 1), () {
-          _pauseTimer = null; // Invalidate the timer after 1 minute
-        });
-        break;
-      case AppLifecycleState.detached:
-        print('appLifeCycleState detached');
-        break;
-      case AppLifecycleState.hidden:
-        // TODO: Handle this case.
-        break;
+      }
     }
   }
 
-  Future<void> _handleAuthentication() async {
-    _pauseTimer = Timer(Duration(minutes: 1), () {
-      _pauseTimer = null; // Invalidate the timer after 1 minute
-    });
+  Future<bool> _handleAuthentication() async {
+    // _pauseTimer = Timer(Duration(seconds: 3), () {
+    //   _pauseTimer = null; // Invalidate the timer after 1 minute
+    // });
     await authenticate().then((value) async {
       if (value) {
+        startAuth.value = false;
+        return value;
         // Get.back();
       } else {
-        await _handleAuthentication();
+        // print(value);
+        Get.back();
+        await _handleAuthentication().then((value_) {
+          if (value_) {
+            startAuth.value = false;
+
+            // break;
+          }
+          return value;
+        });
       }
     });
+    return false;
   }
 
   @override
