@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -9,6 +10,7 @@ import 'package:app/app/modules/ticket/providers/ticket_provider.dart';
 import 'package:app/app/utils/laravel_echo/laravel_echo.dart';
 import 'package:app/app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -48,8 +50,7 @@ class TicketController extends GetxController {
 
   getFormKey() => globalFormKey.value;
 
-  ScrollController scrollController =
-      ScrollController(initialScrollOffset: 0.0);
+  late ScrollController scrollController;
 
   var supportMessages = <SupportMessage>[].obs;
 
@@ -117,7 +118,17 @@ class TicketController extends GetxController {
         var list = SupportMessageList.fromJson(value.body);
         supportMessages.value = list.data ?? [];
         goToLastestMessage();
+
+        print("new message avilable");
       }
+    });
+  }
+
+  Timer? supportMessagesTimer;
+  void startSupportMessagesTimer() {
+    supportMessagesTimer = Timer.periodic(Duration(minutes: 3), (timer) {
+      getSupportMessages();
+      print("object");
     });
   }
 
@@ -125,6 +136,7 @@ class TicketController extends GetxController {
     if (getFormKey().currentState.validate()) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
       sendMessage();
+      // scrollToBottom();
     }
   }
 
@@ -148,6 +160,7 @@ class TicketController extends GetxController {
         supportMessages.add(supportMessage);
         setLatestMessageTicket(supportMessage.ticketId, supportMessage);
         goToLastestMessage();
+        onNewMessage();
         // Timer(Duration(seconds: 5), () {
         //   print('object');
         //   goToLastestMessage();
@@ -225,13 +238,47 @@ class TicketController extends GetxController {
     // LaravelEcho.instance.disconnect();
   }
 
+  bool shouldScrollToBottom = true;
+
+  void scrollToBottom() {
+    if (shouldScrollToBottom && scrollController.hasClients) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  void onUserScroll() {
+    shouldScrollToBottom =
+        false; // Disable auto-scroll when the user manually scrolls
+  }
+
+  void onNewMessage() {
+    shouldScrollToBottom =
+        true; // Re-enable auto-scroll when a new message arrives
+    scrollToBottom(); // Scroll to the bottom for the new message
+  }
+
   @override
   void onInit() {
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse ||
+          scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
+        onUserScroll();
+      }
+    });
+
     setTicketData();
     simpleChoice = getIsTicketClosed()
         ? ['details'.tr]
         : ['details'.tr, 'close_ticket'.tr];
     getSupportMessages();
+    startSupportMessagesTimer();
     super.onInit();
     ever(isSendingMessage, (callback) {
       if (!callback) {
@@ -496,15 +543,18 @@ class TicketController extends GetxController {
   void onReady() {
     super.onReady();
     contactController.updateTicketNotifications(getTicketId(), 0);
+    // scrollToBottom();
   }
 
   void goToLastestMessage() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-    if (scrollController.hasClients) {
-      print('going');
-      scrollController.animateTo(supportMessages.length * 70.h,
-          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
-    }
+    onNewMessage();
+    // if (scrollController.hasClients) {
+    //   print('going');
+
+    //   // scrollController.animateTo(supportMessages.length * 70.h,
+    //   //     duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    // }
   }
 
   void setLatestMessageTicket(id, supportMessage) {
@@ -520,6 +570,8 @@ class TicketController extends GetxController {
 
   @override
   void onClose() {
+    scrollController.dispose();
+    supportMessagesTimer?.cancel();
     // unsubscribeTicketChannel();
     // try {
     //   LaravelEcho.instance.disconnect();

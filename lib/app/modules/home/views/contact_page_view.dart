@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/controllers/contact_controller.dart';
 import 'package:app/app/modules/home/views/account_page_view.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -74,12 +75,10 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(0);
-                        // controller.operationController.reset();
-                        // controller.operationController.forward();
                       },
-                      child: Container(
-                        // duration: const Duration(milliseconds: 300),
-                        // curve: Curves.easeInOut,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -95,7 +94,6 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                             'new_case'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 0
                                   ? Colors.white
@@ -112,12 +110,10 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(1);
-                        // controller.operationController.reset();
-                        // controller.operationController.forward();
                       },
-                      child: Container(
-                        // duration: const Duration(milliseconds: 300),
-                        // curve: Curves.easeInOut,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -131,7 +127,6 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                             'open_cases'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 1
                                   ? Colors.white
@@ -148,12 +143,10 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(2);
-                        // controller.operationController.reset();
-                        // controller.operationController.forward();
                       },
-                      child: Container(
-                        // duration: const Duration(milliseconds: 300),
-                        // curve: Curves.easeInOut,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
                         width: 102.3.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -169,7 +162,6 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
                             'solved_cases'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 2
                                   ? Colors.white
@@ -189,151 +181,149 @@ class DisplayTicketsTypeButtonWidget extends GetView<ContactController> {
               margin: EdgeInsets.only(top: 20.h, left: 16.w, right: 16.w),
               child: Column(
                 children: [
-                  if (controller.getIndex() == 0) ...[
-                    controller.getIsLoading()
-                        ? Center(
-                            child: SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : const NewCaseFormWidget(),
-                  ] else if (controller.getIndex() == 1) ...[
-                    controller.getIsLoading()
-                        ? Center(
-                            child: SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : controller.openTicketsList.isEmpty
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 800),
+                    child: controller.getIndex() == 0
+                        ? controller.getIsLoading()
                             ? Center(
-                                child: Text(
-                                  'no_open_tickets'.tr,
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: ThemeController.to.getIsDarkMode
-                                        ? unselectedBottomBarItemColorDarkTheme
-                                        : unselectedBottomBarItemColorLightTheme,
-                                  ),
-                                ),
+                                child: LoadingLogoWidget(),
                               )
-                            : Container(
-                                margin: EdgeInsets.only(top: 0.h),
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.only(top: 0),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  children: [
-                                    ...controller.openTicketsList
-                                        .map(
-                                          (e) => TicketItemWidget(
-                                              id: e.id ?? 0,
-                                              hasNotification: controller
-                                                  .checkIfTicketNotifications(
-                                                      e.id),
-                                              title: e.name ?? '',
-                                              desc: e.subject ?? '',
-                                              ticketId: e.ticket ?? '',
-                                              status: e.status!,
-                                              isClosed: e.status == 2,
-                                              created_at:
-                                                  intl.DateFormat('yyyy-MM-dd h:m a')
-                                                      .format(e.createdAt ??
-                                                          tz.TZDateTime.now(
-                                                              kuwaitTimezoneLocation))
-                                                      .toString(),
-                                              avatar: Functions.getUserAvatar(
-                                                controller.homeController
-                                                        .getUser()!
-                                                        .avatar ??
-                                                    '',
-                                              ),
-                                              isAdmin: e.latestSupportMessage
-                                                      ?.isAdmin ==
-                                                  1,
-                                              message: e.latestSupportMessage
-                                                      ?.message ??
-                                                  '',
-                                              date: intl.DateFormat('h:m a')
-                                                  .format(e.latestSupportMessage
-                                                          ?.createdAt ??
-                                                      tz.TZDateTime.now(kuwaitTimezoneLocation))
-                                                  .toString()),
-                                        )
-                                        .toList(),
-                                  ],
-                                ),
-                              ),
-                  ] else ...[
-                    controller.getIsLoading()
-                        ? Center(
-                            child: SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : controller.closedTicketsList.isEmpty
-                            ? Center(
-                                child: Text(
-                                  'no_closed_tickets'.tr,
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: ThemeController.to.getIsDarkMode
-                                        ? unselectedBottomBarItemColorDarkTheme
-                                        : unselectedBottomBarItemColorLightTheme,
-                                  ),
-                                ),
-                              )
-                            : Center(
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(top: 0),
-                                  children: controller.closedTicketsList
-                                      .map(
-                                        (e) => TicketItemWidget(
-                                            id: e.id ?? 0,
-                                            hasNotification: controller
-                                                .checkIfTicketNotifications(
-                                                    e.id),
-                                            title: e.name ?? '',
-                                            desc: e.subject ?? '',
-                                            ticketId: e.ticket ?? '',
-                                            isClosed: e.status == 2,
-                                            status: e.status!,
-                                            created_at: intl.DateFormat('yyyy-MM-dd h:m a')
-                                                .format(e.createdAt ??
-                                                    tz.TZDateTime.now(
-                                                        kuwaitTimezoneLocation))
-                                                .toString(),
-                                            avatar: Functions.getUserAvatar(
-                                              controller.homeController
-                                                      .getUser()!
-                                                      .avatar ??
-                                                  '',
-                                            ),
-                                            isAdmin: e.latestSupportMessage?.isAdmin ==
-                                                1,
-                                            message:
-                                                e.latestSupportMessage?.message ??
-                                                    '',
-                                            date: intl.DateFormat('h:m a')
-                                                .format(e.latestSupportMessage
-                                                        ?.createdAt ??
-                                                    tz.TZDateTime.now(
-                                                        kuwaitTimezoneLocation))
-                                                .toString()),
+                            : const NewCaseFormWidget()
+                        : controller.getIndex() == 1
+                            ? controller.getIsLoading()
+                                ? Center(
+                                    child: LoadingLogoWidget(),
+                                  )
+                                : controller.openTicketsList.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          'no_open_tickets'.tr,
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? unselectedBottomBarItemColorDarkTheme
+                                                : unselectedBottomBarItemColorLightTheme,
+                                          ),
+                                        ),
                                       )
-                                      .toList(),
-                                ),
-                              ),
-                  ],
+                                    : Container(
+                                        margin: EdgeInsets.only(top: 0.h),
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.only(top: 0),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          children: [
+                                            ...controller.openTicketsList
+                                                .map(
+                                                  (e) => TicketItemWidget(
+                                                      id: e.id ?? 0,
+                                                      hasNotification: controller
+                                                          .checkIfTicketNotifications(
+                                                              e.id),
+                                                      title: e.name ?? '',
+                                                      desc: e.subject ?? '',
+                                                      ticketId: e.ticket ?? '',
+                                                      status: e.status!,
+                                                      isClosed: e.status == 2,
+                                                      created_at: intl.DateFormat(
+                                                              'yyyy-MM-dd h:m a')
+                                                          .format(e.createdAt ??
+                                                              tz.TZDateTime.now(
+                                                                  kuwaitTimezoneLocation))
+                                                          .toString(),
+                                                      avatar: Functions
+                                                          .getUserAvatar(
+                                                        controller
+                                                                .homeController
+                                                                .getUser()!
+                                                                .avatar ??
+                                                            '',
+                                                      ),
+                                                      isAdmin: e
+                                                              .latestSupportMessage
+                                                              ?.isAdmin ==
+                                                          1,
+                                                      message:
+                                                          e.latestSupportMessage
+                                                                  ?.message ??
+                                                              '',
+                                                      date: intl.DateFormat('h:m a')
+                                                          .format(e.latestSupportMessage?.createdAt ?? tz.TZDateTime.now(kuwaitTimezoneLocation))
+                                                          .toString()),
+                                                )
+                                                .toList(),
+                                          ],
+                                        ),
+                                      )
+                            : controller.getIsLoading()
+                                ? Center(
+                                    child: LoadingLogoWidget(),
+                                  )
+                                : controller.closedTicketsList.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          'no_closed_tickets'.tr,
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: ThemeController
+                                                    .to.getIsDarkMode
+                                                ? unselectedBottomBarItemColorDarkTheme
+                                                : unselectedBottomBarItemColorLightTheme,
+                                          ),
+                                        ),
+                                      )
+                                    : Center(
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.only(top: 0),
+                                          children: controller.closedTicketsList
+                                              .map(
+                                                (e) => TicketItemWidget(
+                                                    id: e.id ?? 0,
+                                                    hasNotification: controller
+                                                        .checkIfTicketNotifications(
+                                                            e.id),
+                                                    title: e.name ?? '',
+                                                    desc: e.subject ?? '',
+                                                    ticketId: e.ticket ?? '',
+                                                    isClosed: e.status == 2,
+                                                    status: e.status!,
+                                                    created_at: intl.DateFormat('yyyy-MM-dd h:m a')
+                                                        .format(e.createdAt ??
+                                                            tz.TZDateTime.now(
+                                                                kuwaitTimezoneLocation))
+                                                        .toString(),
+                                                    avatar:
+                                                        Functions.getUserAvatar(
+                                                      controller.homeController
+                                                              .getUser()!
+                                                              .avatar ??
+                                                          '',
+                                                    ),
+                                                    isAdmin: e.latestSupportMessage?.isAdmin ==
+                                                        1,
+                                                    message: e
+                                                            .latestSupportMessage
+                                                            ?.message ??
+                                                        '',
+                                                    date: intl.DateFormat('h:m a')
+                                                        .format(e
+                                                                .latestSupportMessage
+                                                                ?.createdAt ??
+                                                            tz.TZDateTime.now(kuwaitTimezoneLocation))
+                                                        .toString()),
+                                              )
+                                              .toList(),
+                                        ),
+                                      ),
+                    // ],
+                  )
                 ],
               ),
             ),

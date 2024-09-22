@@ -65,7 +65,7 @@ class StretchedBottomNavigationBar extends GetView<HomeController> {
                 isHome: false,
                 icon: La.user,
                 index: 4,
-                iswarning: controller.passport_status.value == 0,
+                // iswarning: controller.passport_status.value == 0,
               ),
               // Icon(Icons.warning_amber_rounded)
               //   ],

@@ -11,15 +11,18 @@ import 'package:app/app/data/data.dart';
 import 'package:app/app/modules/splash/providers/splash_provider.dart';
 import 'package:app/app/utils/constant.dart';
 import 'package:open_store/open_store.dart';
+import 'package:typewritertext/typewritertext.dart';
 
-class SplashController extends GetxController {
+class SplashController extends GetxController
+    with SingleGetTickerProviderMixin {
   final SplashProvider splashProvider;
   SplashController({
     required this.splashProvider,
   });
 
   final presistentData = PresistentData();
-
+  late AnimationController animationController;
+  late Animation<double> animation;
   var isThereNewUpdate = false.obs;
   var creatAccountChoice = true.obs;
 
@@ -27,7 +30,7 @@ class SplashController extends GetxController {
   var newAppDesc = ''.obs;
   var mustUpdate = false.obs;
   var appleAppId = ''.obs;
-
+  final activeLocalAuth = true.obs;
   var isLoading = false.obs;
 
   static final _auth = LocalAuthentication();
@@ -71,11 +74,30 @@ class SplashController extends GetxController {
     }
   }
 
+  var writeController = TypeWriterController(
+      autorun: false,
+      text: " FundBucks",
+      duration: Duration(milliseconds: 100));
   // await authenticate();
   // }
-
+  RxString startTyping = "".obs;
   @override
   Future<void> onInit() async {
+    animationController = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this, // Use `this` as a TickerProvider
+    );
+
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInOut,
+    );
+
+    animationController.forward().then((_) {
+      // startTyping.value = "FundBucks"; // Start typing after animation completes
+    });
+
+    initLocalAuth();
     print('onInit');
     precacheImage(
         const AssetImage('assets/images/png/snackbarLogo.png'), Get.context!);
@@ -92,6 +114,14 @@ class SplashController extends GetxController {
     // presistentData.changeFontFamily();
 
     super.onInit();
+  }
+
+  Future startType() async {
+    await Future.delayed(Duration(seconds: 1)).then((value) async {
+      await writeController.start();
+
+      // update();
+    });
   }
 
   void checkUpdate() {
@@ -281,31 +311,39 @@ class SplashController extends GetxController {
     );
   }
 
+  void initLocalAuth() {
+    if (presistentData.getLocalAuth() == null) {
+      presistentData.writeLocalAuth(true);
+      activeLocalAuth.value = true;
+      return;
+    }
+    if (presistentData.getLocalAuth()!) {
+      activeLocalAuth.value = true;
+      return;
+    }
+    activeLocalAuth.value = false;
+  }
+
   void navigateBasedOnLogin() async {
     final authToken = presistentData.getAuthToken();
     if (authToken != null) {
       if (authToken.isNotEmpty) {
-        Get.offNamedUntil(
-          '/home',
-          ModalRoute.withName('toNewHome'),
-        );
-        // bool isAuth = await authenticate();
-        // if (isAuth) {
-        //   Get.offNamedUntil(
-        //     '/home',
-        //     ModalRoute.withName('toNewHome'),
-        //   );
-        // } else {
-        //   while (!isAuth) {
-        //     isAuth = await authenticate();
-        //     if (isAuth) {
-        //       Get.offNamedUntil(
-        //         '/home',
-        //         ModalRoute.withName('toNewHome'),
-        //       );
-        //     }
-        //   }
-        // }
+        if (activeLocalAuth.isTrue) {
+          await _handleAuthentication().then((value) {
+            print(value);
+            if (!value) {
+              Get.offNamedUntil(
+                '/home',
+                ModalRoute.withName('toNewHome'),
+              );
+            }
+          });
+        } else {
+          Get.offNamedUntil(
+            '/home',
+            ModalRoute.withName('toNewHome'),
+          );
+        }
 
         return;
       }
@@ -325,8 +363,36 @@ class SplashController extends GetxController {
     return;
   }
 
+  Future<bool> _handleAuthentication() async {
+    // _pauseTimer = Timer(Duration(seconds: 3), () {
+    //   _pauseTimer = null; // Invalidate the timer after 1 minute
+    // });
+    print("start");
+    await authenticate().then((value) async {
+      print("vlaue: $value");
+      if (value) {
+        // startAuth.value = false;
+        return value;
+        // Get.back();
+      } else {
+        // print(value);
+        // Get.back();
+        await _handleAuthentication().then((value_) {
+          if (value_) {
+            // startAuth.value = false;
+
+            // break;
+          }
+          return value;
+        });
+      }
+    });
+    return false;
+  }
+
   @override
   void onReady() {
+    startType();
     print('onReady');
     super.onReady();
     ever(isLoading, (value) {
@@ -340,16 +406,19 @@ class SplashController extends GetxController {
         );
       }
     });
-    // isLoading.value
-    //     ? null
-    //     : new Future.delayed(
-    //         Duration(seconds: splashScreenSeconds),
-    //         () {
-    //           navigateBasedOnLogin();
-    //         },
-    //       );
+    isLoading.value
+        ? null
+        : new Future.delayed(
+            Duration(seconds: splashScreenSeconds),
+            () {
+              navigateBasedOnLogin();
+            },
+          );
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    animationController.dispose();
+    super.onClose();
+  }
 }

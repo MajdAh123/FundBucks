@@ -52,8 +52,8 @@ class TicketItemWidget extends GetView<ContactController> {
       },
       child: Container(
         width: 343.w,
-        height: 85.h,
-        constraints: BoxConstraints(maxHeight: 86.h),
+        // height: 85.h,
+        constraints: BoxConstraints(maxHeight: 90.h),
         margin: EdgeInsets.only(bottom: 5.h, top: 0),
         padding:
             EdgeInsets.only(left: 15.w, right: 15.w, top: 10.h, bottom: 11.h),
@@ -97,7 +97,7 @@ class TicketItemWidget extends GetView<ContactController> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 5.h),
                   Text(
                     isClosed
                         ? title

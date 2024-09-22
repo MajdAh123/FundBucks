@@ -1,4 +1,5 @@
 import 'package:app/app/modules/home/controllers/home_controller.dart';
+import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class SettingController extends GetxController {
   final presistentData = PresistentData();
 
   final activateNotifications = true.obs;
+  final activeLocalAuth = true.obs;
 
   var isLoading = false.obs;
 
@@ -26,6 +28,10 @@ class SettingController extends GetxController {
       activateNotifications.value = !activateNotifications.value;
 
   bool getActivateNotification() => activateNotifications.value;
+
+  void setActivateLocalAuth() => activeLocalAuth.value = !activeLocalAuth.value;
+
+  bool getActivateLocalAuth() => activeLocalAuth.value;
 
   void changeLanguage(String? languageCode) {
     if (languageCode == null) {
@@ -42,6 +48,7 @@ class SettingController extends GetxController {
       presistentData.writeLocaleCode(lang);
       Get.updateLocale(Locale(lang));
     }
+    Get.find<OperationController>().getPortfolios();
   }
 
   void changeTheme(bool? themeMode) {
@@ -68,6 +75,19 @@ class SettingController extends GetxController {
     activateNotifications.value = false;
   }
 
+  void initLocalAuth() {
+    if (presistentData.getLocalAuth() == null) {
+      presistentData.writeLocalAuth(true);
+      activeLocalAuth.value = true;
+      return;
+    }
+    if (presistentData.getLocalAuth()!) {
+      activeLocalAuth.value = true;
+      return;
+    }
+    activeLocalAuth.value = false;
+  }
+
   void updateNotifications() async {
     setIsLoading(true);
     final fcm = presistentData.getFcmToken();
@@ -84,14 +104,25 @@ class SettingController extends GetxController {
     });
   }
 
+  void updateLocalAuth() async {
+    presistentData.writeLocalAuth(getActivateLocalAuth());
+    print(getActivateLocalAuth());
+  }
+
   void changeNotificationsStatus() {
     setActivateNotification();
     updateNotifications();
   }
 
+  void changeLocalAuthStauts() {
+    setActivateLocalAuth();
+    updateLocalAuth();
+  }
+
   @override
   void onInit() {
     initNotifications();
+    initLocalAuth();
     super.onInit();
   }
 

@@ -96,7 +96,7 @@ class AccountController extends GetxController {
     }
 
     // list.sort((a, b) => cashColor.value.compareTo(b.color.value));
-    update();
+    // update();
     return list;
   }
 

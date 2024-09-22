@@ -14,6 +14,7 @@ class PresistentData extends GetxController {
   final String notifications = 'NOTIFICATIONS';
   final String tooManyAttempts = 'TOO_MANY_ATTEMPTS';
   final String darkMode = 'DARK_MODE';
+  final String localAuth = 'local_Auth';
 
   void writeTooManyAttempts(String value) => box.write(tooManyAttempts, value);
 
@@ -45,13 +46,16 @@ class PresistentData extends GetxController {
 
   bool? getDarkMode() => box.read(darkMode);
 
-  void writeDarkMode(bool darkMode) =>
-      box.write(this.darkMode, darkMode);
+  void writeDarkMode(bool darkMode) => box.write(this.darkMode, darkMode);
 
   bool? getNotifications() => box.read(notifications);
 
   void writeNotifications(bool notifications) =>
       box.write(this.notifications, notifications);
+
+  bool? getLocalAuth() => box.read(localAuth);
+
+  void writeLocalAuth(bool localAuth) => box.write(this.localAuth, localAuth);
 
   String getFontFamily() {
     String? langCode = readLocaleCode();

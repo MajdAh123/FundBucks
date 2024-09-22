@@ -1,6 +1,7 @@
 import 'package:app/app/data/models/models.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +27,11 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
             () => controller.getIsLoading()
                 ? Center(
                     child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.w),
-                    child: SizedBox(
-                      width: 20.w,
-                      height: 20.h,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ))
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.w, vertical: 30.w),
+                        child: LoadingLogoWidget(
+                          width: 60,
+                        )))
                 : Form(
                     key: controller.getFormKey(),
                     autovalidateMode: AutovalidateMode.disabled,

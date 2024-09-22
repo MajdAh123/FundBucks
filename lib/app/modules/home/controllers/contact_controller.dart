@@ -49,13 +49,13 @@ class ContactController extends GetxController {
   // late AnimationController operationController;
   // late Animation<double> animation;
 
-  final globalFormKey = GlobalKey<FormState>().obs;
+  // final globalFormKey = GlobalKey<FormState>().obs;
 
   var isLoading = false.obs;
 
   var ticketNotifications = <int, int>{}.obs;
 
-  getFormKey() => globalFormKey.value;
+  // getFormKey() => globalFormKey.value;
 
   void setIsLoading(bool value) => isLoading.value = value;
   bool getIsLoading() => isLoading.value;
@@ -95,9 +95,40 @@ class ContactController extends GetxController {
   }
 
   void onCreateButtonClick() {
-    if (getFormKey().currentState.validate()) {
+    if (validateContactForm()) {
       createTicket();
     }
+  }
+
+  var titleTextError = "".obs;
+  var descrptionTextError = "".obs;
+  void validateSubject() {
+    String value = titleTextEditingController.value.text;
+    if (value.isEmpty) {
+      titleTextError.value = 'required_field'.trParams({
+        'name': 'subject'.tr,
+      });
+    } else {
+      titleTextError.value = "";
+    }
+  }
+
+  void validateDescription() {
+    String value = descriptionTextEditingController.value.text;
+    if (value.isEmpty) {
+      descrptionTextError.value = 'required_field'.trParams({
+        'name': 'description'.tr,
+      });
+    } else {
+      descrptionTextError.value = "";
+    }
+  }
+
+  bool validateContactForm() {
+    validateDescription();
+    validateSubject();
+
+    return titleTextError.value.isEmpty && descrptionTextError.value.isEmpty;
   }
 
   void createTicket() {

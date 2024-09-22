@@ -40,9 +40,6 @@ class OperationController extends GetxController {
   void setBankName(String? bankName) => this.bankName.value = bankName ?? '';
   String getBankName() => this.bankName.value;
 
-  final depositFormKey = GlobalKey<FormState>().obs;
-  final withdrawFormKey = GlobalKey<FormState>().obs;
-
   // late AnimationController controller;
   // late AnimationController operationController;
   // late Animation<double> animation;
@@ -120,13 +117,104 @@ class OperationController extends GetxController {
   String getDepositDate() => getDepositDateTextEditingController().text;
 
   String getDepositAmount() => getDepositAmountTextEditingController().text;
+  var withdrawAmountError = ''.obs;
+  var withdrawCurrencyError = ''.obs;
+  var depositAmountError = ''.obs;
+  var depositCurrencyError = ''.obs;
+  var depositDateError = ''.obs;
+
+  void validateWithdrawAmount() {
+    String value = getDepositAmount();
+    if (value.isEmpty) {
+      withdrawAmountError.value = 'required_field'.trParams({
+        'name': 'amount'.tr,
+      });
+    } else {
+      double? parsedValue = double.tryParse(value);
+      if (parsedValue == null || parsedValue <= 0) {
+        withdrawAmountError.value = 'required_field'.trParams({
+          'name': 'amount'.tr,
+        });
+      } else {
+        withdrawAmountError.value = '';
+      }
+    }
+  }
+
+  void validateDepositAmount() {
+    String value = getDepositAmount();
+    if (value.isEmpty) {
+      depositAmountError.value = 'required_field'.trParams({
+        'name': 'amount'.tr,
+      });
+    } else {
+      double? parsedValue = double.tryParse(value);
+      if (parsedValue == null || parsedValue <= 0) {
+        depositAmountError.value = 'required_field'.trParams({
+          'name': 'amount'.tr,
+        });
+      } else {
+        depositAmountError.value = '';
+      }
+    }
+  }
+
+  void validateDepositCurrency() {
+    if (getDepositCurrencySelect() == null ||
+        getDepositCurrencySelect()!.isEmpty) {
+      depositCurrencyError.value = 'required_field'.trParams({
+        'name': 'currency'.tr,
+      });
+    } else {
+      depositCurrencyError.value = '';
+    }
+  }
+
+  void validateWithdrawCurrency() {
+    if (getDepositCurrencySelect() == null ||
+        getDepositCurrencySelect()!.isEmpty) {
+      depositCurrencyError.value = 'required_field'.trParams({
+        'name': 'currency'.tr,
+      });
+    } else {
+      depositCurrencyError.value = '';
+    }
+  }
+
+  void validateDepositDate() {
+    if (getDepositDate().isEmpty) {
+      depositDateError.value = 'required_field'.trParams({
+        'name': 'date'.tr,
+      });
+    } else {
+      depositDateError.value = '';
+    }
+  }
+
+  bool validateDepositForm() {
+    validateDepositAmount();
+    validateDepositCurrency();
+    validateDepositDate();
+
+    return depositAmountError.value.isEmpty &&
+        depositCurrencyError.value.isEmpty &&
+        depositDateError.value.isEmpty;
+  }
+
+  bool validateWithdrawForm() {
+    validateWithdrawAmount();
+    validateWithdrawCurrency();
+
+    return withdrawAmountError.value.isEmpty &&
+        withdrawCurrencyError.value.isEmpty;
+  }
 
   void onDepositSendButtonClick() {
     if (getFile().path.isEmpty) {
       setIsImageError(true);
       return;
     }
-    if (getDepositFormKey().currentState.validate()) {
+    if (validateDepositForm()) {
       if (homeController.getUser()?.type?.compareTo('test') == 0) {
         SnackBarWidgetAwesome(
           'error'.tr,
@@ -173,8 +261,7 @@ class OperationController extends GetxController {
   }
 
   void onWithdrawSendButtonClick() {
-    if (getWithdrawFormKey().currentState.validate() &&
-        checkIfBankingDetailsExists()) {
+    if (validateWithdrawForm() && checkIfBankingDetailsExists()) {
       if (homeController.getUser()?.type?.compareTo('test') == 0) {
         SnackBarWidgetAwesome(
           'error'.tr,
@@ -209,9 +296,6 @@ class OperationController extends GetxController {
     print(selectGatewayIndex?.value);
     return selectGatewayIndex?.value;
   }
-
-  getDepositFormKey() => depositFormKey.value;
-  getWithdrawFormKey() => withdrawFormKey.value;
 
   void showImageSelection() {
     setIsImageError(false);
@@ -361,9 +445,9 @@ class OperationController extends GetxController {
     });
   }
 
-  void getPortfolios() {
+  void getPortfolios() async {
     setIsLoading(true);
-    operationPageProvider.getPortfolio().then((value) {
+    await operationPageProvider.getPortfolio().then((value) {
       log("Get Portfolios sttaus code is : ${value.statusCode}");
       if (value.statusCode == 200) {
         final baseSuccessModel = BaseSuccessModel.fromJson(value.body);
@@ -374,11 +458,21 @@ class OperationController extends GetxController {
 
         log("Currency: ${currency}");
         currencies.value = [currency];
+        print("++++++++++++++++++++++++++++");
+        for (var tt in currencies.value) {
+          print("${tt.currencyId}" "${tt..currencySign}");
+        }
+        print("++++++++++++++++++++++++++++");
+
+        // setDepositCurrencySelect(value)
         if (currencies.isNotEmpty) {
           setCurrencySelect(Get.locale?.languageCode.compareTo('ar') == 0
               ? homeController.getUser()?.currency?.currencyId
               : homeController.getUser()?.currency?.currencySign);
         }
+        print(homeController.getUser()?.currency?.currencySign);
+        print(Get.locale?.languageCode);
+        print(getDepositCurrencySelect() == currencies.first.currencySign);
       }
       setIsLoading(false);
     }, onError: (error, stacktrace) {
@@ -475,6 +569,7 @@ class OperationController extends GetxController {
     getGatewaysList();
     getOperations();
     getPortfolios();
+
     // getDepositDateTextEditingController().text = 'date'.tr;
     // getDepositDateTextEditingController().text = ;
     super.onInit();

@@ -4,6 +4,7 @@ import 'package:app/app/modules/edit_profile/views/showImage.dart';
 import 'package:app/app/modules/edit_profile/providers/user_provider.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -1096,97 +1097,124 @@ class EditProfilePage extends GetView<EditProfileController> {
                                       SizedBox(
                                         height: 0,
                                       ),
-                                      Container(
-                                          width: 400,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 15.w),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: ThemeController
-                                                      .to.getIsDarkMode
-                                                  ? greyColor.withOpacity(.39)
-                                                  : strokeColor,
+                                      Obx(
+                                        () => Container(
+                                            width: 400,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15.w),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: controller
+                                                        .natioalityRequired
+                                                        .isTrue
+                                                    ? Colors.amber
+                                                    : ThemeController
+                                                            .to.getIsDarkMode
+                                                        ? greyColor
+                                                            .withOpacity(.39)
+                                                        : strokeColor,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Get.to(() => CountriesPage());
-                                            },
-                                            child: SizedBox(
-                                                width: 400,
-                                                height: 55,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                          .nationalTextEditController
-                                                          .value
-                                                          .text,
-                                                      style: TextStyle(
-                                                        color: ThemeController
-                                                                .to
-                                                                .getIsDarkMode
-                                                            ? unselectedBottomBarItemColorDarkTheme
-                                                            : unselectedBottomBarItemColorLightTheme,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Get.to(() => CountriesPage());
+                                              },
+                                              child: SizedBox(
+                                                  width: 400,
+                                                  height: 55,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        controller
+                                                            .nationalTextEditController
+                                                            .value
+                                                            .text,
+                                                        style: TextStyle(
+                                                          color: ThemeController
+                                                                  .to
+                                                                  .getIsDarkMode
+                                                              ? unselectedBottomBarItemColorDarkTheme
+                                                              : unselectedBottomBarItemColorLightTheme,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Icon(Icons
-                                                        .keyboard_arrow_down_outlined),
-                                                  ],
-                                                )),
-                                          )),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down_outlined,
+                                                        color: controller
+                                                                .natioalityRequired
+                                                                .isTrue
+                                                            ? Colors.amber
+                                                            : Colors.black,
+                                                      ),
+                                                    ],
+                                                  )),
+                                            )),
+                                      ),
                                     ],
                                   ),
-                                  Positioned(
-                                    top: -0,
-                                    left: 5,
-                                    child: Container(
-                                      color: ThemeController.to.getIsDarkMode
-                                          ? containerColorDarkTheme
-                                          : containerColorLightTheme,
-                                      height: 10,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.8,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      child: Row(
-                                        // mainAxisAlignment:
-                                        // MainAxisAlignment.center,
-                                        // mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'nationalty'.tr,
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              color: ThemeController
-                                                      .to.getIsDarkMode
-                                                  ? unselectedBottomBarItemColorDarkTheme
-                                                  : unselectedBottomBarItemColorLightTheme,
+                                  Obx(
+                                    () => Positioned(
+                                      top: -0,
+                                      left: 5,
+                                      child: Container(
+                                        color: ThemeController.to.getIsDarkMode
+                                            ? containerColorDarkTheme
+                                            : containerColorLightTheme,
+                                        height: 10,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Row(
+                                          // mainAxisAlignment:
+                                          // MainAxisAlignment.center,
+                                          // mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              'nationalty'.tr,
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: controller
+                                                        .natioalityRequired
+                                                        .isTrue
+                                                    ? Colors.amber
+                                                    : ThemeController
+                                                            .to.getIsDarkMode
+                                                        ? unselectedBottomBarItemColorDarkTheme
+                                                        : unselectedBottomBarItemColorLightTheme,
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.edit,
-                                              color: controller
-                                                      .focusNodes[3].hasFocus
-                                                  ? mainColor
-                                                  : Colors.grey,
-                                              size: 12,
+                                            IconButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color: controller
+                                                        .natioalityRequired
+                                                        .isTrue
+                                                    ? Colors.amber
+                                                    : controller.focusNodes[3]
+                                                            .hasFocus
+                                                        ? mainColor
+                                                        : Colors.grey,
+                                                size: 12,
+                                              ),
                                             ),
-                                          ),
-                                          // Expanded(child: child)
-                                        ],
+                                            // Expanded(child: child)
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -2282,13 +2310,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                         SizedBox(height: 40.h),
                         Obx(
                           () => controller.getIsLoading()
-                              ? Center(
-                                  child: SizedBox(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
+                              ? Center(child: LoadingLogoWidget())
                               : Container(
                                   margin:
                                       EdgeInsets.symmetric(horizontal: 17.w),
@@ -2327,12 +2349,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                         Obx(
                           () => controller.getIsDeleteLoading()
                               ? Center(
-                                  child: SizedBox(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
+                                  child: LoadingLogoWidget(
+                                  width: 60,
+                                ))
                               : Container(
                                   margin:
                                       EdgeInsets.fromLTRB(17.w, 12.h, 16.w, 0),
@@ -2342,13 +2361,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                                         .showDeleteAccountReasonDialog,
                                     child: controller.getIsDeleteLoading()
                                         ? Center(
-                                            child: SizedBox(
-                                              width: 20.w,
-                                              height: 20.h,
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ),
-                                          )
+                                            child: LoadingLogoWidget(
+                                            width: 60,
+                                          ))
                                         : Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -2444,12 +2459,9 @@ class ProfileChangeImageWidget extends GetView<EditProfileController> {
           child: Obx(
             () => controller.getIsPhotoLoading()
                 ? Center(
-                    child: SizedBox(
-                      width: 15.w,
-                      height: 15.h,
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
+                    child: LoadingLogoWidget(
+                    width: 70,
+                  ))
                 : Stack(
                     children: [
                       !controller.getFilePath().isEmpty

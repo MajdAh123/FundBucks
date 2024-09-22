@@ -27,7 +27,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Get.put(GlobalNotificationController(), permanent: true);
 
   Get.put<LanguageController>(LanguageController(), permanent: true);

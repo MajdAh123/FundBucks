@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:app/app/modules/edit_profile/bindings/edit_profile_binding.dart';
+import 'package:app/generated/inAppReview.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:app/app/data/data.dart';
 import 'package:app/app/data/models/models.dart';
@@ -30,15 +31,24 @@ import 'package:pusher_client/pusher_client.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-
+import 'package:in_app_review/in_app_review.dart';
 import '../../../widgets/snack_Bar_Awesome_widget.dart';
 import '../../edit_profile/controllers/edit_profile_controller.dart';
+import '../views/account_page_view.dart';
+import '../views/contact_page_view.dart';
+import '../../../widgets/logoAnimation.dart';
+import '../views/operation_page_view.dart';
+import '../views/profile_page_view.dart';
+import '../views/report_page_view.dart';
+
 import 'profile_controller.dart';
 
-class HomeController extends GetxController with WidgetsBindingObserver {
-  final index = 0.obs;
+class HomeController extends GetxController
+    with WidgetsBindingObserver, GetSingleTickerProviderStateMixin {
+  var index = 0.obs;
+  // var previousIndex = 0.obs;
   final presistentData = PresistentData();
-
+  PageController pageController = PageController();
   var isThereNotification = false.obs;
   var isLoading = false.obs;
   var isError = false.obs;
@@ -78,6 +88,7 @@ class HomeController extends GetxController with WidgetsBindingObserver {
   RxInt passport_required = 5.obs;
   void setIsThereNotification(bool value) => isThereNotification.value = value;
   bool getIsThereNotification() => isThereNotification.value;
+  final activeLocalAuth = true.obs;
   static final LocalAuthentication _auth = LocalAuthentication();
   bool _authInProgress = false;
   Timer? _pauseTimer;
@@ -133,32 +144,38 @@ class HomeController extends GetxController with WidgetsBindingObserver {
       print("sssssssssssssssss");
       // fromInactive = true;
     } else if (state == AppLifecycleState.paused) {
-      _pauseTimer = Timer(Duration(minutes: 2), () {
-        _pauseTimer = null; // Invalidate the timer after 1 minute
-        startAuth.value = true;
-        print(startAuth);
-      });
+      initLocalAuth();
+      if (activeLocalAuth.isTrue) {
+        _pauseTimer = Timer(Duration(seconds: 10), () {
+          _pauseTimer = null; // Invalidate the timer after 1 minute
+          startAuth.value = true;
+          print(startAuth);
+        });
+      }
+
       print("qqqqqqqqqqqqqqq");
     } else if (state == AppLifecycleState.resumed) {
-      print("=++++++++${startAuth.value}");
-      if (_pauseTimer != null && _pauseTimer!.isActive) {
-        // Cancel the timer if it's still active
-        startAuth.value = false;
-        _pauseTimer!.cancel();
-      } else {
-        // Proceed with authentication if the timer is not active (meaning more than 1 minute has passed)
-        if (startAuth.isTrue) {
-          print("================");
-          print(_authInProgress);
-          if (_authInProgress) {
-            _authInProgress = false; // Cancel the ongoing authentication
-          } else {
-            print("qqqqqqqqqwwwwwwwwwwwwwwwwdddddddddddddddd");
-            await _handleAuthentication().then((value) {
-              if (value) {
-                return;
-              }
-            });
+      if (activeLocalAuth.isTrue) {
+        print("=++++++++${startAuth.value}");
+        if (_pauseTimer != null && _pauseTimer!.isActive) {
+          // Cancel the timer if it's still active
+          startAuth.value = false;
+          _pauseTimer!.cancel();
+        } else {
+          // Proceed with authentication if the timer is not active (meaning more than 1 minute has passed)
+          if (startAuth.isTrue) {
+            print("================");
+            print(_authInProgress);
+            if (_authInProgress) {
+              _authInProgress = false; // Cancel the ongoing authentication
+            } else {
+              print("qqqqqqqqqwwwwwwwwwwwwwwwwdddddddddddddddd");
+              await _handleAuthentication().then((value) {
+                if (value) {
+                  return;
+                }
+              });
+            }
           }
         }
       }
@@ -190,13 +207,30 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     return false;
   }
 
+  final reviewService = ReviewService();
+  void someUserAction() async {
+    // Call this function to request a review
+    await reviewService.requestReview();
+    print("7687878686877");
+    print("7687878686877");
+  }
+
   @override
   void onInit() {
+    // _opacityController = AnimationController(
+    //   vsync: this,
+    //   animationBehavior: AnimationBehavior.preserve,
+
+    //   duration: Duration(milliseconds: 400), // Duration of opacity change
+    // );
+    // opacityAnimation =
+    //     Tween<double>(begin: 1.0, end: 0.2).animate(_opacityController);
+    initLocalAuth();
     // setUser(user.value);
     // passport_status.value = getUser()?.passport_status ?? 5;
     WidgetsBinding.instance.addObserver(this);
     checkUpdate();
-
+    someUserAction();
     getUserApi();
     // websocket();
     print("asyd: ${passport_status.value}");
@@ -1037,6 +1071,19 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     });
   }
 
+  void initLocalAuth() {
+    if (presistentData.getLocalAuth() == null) {
+      presistentData.writeLocalAuth(true);
+      activeLocalAuth.value = true;
+      return;
+    }
+    if (presistentData.getLocalAuth()!) {
+      activeLocalAuth.value = true;
+      return;
+    }
+    activeLocalAuth.value = false;
+  }
+
   @override
   void onReady() {
     super.onReady();
@@ -1049,7 +1096,52 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     } catch (e) {}
   }
 
+  navigatePage(index) {
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 800),
+        curve: Curves.fastEaseInToSlowEaseOut);
+  }
+
+  List<Widget> allScreens = [
+    AccountPageView(
+        // key: Key("0"),
+        ),
+    // Container(
+    //   child: LoadingLogoWidget(),
+    // ),
+    ReportPageView(
+        // key: Key("1"),
+        ),
+    OperationPageView(
+        // key: Key("2"),
+        ),
+    ContactPageView(
+        // key: Key("3"),
+        ),
+    // SizedBox(),
+    // SizedBox(),
+    ProfilePageView(
+        // key: Key("4"),
+        ),
+  ];
+
   void setIndex(value) {
+    // previousIndex.value = index.value;
+    // index.value = newIndex;
+    // Start the opacity animation
+    // if (index.value != value) {
+    //   _opacityController.forward().then((_) {
+    //     // Once opacity reaches 0, jump to the page
+    //     pageController.jumpToPage(value);
+
+    //     // Reset opacity back to 1 after jump
+    //     _opacityController.reverse();
+    //   });
+    // } else {}
+
+    pageController.animateToPage(value,
+        duration: Duration(milliseconds: 800),
+        curve: Curves.fastEaseInToSlowEaseOut);
     index.value = value;
     if (value == 3) {
       final contactController = Get.find<ContactController>();

@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,12 +28,9 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
                   margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 5.w),
                   child: controller.getIsLoading()
                       ? Center(
-                          child: SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
+                          child: LoadingLogoWidget(
+                          width: 60,
+                        ))
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -77,12 +75,9 @@ class GatewayDetailView extends GetView<GatewayDetailController> {
               alignment: Alignment.center,
               child: controller.getIsLoading()
                   ? Center(
-                      child: SizedBox(
-                        width: 20.w,
-                        height: 20.h,
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
+                      child: LoadingLogoWidget(
+                      width: 60,
+                    ))
                   : SizedBox.shrink(),
             ),
             Align(

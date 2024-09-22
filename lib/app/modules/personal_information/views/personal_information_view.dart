@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -523,12 +524,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                   SizedBox(height: 15.h),
                   controller.getIsLoading()
                       ? Center(
-                          child: SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
+                          child: LoadingLogoWidget(
+                          width: 60,
+                        ))
                       : TextButton(
                           onPressed: () {
                             controller.onContinueButtonClick();

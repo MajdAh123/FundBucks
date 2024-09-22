@@ -25,7 +25,6 @@ class LoginController extends GetxController {
   var deviceInfoPlugin = DeviceInfoPlugin().obs;
   var deviceIp = ''.obs;
   var deviceType = ''.obs;
-
   var tooManyAttempts = false.obs;
   var saveLogin = false.obs;
   var createAccountChoice = true.obs;

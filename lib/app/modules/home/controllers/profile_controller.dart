@@ -225,6 +225,16 @@ class ProfileController extends GetxController {
     );
   }
 
+  bool checkIfBankingDetailsExists() =>
+      (homeController.getUser()?.bankName != null &&
+          homeController.getUser()?.bankName.isNotEmpty &&
+          homeController.getUser()?.bankUserId != null &&
+          homeController.getUser()?.bankUserId.isNotEmpty &&
+          homeController.getUser()?.bankUsername != null &&
+          homeController.getUser()?.bankUsername.isNotEmpty &&
+          homeController.getUser()?.iban != null &&
+          homeController.getUser()?.iban.isNotEmpty);
+
   void changeTheme(bool? themeMode) {
     if (themeMode == null) {
       return;

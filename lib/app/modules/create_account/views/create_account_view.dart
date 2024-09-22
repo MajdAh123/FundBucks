@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:app/generated/generated.dart';
 import 'package:flutter/material.dart';
@@ -135,13 +136,8 @@ class CreateAccountView extends GetView<CreateAccountController> {
                             : null,
                       ),
                       suffixIcon: controller.getIsCheckUsernameLoading()
-                          ? Container(
-                              width: 15.w,
-                              height: 15.h,
-                              margin: Functions.getSpacingBasedOnLang(10.w),
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3.w,
-                              ),
+                          ? LoadingLogoWidget(
+                              width: 30,
                             )
                           : controller.isUsernameLessThan()
                               ? null

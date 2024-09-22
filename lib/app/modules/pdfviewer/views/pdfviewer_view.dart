@@ -1,6 +1,7 @@
 import 'package:advance_pdf_viewer_fork/advance_pdf_viewer_fork.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,8 @@ class PdfviewerView extends GetView<PdfviewerController> {
           Icons.download,
           // color: ThemeController.to.getIsDarkMode ? mainColorDarkTheme :,
         ),
-        backgroundColor: ThemeController.to.getIsDarkMode ? mainColorDarkTheme : mainColor,
+        backgroundColor:
+            ThemeController.to.getIsDarkMode ? mainColorDarkTheme : mainColor,
       ),
       body: Obx(
         () => Column(
@@ -46,12 +48,9 @@ class PdfviewerView extends GetView<PdfviewerController> {
                 child: controller.getIsLoading() ||
                         controller.getPdfUrlVar().isEmpty
                     ? Center(
-                        child: SizedBox(
-                          width: 20.w,
-                          height: 20.h,
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
+                        child: LoadingLogoWidget(
+                        width: 60,
+                      ))
                     : PDFViewer(document: controller.getPdfDocument()),
               ),
             ),

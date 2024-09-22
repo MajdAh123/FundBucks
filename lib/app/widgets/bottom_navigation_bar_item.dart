@@ -31,26 +31,63 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
     return Expanded(
       child: InkWell(
         onTap: () => controller.setIndex(index),
-        child: Stack(
-          children: [
-            index == 4 && iswarning
-                ? Positioned(
-                    right: 15,
-                    top: 5,
-                    child: Icon(
-                      CupertinoIcons.info,
-                      size: 18,
-                      color: Colors.amber,
-                    ),
-                  )
-                : SizedBox(),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (!isHome!) ...[
-                    if (index == 9) ...[
-                      Assets.images.svg.arcticonsCalculator.svg(
+        child: Obx(
+          () => Stack(
+            children: [
+              index == 4 && controller.passport_status.value == 0
+                  ? Positioned(
+                      right: 15,
+                      top: 5,
+                      child: Icon(
+                        CupertinoIcons.info,
+                        size: 18,
+                        color: Colors.amber,
+                      ),
+                    )
+                  : SizedBox(),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (!isHome!) ...[
+                      if (index == 9) ...[
+                        Assets.images.svg.arcticonsCalculator.svg(
+                          color: controller.isSelected(index)
+                              ? (ThemeController.to.getIsDarkMode
+                                  ? bottomBarItemColorDarkTheme
+                                  : mainColor)
+                              : (ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : unselectedBottomBarItemColorLightTheme),
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                      ]
+                      //  else if (index == 4) ...[
+                      //   Assets.images.svg.heroiconsUser.svg(
+                      //     color: controller.isSelected(index) ? mainColor : unselectedBottomBarItemColor,
+                      //     width: 24.w,
+                      //     height: 24.h,
+                      //   ),
+                      // ]
+                      else ...[
+                        Iconify(
+                          icon!,
+                          color: index == 4 &&
+                                  controller.passport_status.value == 0
+                              ? Colors.amber
+                              : controller.isSelected(index)
+                                  ? (ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                      : mainColor)
+                                  : (ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme),
+                          size: 20,
+                        ),
+                      ]
+                    ] else ...[
+                      Assets.images.svg.home.svg(
                         color: controller.isSelected(index)
                             ? (ThemeController.to.getIsDarkMode
                                 ? bottomBarItemColorDarkTheme
@@ -58,21 +95,19 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                             : (ThemeController.to.getIsDarkMode
                                 ? unselectedBottomBarItemColorDarkTheme
                                 : unselectedBottomBarItemColorLightTheme),
-                        width: 24.w,
-                        height: 24.h,
+                        width: 15.w,
+                        height: 15.h,
                       ),
-                    ]
-                    //  else if (index == 4) ...[
-                    //   Assets.images.svg.heroiconsUser.svg(
-                    //     color: controller.isSelected(index) ? mainColor : unselectedBottomBarItemColor,
-                    //     width: 24.w,
-                    //     height: 24.h,
-                    //   ),
-                    // ]
-                    else ...[
-                      Iconify(
-                        icon!,
-                        color: index == 4 && iswarning
+                    ],
+                    SizedBox(height: 7.h),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        //fontFamily: FontFamily.inter,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                        color: index == 4 &&
+                                controller.passport_status.value == 0
                             ? Colors.amber
                             : controller.isSelected(index)
                                 ? (ThemeController.to.getIsDarkMode
@@ -81,64 +116,33 @@ class StretchedBottomNavigationBarItem extends GetView<HomeController> {
                                 : (ThemeController.to.getIsDarkMode
                                     ? unselectedBottomBarItemColorDarkTheme
                                     : unselectedBottomBarItemColorLightTheme),
-                        size: 20,
                       ),
-                    ]
-                  ] else ...[
-                    Assets.images.svg.home.svg(
-                      color: controller.isSelected(index)
-                          ? (ThemeController.to.getIsDarkMode
-                              ? bottomBarItemColorDarkTheme
-                              : mainColor)
-                          : (ThemeController.to.getIsDarkMode
-                              ? unselectedBottomBarItemColorDarkTheme
-                              : unselectedBottomBarItemColorLightTheme),
-                      width: 15.w,
-                      height: 15.h,
                     ),
+                    SizedBox(height: 7.h),
                   ],
-                  SizedBox(height: 7.h),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      //fontFamily: FontFamily.inter,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w600,
-                      color: index == 4 && iswarning
-                          ? Colors.amber
-                          : controller.isSelected(index)
-                              ? (ThemeController.to.getIsDarkMode
-                                  ? bottomBarItemColorDarkTheme
-                                  : mainColor)
-                              : (ThemeController.to.getIsDarkMode
-                                  ? unselectedBottomBarItemColorDarkTheme
-                                  : unselectedBottomBarItemColorLightTheme),
-                    ),
-                  ),
-                  SizedBox(height: 7.h),
-                ],
+                ),
               ),
-            ),
-            isNotification
-                ? Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        bottom: 49.h,
-                        left: 27.w,
-                        child: Container(
-                          height: 8.h,
-                          width: 8.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.orange.withOpacity(.5),
+              isNotification
+                  ? Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          bottom: 49.h,
+                          left: 27.w,
+                          child: Container(
+                            height: 8.h,
+                            width: 8.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.orange.withOpacity(.5),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                : SizedBox.shrink(),
-          ],
+                      ],
+                    )
+                  : SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
     );

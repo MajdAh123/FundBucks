@@ -1,6 +1,7 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/modules/ticket/controllers/ticket_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -157,12 +158,9 @@ class BottomBarTicketWidget extends GetView<TicketController> {
                   // Spacer(),
                   controller.getIsSendingMessage()
                       ? Center(
-                          child: SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
+                          child: LoadingLogoWidget(
+                          width: 60,
+                        ))
                       : CircleAvatar(
                           backgroundColor: ThemeController.to.getIsDarkMode
                               ? bottomBarItemColorDarkTheme

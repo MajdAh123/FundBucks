@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/controllers/operation_controller.dart';
 import 'package:app/app/modules/home/views/account_page_view.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -74,12 +75,10 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
-                        // controller.operationController.reset();
-                        // controller.operationController.forward();
                       },
-                      child: Container(
-                        // duration: const Duration(milliseconds: 300),
-                        // curve: Curves.easeInOut,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
                         width: 156.5.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -95,7 +94,6 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                             'withdraw_request'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 0
                                   ? Colors.white
@@ -112,12 +110,10 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                     child: InkWell(
                       onTap: () {
                         controller.setIndex(controller.getIndex() == 0 ? 1 : 0);
-                        // controller.operationController.reset();
-                        // controller.operationController.forward();
                       },
-                      child: Container(
-                        // duration: const Duration(milliseconds: 300),
-                        // curve: Curves.easeInOut,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
                         width: 156.5.w,
                         height: 50.h,
                         decoration: BoxDecoration(
@@ -133,7 +129,6 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
                             'deposit_request'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getIndex() == 1
                                   ? Colors.white
@@ -153,27 +148,20 @@ class OperationButtonDisplayWidget extends GetView<OperationController> {
               margin: EdgeInsets.only(top: 20.h, left: 16.w, right: 16.w),
               child: Column(
                 children: [
-                  if (controller.getIndex() == 0) ...[
-                    controller.getIsLoading()
-                        ? Center(
-                            child: SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : WithdrawFormWidget(),
-                  ] else ...[
-                    controller.getIsLoading()
-                        ? Center(
-                            child: SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : DepositFormWidget(),
-                  ],
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 800),
+                    child: controller.getIndex() == 0
+                        ? controller.getIsLoading()
+                            ? Center(
+                                child: LoadingLogoWidget(),
+                              )
+                            : WithdrawFormWidget()
+                        : controller.getIsLoading()
+                            ? Center(
+                                child: LoadingLogoWidget(),
+                              )
+                            : DepositFormWidget(),
+                  ),
                 ],
               ),
             ),

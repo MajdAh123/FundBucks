@@ -1,6 +1,7 @@
 import 'package:app/app/modules/home/controllers/profile_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,31 +69,59 @@ class ProfilePageView extends GetView<ProfileController> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 const ProfileAccountInformationWidget(),
-                if (controller.getIfUserCanHaveTestMode()) ...[
-                  SizedBox(height: 15.h),
-                  SwitchListTile.adaptive(
-                    // shape: ShapeBorder,
-                    inactiveTrackColor: ThemeController.to.getIsDarkMode
-                        ? greyColor
-                        : greyReportBackground,
-                    value: controller.getIsTestAccount(),
-                    onChanged: (value) {
-                      controller.showTestModeDialog();
-                    },
-                    title: Text(
-                      'test_mode_label'.tr,
-                      style: TextStyle(
-                        //fontFamily: FontFamily.inter,
-                        color: ThemeController.to.getIsDarkMode
-                            ? unselectedBottomBarItemColorDarkTheme
-                            : unselectedBottomBarItemColorLightTheme,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    activeColor: secondaryColor,
-                  ),
-                ],
+                // if (!controller.checkIfBankingDetailsExists())
+                // if (controller.getIfUserCanHaveTestMode()) ...[
+
+                controller.homeController.getUser()!.type?.compareTo('test') ==
+                        0
+                    ? SwitchListTile.adaptive(
+                        // shape: ShapeBorder,
+                        inactiveTrackColor: ThemeController.to.getIsDarkMode
+                            ? greyColor
+                            : greyReportBackground,
+                        value: controller.getIsTestAccount(),
+                        onChanged: (value) {
+                          controller.showTestModeDialog();
+                        },
+                        title: Text(
+                          'test_mode_label'.tr,
+                          style: TextStyle(
+                            //fontFamily: FontFamily.inter,
+                            color: ThemeController.to.getIsDarkMode
+                                ? unselectedBottomBarItemColorDarkTheme
+                                : unselectedBottomBarItemColorLightTheme,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        activeColor: secondaryColor,
+                      )
+                    : controller.homeController.getUser()!.isBankVer == 0
+                        ? SwitchListTile.adaptive(
+                            // shape: ShapeBorder,
+                            inactiveTrackColor: ThemeController.to.getIsDarkMode
+                                ? greyColor
+                                : greyReportBackground,
+                            value: controller.getIsTestAccount(),
+                            onChanged: (value) {
+                              controller.showTestModeDialog();
+                            },
+                            title: Text(
+                              'test_mode_label'.tr,
+                              style: TextStyle(
+                                //fontFamily: FontFamily.inter,
+                                color: ThemeController.to.getIsDarkMode
+                                    ? unselectedBottomBarItemColorDarkTheme
+                                    : unselectedBottomBarItemColorLightTheme,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            activeColor: secondaryColor,
+                          )
+                        : SizedBox(height: 15.h),
+
+                // ],
                 SizedBox(height: 15.h),
 
                 OptionItemWidget(
@@ -100,7 +129,9 @@ class ProfilePageView extends GetView<ProfileController> {
                     iswarning:
                         controller.homeController.passport_status.value == 0,
                     onTap: () {
-                      Get.toNamed('/edit-profile');
+                      Get.toNamed(
+                        '/edit-profile',
+                      );
                     }),
                 // Divider(height: 0, color: Colors.grey[400]),
                 OptionItemWidget(
@@ -170,11 +201,7 @@ class LogoutItemWidget extends GetView<ProfileController> {
           onTap: controller.signOut,
           child: controller.getIsLoading()
               ? Center(
-                  child: SizedBox(
-                    width: 20.w,
-                    height: 20.h,
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: LoadingLogoWidget(),
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,

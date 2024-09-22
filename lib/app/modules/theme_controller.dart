@@ -27,6 +27,7 @@ class ThemeController extends GetxController {
   ThemeData get lightTheme {
     String fontFamily = getFontFamilyBasedOnLang();
     return ThemeData(
+      useMaterial3: true,
       brightness: Brightness.light,
       primaryColor: Color(0xFF0579B5),
       fontFamily: fontFamily,
@@ -40,7 +41,7 @@ class ThemeController extends GetxController {
   ThemeData get darkTheme {
     String fontFamily = getFontFamilyBasedOnLang();
     return ThemeData(
-      useMaterial3: false,
+      useMaterial3: true,
       brightness: Brightness.dark,
       // backgroundColor: Color(0xFF17191F),
       primaryColor: Color(0xFF004366),

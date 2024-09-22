@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/snack_Bar_Awesome_widget.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -183,10 +184,8 @@ class LoginView extends GetView<LoginController> {
                         SizedBox(height: 20.h),
                         controller.getIsLoading()
                             ? Center(
-                                child: SizedBox(
-                                width: 20.w,
-                                height: 20.h,
-                                child: CircularProgressIndicator(),
+                                child: LoadingLogoWidget(
+                                width: 60,
                               ))
                             : TextButton(
                                 onPressed: () {

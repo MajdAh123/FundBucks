@@ -264,6 +264,7 @@ class LocaleKeys {
   static const cancel = "cancel";
   static const passport_rejetced = "passport_rejetced";
   static const passport_rejetced_massage = "passport_rejetced_massage";
+  static const active_auth = "active_auth";
 }
 
 class Locales {
@@ -529,9 +530,15 @@ class Locales {
     'rejected_passport': 'جواز سفر مرفوض\nارفع جوازك مجدداً',
     'processing_passport': 'قيد المراجعة',
     "cancel": "خروج",
-    "The size of image too big": "حجم الصورة كبير جدا"
+    "The size of image too big": "حجم الصورة كبير جدا",
+    "active_auth": "المصادقة الثنائية",
+    "select_nationalty2": "تحديد الجنسية",
+    "please_select_nationalty_first": "يرجى تحديد الجنسية أولا"
   };
   static const en = {
+    "select_nationalty2": "Select Nationality",
+    "please_select_nationalty_first": "Please select the nationality first",
+    "active_auth": "Local Authincation",
     "The size of image too big": "The size of image too big",
     "passport_rejetced": "passport has been Rejected",
     "passport_rejetced_massage": "Please submit a valid passport",

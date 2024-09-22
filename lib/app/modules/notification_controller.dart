@@ -76,14 +76,22 @@ class GlobalNotificationController extends GetxController {
           );
           log("New notification: " + (notification.title ?? ''));
           showSimpleNotification(
-            Text(
-              notification.title!,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: ThemeController.to.getIsDarkMode
-                    ? containerColorLightTheme
-                    : Colors.black,
+            InkWell(
+              overlayColor: MaterialStateProperty.resolveWith(
+                  (states) => Colors.transparent),
+              highlightColor: Colors.transparent,
+              onTap: () {
+                // log(message.to);
+              },
+              child: Text(
+                notification.title!,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: ThemeController.to.getIsDarkMode
+                      ? containerColorLightTheme
+                      : Colors.black,
+                ),
               ),
             ),
             subtitle: Text(
@@ -129,7 +137,7 @@ class GlobalNotificationController extends GetxController {
           .listen((RemoteMessage message) async {
         RemoteNotification? notification = message.notification;
         AndroidNotification? android = message.notification?.android;
-        log("Clicked the notification");
+        log("Clicked the notificationss");
 
         if (notification != null && android != null) {
           print("=========================");

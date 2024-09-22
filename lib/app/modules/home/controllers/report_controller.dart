@@ -20,7 +20,6 @@ class ReportController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   var isLoading = false.obs;
-  final globalFormKey = GlobalKey<FormState>().obs;
 
   final fromTextEditingController = TextEditingController().obs;
   final toTextEditingController = TextEditingController().obs;
@@ -78,8 +77,8 @@ class ReportController extends GetxController {
   void setIsLoading(bool isLoading) => this.isLoading.value = isLoading;
   bool getIsLoading() => isLoading.value;
 
-  getFormKey() => globalFormKey.value;
-
+  var fromDateError = ''.obs;
+  var toDateError = ''.obs;
   void setReportList(value) => reportList.value = value;
   List<InvestmentReport> getReportList() => reportList;
 
@@ -87,8 +86,55 @@ class ReportController extends GetxController {
     return homeController.getUser()?.currency?.currencySign ?? '';
   }
 
+  void validateFromDate() {
+    String value = fromTextEditingController.value.text;
+    if (value.isEmpty) {
+      fromDateError.value = 'required_field'.trParams({
+        'name': 'start_date'.trParams({
+          'date': '',
+        }),
+      });
+    } else {
+      fromDateError.value = '';
+    }
+  }
+
+  void validateToDate() {
+    String fromDate = fromTextEditingController.value.text;
+    String toDate = toTextEditingController.value.text;
+
+    if (toDate.isEmpty) {
+      toDateError.value = 'required_field'.trParams({
+        'name': 'start_date'.trParams({
+          'date': '',
+        }),
+      });
+    } else {
+      DateTime from = DateTime.tryParse(fromDate) ?? DateTime.now();
+      DateTime to = DateTime.tryParse(toDate) ?? DateTime.now();
+
+      if (!to.isAfter(from)) {
+        toDateError.value = 'required_field'.trParams({
+          'name': 'end_date'.trParams({
+            'date': '',
+          }),
+        });
+        ;
+      } else {
+        toDateError.value = '';
+      }
+    }
+  }
+
+  bool validateForm() {
+    validateFromDate();
+    validateToDate();
+
+    return fromDateError.value.isEmpty && toDateError.value.isEmpty;
+  }
+
   void onSearchButtonClick() {
-    if (getFormKey().currentState.validate()) {
+    if (validateForm()) {
       sendReport();
     }
   }

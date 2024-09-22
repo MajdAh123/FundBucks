@@ -2,6 +2,7 @@ import 'package:app/app/modules/home/controllers/account_controller.dart';
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/painters/painters.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AccountPageView extends GetView<AccountController> {
+  @override
+  // TODO: implement key
   @override
   Widget build(BuildContext context) {
     return EasyRefresh(
@@ -92,12 +95,7 @@ class AccountPageView extends GetView<AccountController> {
                       textDirection: TextDirection.ltr,
                       child: controller.getIsLoadingChart()
                           ? Center(
-                              child: Container(
-                                width: 25.w,
-                                height: 25.w,
-                                margin: EdgeInsets.symmetric(vertical: 50.h),
-                                child: CircularProgressIndicator(),
-                              ),
+                              child: LoadingLogoWidget(width: 50.w),
                             )
                           : InvestmentChangesChart(),
                     ),

@@ -49,6 +49,8 @@ class AppPages {
 
   static final routes = [
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
@@ -57,31 +59,43 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.LOGIN,
       page: () => LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.CREATE_ACCOUNT,
       page: () => CreateAccountView(),
       binding: CreateAccountBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.PORTFOLIO_INFORMATION,
       page: () => PortfolioInformationView(),
       binding: PortfolioInformationBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.PERSONAL_INFORMATION,
       page: () => PersonalInformationView(),
       binding: PersonalInformationBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.NOTIFICATION,
       page: () => NotificationView(),
       binding: NotificationBinding(),
@@ -90,6 +104,8 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.SETTING,
       page: () => SettingView(),
       binding: SettingBinding(),
@@ -98,6 +114,8 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.EDIT_PROFILE,
       page: () => EditProfileView(),
       binding: EditProfileBinding(),
@@ -106,6 +124,8 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.TICKET,
       page: () => TicketView(),
       binding: TicketBinding(),
@@ -114,6 +134,8 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.GATEWAY_DETAIL,
       page: () => GatewayDetailView(),
       binding: GatewayDetailBinding(),
@@ -122,6 +144,8 @@ class AppPages {
       ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.VERIFY,
       page: () => VerifyView(),
       binding: VerifyBinding(),
@@ -130,36 +154,50 @@ class AppPages {
       // ],
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.PDFVIEWER,
       page: () => PdfviewerView(),
       binding: PdfviewerBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.WEBVIEW,
       page: () => WebviewView(),
       binding: WebviewBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.SUPPORT_CARD,
       page: () => SupportCardView(),
       binding: SupportCardBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.RESET_PASSWORD,
       page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.FIND_ACCOUNT,
       page: () => FindAccountView(),
       binding: FindAccountBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.PHOTO,
       page: () => PhotoView(),
       binding: PhotoBinding(),
     ),
     GetPage(
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
       name: _Paths.ABOUT_US,
       page: () => const AboutUsView(),
       binding: AboutUsBinding(),

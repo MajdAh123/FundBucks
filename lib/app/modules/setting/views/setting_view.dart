@@ -1,5 +1,6 @@
 import 'package:app/app/modules/theme_controller.dart';
 import 'package:app/app/utils/utils.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
 import 'package:app/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,10 +39,8 @@ class SettingView extends GetView<SettingController> {
                     child: Column(
                       children: [
                         SizedBox(height: 30.h),
-                        SizedBox(
-                          width: 20.w,
-                          height: 20.h,
-                          child: CircularProgressIndicator(),
+                        LoadingLogoWidget(
+                          width: 60,
                         ),
                       ],
                     ),
@@ -171,6 +170,65 @@ class SettingView extends GetView<SettingController> {
                             ),
                           ),
                           SizedBox(height: 10.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 15.h,
+                            ),
+                            color: ThemeController.to.getIsDarkMode
+                                ? containerColorDarkTheme
+                                : containerColorLightTheme,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 30.w,
+                                  height: 30.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.white10,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Iconify(
+                                      Mdi.lock_add,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? Colors.white
+                                          : mainColor,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 15.w),
+                                Text(
+                                  'active_auth'.tr,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    //fontFamily: FontFamily.inter,
+                                    fontWeight: FontWeight.w500,
+                                    color: ThemeController.to.getIsDarkMode
+                                        ? unselectedBottomBarItemColorDarkTheme
+                                        : const Color(0xFF515151),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Switch(
+                                  inactiveTrackColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? greyColor
+                                          : greyReportBackground,
+                                  value: controller.activeLocalAuth.value,
+                                  activeColor: ThemeController.to.getIsDarkMode
+                                      ? bottomBarItemColorDarkTheme
+                                      : mainColor,
+                                  onChanged: (value) {
+                                    controller.changeLocalAuthStauts();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
 
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -214,7 +272,7 @@ class SettingView extends GetView<SettingController> {
                                 ),
                                 const Spacer(),
                                 DropdownButton<String>(
-                                  dropdownColor: Theme.of(context).cardColor,
+                                  dropdownColor: Theme.of(context).canvasColor,
                                   icon: Icon(
                                     Icons.chevron_right,
                                     color: softGreyColor,

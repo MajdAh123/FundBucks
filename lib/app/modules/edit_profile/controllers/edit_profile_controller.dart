@@ -449,9 +449,9 @@ class EditProfileController extends GetxController {
     passportTextEditController.value.text =
         homeController.getUser()?.passport ?? '';
     nationalTextEditController.value.text =
-        homeController.getUser()?.nationality ?? "Kuwait";
+        homeController.getUser()?.nationality ?? "";
     codenationalTextEditController.value.text =
-        homeController.getUser()?.nationality_code ?? "KW";
+        homeController.getUser()?.nationality_code ?? "";
     bankNameTextEditController.value.text =
         homeController.getUser()?.bankName ?? '';
     bankAccountNumberTextEditController.value.text =
@@ -480,8 +480,8 @@ class EditProfileController extends GetxController {
             homeController.getUser()?.passport ||
         nationalTextEditController.value.text !=
             homeController.getUser()?.nationality ||
-        codenationalTextEditController.value.text !=
-            homeController.getUser()?.nationality_code ||
+        // codenationalTextEditController.value.text !=
+        //     homeController.getUser()?.nationality_code ||
         bankNameTextEditController.value.text !=
             homeController.getUser()?.bankName ||
         (bankAccountNumberTextEditController.value.text !=
@@ -540,6 +540,11 @@ class EditProfileController extends GetxController {
     if (getFilePass().path.isNotEmpty) {
       passport_status.value = 1;
     }
+    if (getTextValue(nationalTextEditController.value.text) !=
+            homeController.getUser()!.nationality &&
+        natioalityRequired.isFalse) {
+      passport_status.value = 0;
+    }
 
     final FormData _formData = FormData({
       'image': getFile().path.isEmpty
@@ -585,7 +590,14 @@ class EditProfileController extends GetxController {
         //   duration: Duration(seconds: defaultSnackbarDuration),
         // ));
         homeController.getUserApi();
+        print("------------------------");
+        print(homeController.getIndex());
+        print("------------------------");
+
+        //
         Get.close(1);
+        // homeController.navigatePage(4);
+        // homeController.setIndex(4);
       }
     });
   }
@@ -1193,41 +1205,49 @@ class EditProfileController extends GetxController {
     }
   }
 
+  RxBool natioalityRequired = false.obs;
   void showImageSelectionPass() {
-    Get.bottomSheet(
-      Container(
-          // height: 100.h,
-          color: ThemeController.to.getIsDarkMode
-              ? containerColorDarkTheme
-              : containerColorLightTheme,
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text(
-                  'from_gallery'.tr,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w500,
+    if (nationalTextEditController.value.text.isEmpty) {
+      natioalityRequired.value = true;
+      SnackBarWidgetAwesomeWarning(
+          "select_nationalty2".tr, "please_select_nationalty_first".tr);
+    } else {
+      // natioalityRequired.value = false;
+      Get.bottomSheet(
+        Container(
+            // height: 100.h,
+            color: ThemeController.to.getIsDarkMode
+                ? containerColorDarkTheme
+                : containerColorLightTheme,
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  title: Text(
+                    'from_gallery'.tr,
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
+                  onTap: this.selectFromGalleryPass,
                 ),
-                onTap: this.selectFromGalleryPass,
-              ),
-              ListTile(
-                title: Text(
-                  'from_camera'.tr,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w500,
+                ListTile(
+                  title: Text(
+                    'from_camera'.tr,
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
+                  onTap: this.selectFromCameraPass,
                 ),
-                onTap: this.selectFromCameraPass,
-              ),
-            ],
-          )),
-      isDismissible: true,
-      enableDrag: true,
-    );
+              ],
+            )),
+        isDismissible: true,
+        enableDrag: true,
+      );
+    }
   }
 }

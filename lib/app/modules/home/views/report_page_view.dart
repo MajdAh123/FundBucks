@@ -1,9 +1,11 @@
 import 'package:app/app/modules/home/controllers/report_controller.dart';
-import 'package:app/app/modules/home/views/account_page_view.dart';
 import 'package:app/app/modules/theme_controller.dart';
-import 'package:app/app/painters/painters.dart';
+import 'package:app/app/painters/balance_widget_painter.dart';
 import 'package:app/app/utils/utils.dart';
-import 'package:app/app/widgets/widgets.dart';
+import 'package:app/app/widgets/logoAnimation.dart';
+import 'package:app/app/widgets/page_header_widget.dart';
+import 'package:app/app/widgets/report_info_card_widget.dart';
+import 'package:app/app/widgets/report_list_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,18 +16,14 @@ import 'package:iconify_flutter/icons/bi.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:timezone/standalone.dart' as tz;
 
+import 'account_page_view.dart';
+
 class ReportPageView extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.getIsLoading()
-          ? Center(
-              child: SizedBox(
-                width: 20.w,
-                height: 20.h,
-                child: CircularProgressIndicator(),
-              ),
-            )
+      () => controller.isLoading.value
+          ? Center(child: LoadingLogoWidget())
           : EasyRefresh(
               header: ClassicHeader(
                 dragText: 'pull_to_refresh'.tr,
@@ -46,8 +44,8 @@ class ReportPageView extends GetView<ReportController> {
                 controller.setInvestmentPercent(0);
                 controller.setStartDate('');
                 controller.setEndDate('');
-                controller.getToTextEditingController().text = '';
-                controller.getFromTextEditingController().text = '';
+                controller.toTextEditingController.value.text = '';
+                controller.fromTextEditingController.value.text = '';
                 controller.getReports();
               },
               onLoad: () async {},
@@ -63,7 +61,7 @@ class ReportPageView extends GetView<ReportController> {
                     ),
                     PageHeaderWidget(title: 'reports'.tr),
                     const ReportInfoCardWidget(),
-                    controller.getIsLoading()
+                    controller.isLoading.value
                         ? Center(
                             child: SizedBox(
                               width: 20.w,
@@ -75,7 +73,6 @@ class ReportPageView extends GetView<ReportController> {
                             width: 375.w,
                             height: 120.h,
                             margin: EdgeInsets.only(top: 360.h),
-                            // padding: EdgeInsets.only(top: 30.h),
                             child: CustomPaint(
                               painter: BalanceWidgetPainter(
                                 color: controller.getInvestmentDifference() == 0
@@ -269,7 +266,6 @@ class ReportPageView extends GetView<ReportController> {
                                                     .toString()),
                                         style: TextStyle(
                                           fontSize: 13.sp,
-                                          //fontFamily: FontFamily.inter,
                                           fontWeight: FontWeight.w500,
                                           color: controller.getTextColor(
                                             Get.locale?.languageCode
@@ -290,7 +286,6 @@ class ReportPageView extends GetView<ReportController> {
                     Container(
                       margin: EdgeInsets.only(top: 315.h),
                       child: Row(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -302,7 +297,6 @@ class ReportPageView extends GetView<ReportController> {
                                         : controller.getInvestmentPercent()),
                             style: TextStyle(
                               fontSize: 14.sp,
-                              //fontFamily: FontFamily.inter,
                               fontWeight: FontWeight.w500,
                               color: controller.getInvestmentDifference() == 0
                                   ? Colors.grey
@@ -329,294 +323,281 @@ class ReportPageView extends GetView<ReportController> {
                         ],
                       ),
                     ),
-                    Form(
-                      key: controller.getFormKey(),
-                      autovalidateMode: AutovalidateMode.disabled,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            left: 17.w, right: 16.w, top: 465.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'select_time_period'.tr,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                //fontFamily: FontFamily.inter,
-                                fontWeight: FontWeight.w600,
-                                color: ThemeController.to.getIsDarkMode
-                                    ? unselectedBottomBarItemColorDarkTheme
-                                    : unselectedBottomBarItemColorLightTheme,
-                              ),
+                    Container(
+                      margin:
+                          EdgeInsets.only(left: 17.w, right: 16.w, top: 465.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'select_time_period'.tr,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: ThemeController.to.getIsDarkMode
+                                  ? unselectedBottomBarItemColorDarkTheme
+                                  : unselectedBottomBarItemColorLightTheme,
                             ),
-                            SizedBox(height: 10.h),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${"from".tr}:',
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    //fontFamily: FontFamily.inter,
-                                    fontWeight: FontWeight.w400,
-                                    color: ThemeController.to.getIsDarkMode
-                                        ? unselectedBottomBarItemColorDarkTheme
-                                        : unselectedBottomBarItemColorLightTheme,
-                                  ),
+                          ),
+                          SizedBox(height: 10.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${"from".tr}:',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme,
                                 ),
-                                SizedBox(height: 7.h),
-                                // const Spacer(),
-                                SizedBox(
-                                  // width: 280.w,
-                                  child: Theme(
-                                    data: ThemeController.to.getIsDarkMode
-                                        ? ThemeData.dark(useMaterial3: true)
-                                            .copyWith(
-                                                colorScheme:
-                                                    ColorScheme.fromSeed(
-                                                        brightness:
-                                                            Brightness.dark,
-                                                        seedColor: Colors.blue))
-                                        : ThemeData.light().copyWith(
-                                            colorScheme: ColorScheme.fromSeed(
-                                                seedColor: Colors.blue)),
-                                    child: DateTimePicker(
-                                      controller: controller
-                                          .getFromTextEditingController(),
-                                      autovalidate: false,
-                                      validator: (value) {
-                                        if (value?.isEmpty ?? true) {
-                                          return 'required_field'.trParams({
-                                            'name': 'start_date'.trParams({
-                                              'date': '',
-                                            }),
-                                          });
-                                        }
-                                        return null;
-                                      },
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2100),
-                                      dateLabelText: 'Date',
-                                      decoration: InputDecoration(
-                                        suffixIcon: Padding(
-                                          padding:
-                                              marginHorizontalBasedOnLanguage(
-                                                  11.w),
-                                          child: Iconify(
-                                            Ic.twotone_date_range,
-                                            size: 27,
-                                            color: ThemeController
-                                                    .to.getIsDarkMode
-                                                ? bottomBarItemColorDarkTheme
-                                                : mainColor,
-                                          ),
-                                        ),
-                                        suffixIconConstraints: BoxConstraints(
-                                            maxWidth: 27.w, maxHeight: 27.h),
-                                        fillColor:
-                                            ThemeController.to.getIsDarkMode
-                                                ? containerColorDarkTheme
-                                                : containerColorLightTheme,
-                                        // fillColor: Colors.white,
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.r),
-                                          borderSide: BorderSide(
-                                            color: strokeColor,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          borderSide: BorderSide(
-                                            color:
-                                                ThemeController.to.getIsDarkMode
-                                                    ? greyColor.withOpacity(.39)
-                                                    : strokeColor,
-                                            width: 1.0,
-                                          ),
+                              ),
+                              SizedBox(height: 7.h),
+                              Obx(
+                                () => Theme(
+                                  data: ThemeController.to.getIsDarkMode
+                                      ? ThemeData.dark(useMaterial3: true)
+                                          .copyWith(
+                                              colorScheme: ColorScheme.fromSeed(
+                                                  brightness: Brightness.dark,
+                                                  seedColor: Colors.blue))
+                                      : ThemeData.light().copyWith(
+                                          colorScheme: ColorScheme.fromSeed(
+                                              seedColor: Colors.blue)),
+                                  child: DateTimePicker(
+                                    controller: controller
+                                        .fromTextEditingController.value,
+                                    autovalidate: false,
+                                    validator: (value) {
+                                      if (value?.isEmpty ?? true) {
+                                        return 'required_field'.trParams({
+                                          'name': 'start_date'.trParams({
+                                            'date': '',
+                                          }),
+                                        });
+                                      }
+                                      return null;
+                                    },
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                    dateLabelText: 'Date',
+                                    decoration: InputDecoration(
+                                      suffixIcon: Padding(
+                                        padding:
+                                            marginHorizontalBasedOnLanguage(
+                                                11.w),
+                                        child: Iconify(
+                                          Ic.twotone_date_range,
+                                          size: 27,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? bottomBarItemColorDarkTheme
+                                                  : mainColor,
                                         ),
                                       ),
-                                      onChanged: (val) => print(val),
-                                      onSaved: (val) => print(val),
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: ThemeController.to.getIsDarkMode
-                                            ? unselectedBottomBarItemColorDarkTheme
-                                            : unselectedBottomBarItemColorLightTheme,
+                                      suffixIconConstraints: BoxConstraints(
+                                          maxWidth: 27.w, maxHeight: 27.h),
+                                      fillColor:
+                                          ThemeController.to.getIsDarkMode
+                                              ? containerColorDarkTheme
+                                              : containerColorLightTheme,
+                                      filled: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        borderSide: BorderSide(
+                                          color: strokeColor,
+                                          width: 1.0,
+                                        ),
                                       ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        borderSide: BorderSide(
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorText:
+                                          controller.fromDateError.value.isEmpty
+                                              ? null
+                                              : controller.fromDateError.value,
+                                    ),
+                                    onChanged: (val) =>
+                                        controller.validateFromDate(),
+                                    onSaved: (val) => print(val),
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? unselectedBottomBarItemColorDarkTheme
+                                          : unselectedBottomBarItemColorLightTheme,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 10.h),
-                            Column(
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${"to".tr}:',
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    //fontFamily: FontFamily.inter,
-                                    fontWeight: FontWeight.w400,
-                                    color: ThemeController.to.getIsDarkMode
-                                        ? unselectedBottomBarItemColorDarkTheme
-                                        : unselectedBottomBarItemColorLightTheme,
-                                  ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${"to".tr}:',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: ThemeController.to.getIsDarkMode
+                                      ? unselectedBottomBarItemColorDarkTheme
+                                      : unselectedBottomBarItemColorLightTheme,
                                 ),
-                                SizedBox(height: 7.h),
-                                // const Spacer(),
-                                SizedBox(
-                                  // width: 280.w,
-                                  child: Theme(
-                                    data: ThemeController.to.getIsDarkMode
-                                        ? ThemeData.dark(useMaterial3: true)
-                                            .copyWith(
-                                                colorScheme:
-                                                    ColorScheme.fromSeed(
-                                                        brightness:
-                                                            Brightness.dark,
-                                                        seedColor: Colors.blue))
-                                        : ThemeData.light().copyWith(
-                                            colorScheme: ColorScheme.fromSeed(
-                                                seedColor: Colors.blue)),
-                                    child: DateTimePicker(
-                                      controller: controller
-                                          .getToTextEditingController(),
-                                      autovalidate: false,
-                                      validator: (value) {
-                                        if (value?.isEmpty ?? true) {
-                                          return 'required_field'.trParams({
-                                            'name': 'end_date'.trParams({
-                                              'date': '',
-                                            }),
-                                          });
-                                        }
-                                        if (value != null) {
-                                          if (controller
-                                              .getFromTextEditingController()
-                                              .text
-                                              .isNotEmpty) {
-                                            DateTime from = DateTime.parse(
-                                                controller
-                                                    .getFromTextEditingController()
-                                                    .text);
-                                            DateTime to = DateTime.parse(value);
-                                            if (!to.isAfter(from)) {
-                                              return 'start_date_before_end_date'
-                                                  .tr;
-                                            }
+                              ),
+                              SizedBox(height: 7.h),
+                              Obx(
+                                () => Theme(
+                                  data: ThemeController.to.getIsDarkMode
+                                      ? ThemeData.dark(useMaterial3: true)
+                                          .copyWith(
+                                              colorScheme: ColorScheme.fromSeed(
+                                                  brightness: Brightness.dark,
+                                                  seedColor: Colors.blue))
+                                      : ThemeData.light().copyWith(
+                                          colorScheme: ColorScheme.fromSeed(
+                                              seedColor: Colors.blue)),
+                                  child: DateTimePicker(
+                                    controller: controller
+                                        .toTextEditingController.value,
+                                    autovalidate: false,
+                                    validator: (value) {
+                                      if (value?.isEmpty ?? true) {
+                                        return 'required_field'.trParams({
+                                          'name': 'end_date'.trParams({
+                                            'date': '',
+                                          }),
+                                        });
+                                      }
+                                      if (value != null) {
+                                        if (controller.fromTextEditingController
+                                            .value.text.isNotEmpty) {
+                                          DateTime from = DateTime.parse(
+                                              controller
+                                                  .fromTextEditingController
+                                                  .value
+                                                  .text);
+                                          DateTime to = DateTime.parse(value);
+                                          if (!to.isAfter(from)) {
+                                            return 'start_date_before_end_date'
+                                                .tr;
                                           }
                                         }
-                                        return null;
-                                      },
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(
-                                        tz.TZDateTime.now(
-                                                kuwaitTimezoneLocation)
-                                            .year,
-                                        tz.TZDateTime.now(
-                                                kuwaitTimezoneLocation)
-                                            .month,
-                                        tz.TZDateTime.now(
-                                                kuwaitTimezoneLocation)
-                                            .day,
-                                      ),
-                                      dateLabelText: 'Date',
-                                      decoration: InputDecoration(
-                                        suffixIcon: Padding(
-                                          padding:
-                                              marginHorizontalBasedOnLanguage(
-                                                  11.w),
-                                          child: Iconify(
-                                            Ic.twotone_date_range,
-                                            size: 27,
-                                            color: ThemeController
-                                                    .to.getIsDarkMode
-                                                ? bottomBarItemColorDarkTheme
-                                                : mainColor,
-                                          ),
-                                        ),
-                                        suffixIconConstraints: BoxConstraints(
-                                            maxWidth: 27.w, maxHeight: 27.h),
-                                        fillColor:
-                                            ThemeController.to.getIsDarkMode
-                                                ? containerColorDarkTheme
-                                                : containerColorLightTheme,
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.r),
-                                          borderSide: BorderSide(
-                                            color: strokeColor,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          borderSide: BorderSide(
-                                            color:
-                                                ThemeController.to.getIsDarkMode
-                                                    ? greyColor.withOpacity(.39)
-                                                    : strokeColor,
-                                            width: 1.0,
-                                          ),
+                                      }
+                                      return null;
+                                    },
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(
+                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
+                                          .year,
+                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
+                                          .month,
+                                      tz.TZDateTime.now(kuwaitTimezoneLocation)
+                                          .day,
+                                    ),
+                                    dateLabelText: 'Date',
+                                    decoration: InputDecoration(
+                                      suffixIcon: Padding(
+                                        padding:
+                                            marginHorizontalBasedOnLanguage(
+                                                11.w),
+                                        child: Iconify(
+                                          Ic.twotone_date_range,
+                                          size: 27,
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? bottomBarItemColorDarkTheme
+                                                  : mainColor,
                                         ),
                                       ),
-                                      onChanged: (val) => print(val),
-                                      onSaved: (val) => print(val),
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: ThemeController.to.getIsDarkMode
-                                            ? unselectedBottomBarItemColorDarkTheme
-                                            : unselectedBottomBarItemColorLightTheme,
+                                      suffixIconConstraints: BoxConstraints(
+                                          maxWidth: 27.w, maxHeight: 27.h),
+                                      fillColor:
+                                          ThemeController.to.getIsDarkMode
+                                              ? containerColorDarkTheme
+                                              : containerColorLightTheme,
+                                      filled: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        borderSide: BorderSide(
+                                          color: strokeColor,
+                                          width: 1.0,
+                                        ),
                                       ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        borderSide: BorderSide(
+                                          color:
+                                              ThemeController.to.getIsDarkMode
+                                                  ? greyColor.withOpacity(.39)
+                                                  : strokeColor,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorText:
+                                          controller.toDateError.value.isEmpty
+                                              ? null
+                                              : controller.toDateError.value,
+                                    ),
+                                    onChanged: (val) =>
+                                        controller.validateToDate(),
+                                    onSaved: (val) => print(val),
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: ThemeController.to.getIsDarkMode
+                                          ? unselectedBottomBarItemColorDarkTheme
+                                          : unselectedBottomBarItemColorLightTheme,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 30.h),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: 10.w, right: 10.w, bottom: 10.h),
-                              child: TextButton(
-                                onPressed: controller.onSearchButtonClick,
-                                style: TextButton.styleFrom(
-                                  minimumSize: const Size.fromHeight(50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  // primary: mainColor,
-                                  backgroundColor:
-                                      ThemeController.to.getIsDarkMode
-                                          ? mainColorDarkTheme
-                                          : mainColor,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 30.h),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 10.w, right: 10.w, bottom: 10.h),
+                            child: TextButton(
+                              onPressed: controller.onSearchButtonClick,
+                              style: TextButton.styleFrom(
+                                minimumSize: const Size.fromHeight(50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(
-                                  "search".tr,
-                                  style: TextStyle(
-                                    //fontFamily: FontFamily.inter,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
+                                backgroundColor:
+                                    ThemeController.to.getIsDarkMode
+                                        ? mainColorDarkTheme
+                                        : mainColor,
+                              ),
+                              child: Text(
+                                "search".tr,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
-                            ReportListWidget(
-                              title: 'investment_reports'.tr,
-                              marginTop: 20.h,
-                            ),
-                          ],
-                        ),
+                          ),
+                          ReportListWidget(
+                            title: 'investment_reports'.tr,
+                            marginTop: 20.h,
+                          ),
+                        ],
                       ),
                     ),
                   ],
