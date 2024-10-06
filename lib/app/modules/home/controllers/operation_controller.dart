@@ -124,7 +124,8 @@ class OperationController extends GetxController {
   var depositDateError = ''.obs;
 
   void validateWithdrawAmount() {
-    String value = getDepositAmount();
+    print(withdrawAmountTextEditingController.value.text);
+    String value = withdrawAmountTextEditingController.value.text;
     if (value.isEmpty) {
       withdrawAmountError.value = 'required_field'.trParams({
         'name': 'amount'.tr,
@@ -412,6 +413,7 @@ class OperationController extends GetxController {
   }
 
   void sendWithdrawRequest() {
+    print(withdrawAmountTextEditingController.value.text);
     setIsLoading(true);
     final FormData _formData = FormData({
       'amount': withdrawAmountTextEditingController.value.text,

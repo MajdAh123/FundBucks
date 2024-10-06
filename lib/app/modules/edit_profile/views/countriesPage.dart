@@ -14,8 +14,21 @@ class CountriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ThemeController.to.isDarkMode.isTrue
+            ? containerColorDarkTheme
+            : Colors.white,
         appBar: AppBar(
-          title: Text("select_nationalty".tr),
+          title: Text(
+            "select_nationalty".tr,
+            style: TextStyle(
+                color: ThemeController.to.isDarkMode.isTrue
+                    ? Colors.grey
+                    : Colors.black),
+          ),
+          iconTheme: IconThemeData(
+              color: ThemeController.to.isDarkMode.isTrue
+                  ? Colors.grey
+                  : Colors.black),
         ),
         body: GetBuilder<EditProfileController>(
             init: EditProfileController(userProvider: Get.find<UserProvider>()),
@@ -35,7 +48,9 @@ class CountriesPage extends StatelessWidget {
                         ),
                         child: TextField(
                           decoration: InputDecoration(
-                              border: InputBorder.none, hintText: "search_".tr),
+                              border: InputBorder.none,
+                              hintText: "search_".tr,
+                              hintStyle: TextStyle(color: Colors.grey)),
                           onChanged: (value) {
                             if (value.isEmpty) {
                               controller.searchCountry = controller.allNational;
@@ -79,11 +94,21 @@ class CountriesPage extends StatelessWidget {
                                   Text(
                                     countryNational.countryName!,
                                     style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color:
+                                            ThemeController.to.isDarkMode.isTrue
+                                                ? Colors.grey
+                                                : Colors.black),
                                   ),
-                                  Text(countryNational.countryCode!),
+                                  Text(
+                                    countryNational.countryCode!,
+                                    style: TextStyle(
+                                        color:
+                                            ThemeController.to.isDarkMode.isTrue
+                                                ? Colors.grey
+                                                : Colors.black),
+                                  ),
                                 ],
                               ),
                             ),
