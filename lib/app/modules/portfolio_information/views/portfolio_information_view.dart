@@ -51,6 +51,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<String>(
+                              dropdownColor: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
                               enableFeedback: true,
                               elevation: 12,
                               value: controller.getPortfolioSelect(),
@@ -331,6 +334,9 @@ class PortfolioInformationView extends GetView<PortfolioInformationController> {
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<String>(
+                              dropdownColor: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
                               enableFeedback: true,
                               elevation: 12,
                               value: controller.getCurrencySelect(),

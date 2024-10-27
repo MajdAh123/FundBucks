@@ -272,7 +272,10 @@ class SettingView extends GetView<SettingController> {
                                 ),
                                 const Spacer(),
                                 DropdownButton<String>(
-                                  dropdownColor: Theme.of(context).canvasColor,
+                                  dropdownColor:
+                                      ThemeController.to.getIsDarkMode
+                                          ? containerColorDarkTheme
+                                          : containerColorLightTheme,
                                   icon: Icon(
                                     Icons.chevron_right,
                                     color: softGreyColor,

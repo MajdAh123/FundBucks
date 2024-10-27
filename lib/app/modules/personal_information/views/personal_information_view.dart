@@ -282,6 +282,9 @@ class PersonalInformationView extends GetView<PersonalInformationController> {
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<String>(
+                              dropdownColor: ThemeController.to.getIsDarkMode
+                                  ? containerColorDarkTheme
+                                  : containerColorLightTheme,
                               value: controller.getGenderSelect(),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
